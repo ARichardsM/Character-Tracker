@@ -4,6 +4,10 @@
 #include <iostream>
 #include <fstream>
 
+// Declare Global variables
+const vector<string> unitRankings;		// List of eligible unit rankings
+const vector<string> characterRankings;	// List of eligible character rankings
+
 // Abstract Entity Information
 class entity {
 public:
