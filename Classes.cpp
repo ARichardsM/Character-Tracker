@@ -35,9 +35,6 @@ character::character(std::string fileSTEM) {
 		else if (splitLine[0] == "Aspect") {
 			aspects.push_back(splitLine[1]);
 		}
-		else if (splitLine[0] == "Fact") {
-			facts.push_back(splitLine[1]);
-		}
 		else if (splitLine[0] == "Relation") {
 			relations.push_back(splitLine[1]);
 		}
@@ -50,10 +47,58 @@ void character::print() {
 	std::cout << "Member: " << member << "\n";
 	for (std::string aspect : aspects)
 		std::cout << "Aspect: " << aspect << "\n";
-	for (std::string fact : facts)
-		std::cout << "Facts: " << fact << "\n";
 	for (std::string relation : relations)
 		std::cout << "Relations: " << relation << "\n";
+}
+
+void character::fullprint(std::vector<unit> unitList) {
+	// If not a member, simply print
+	if (member == "None")
+		print();
+	else {
+		// Print Name and Rank
+		std::cout << "Name: " << name << "\n";
+		std::cout << "Rank: " << rank << "\n";
+
+		// Record the character's aspects and relations
+		std::vector<std::string> fullAspects = aspects;
+		std::vector<std::string> fullRelations = relations;
+
+		// Set next member and initilize the full member vector
+		std::vector<std::string> fullMember;
+		std::string nextMember = member;
+
+		// While a next member exists
+		while (nextMember != "None") {
+
+			// Find the unit the entity belongs to
+			for (unit unit : unitList) {
+				if (unit.name == nextMember) {
+					// Add the aspects, relations and membership
+					fullAspects.insert(fullAspects.end(), unit.aspects.begin(), unit.aspects.end());
+					fullRelations.insert(fullRelations.end(), unit.relations.begin(), unit.relations.end());
+					fullMember.push_back(nextMember);
+
+					// Update the next member
+					nextMember = unit.member;
+
+					break;
+				}
+			}
+		}
+
+		// Print the full memberships, aspects and relations
+		std::cout << "Member: " ;
+		for (std::string membership : std::vector<std::string>(fullMember.begin(), fullMember.end() - 1))
+			std::cout << membership << " - ";
+		std::cout << fullMember.back() << "\n";
+
+		for (std::string aspect : fullAspects)
+			std::cout << "Aspect: " << aspect << "\n";
+
+		for (std::string relation : fullRelations)
+			std::cout << "Relations: " << relation << "\n";
+	}
 }
 
 /*

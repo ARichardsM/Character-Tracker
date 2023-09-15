@@ -15,19 +15,6 @@ public:
 	std::vector<std::string> relations = {};
 };
 
-// Character Information
-class character : public entity {
-public:
-	std::string nickname = "None";
-
-	std::vector<std::string> facts = {};
-
-	character(std::string fileSTEM);
-
-	// Print out the character
-	void print();
-};
-
 // Unit Information
 class unit : public entity {
 public:
@@ -35,6 +22,19 @@ public:
 
 	// Print out the unit
 	void print();
+};
+
+// Character Information
+class character : public entity {
+public:
+	std::string nickname = "None";
+
+	character(std::string fileSTEM);
+
+	// Print out the character
+	void print();
+	// Print out the character and all member unit information
+	void fullprint(std::vector<unit> unitList);
 };
 
 namespace interactions {

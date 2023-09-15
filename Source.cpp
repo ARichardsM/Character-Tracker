@@ -19,6 +19,10 @@ int main()
     // Pull `Character Files` from the `Characters` Directory
     fs::path charPath = fs::current_path() / "Characters";
     for (const auto& entry : fs::directory_iterator(charPath)) {
+        // Skip the template
+        if (entry.path().stem().string() == "Template Character")
+            continue;
+
         // Add the character to the list
         charList.push_back(character(entry.path().stem().string()));
     }
@@ -26,11 +30,15 @@ int main()
     // Pull `Unit Files` from the `Units` Directory
     fs::path unitPath = fs::current_path() / "Units";
     for (const auto& entry : fs::directory_iterator(unitPath)) {
+        // Skip the template
+        if (entry.path().stem().string() == "Template Unit")
+            continue;
+
         // Add the unit to the list
         unitList.push_back(unit(entry.path().stem().string()));
     }
 
-    switch (support::prompt("Select", { "Verify", "Print" })) {
+    switch (support::prompt("Select", { "Verify", "Print", "Test New Function"})) {
     case 1:
         // Verify the units and characters
         interactions::verifyMemberships(charList, unitList);
@@ -51,6 +59,13 @@ int main()
             entry.print();
             cout << endl;
         }
+        break;
+    case 3:
+        // Initialize rand
+        srand(time(0));
+        
+        // Full print a random character
+        charList[rand() % charList.size()].fullprint(unitList);
         break;
     }
 }
