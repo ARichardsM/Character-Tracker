@@ -27,7 +27,8 @@ character::character(std::string fileSTEM) {
 			nickname = splitLine[1];
 		}
 		else if (splitLine[0] == "Rank") {
-			rank = splitLine[1];
+			if (find(characterRankings.begin(), characterRankings.end(), splitLine[1]) != characterRankings.end())
+				rank = splitLine[1];
 		}
 		else if (splitLine[0] == "Member") {
 			member = splitLine[1];
@@ -125,7 +126,8 @@ unit::unit(std::string fileSTEM) {
 
 		// Depending on [0], set a variable to [1]
 		if (splitLine[0] == "Rank") {
-			rank = splitLine[1];
+			if (find(unitRankings.begin(), unitRankings.end(), splitLine[1]) != unitRankings.end())
+				rank = splitLine[1];
 		}
 		else if (splitLine[0] == "Member") {
 			member = splitLine[1];

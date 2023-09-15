@@ -38,7 +38,7 @@ int main()
         unitList.push_back(unit(entry.path().stem().string()));
     }
 
-    switch (support::prompt("Select", { "Verify", "Print", "Test New Function"})) {
+    switch (support::prompt("Select", { "Verify", "Print", "Random Pull"})) {
     case 1:
         // Verify the units and characters
         interactions::verifyMemberships(charList, unitList);
