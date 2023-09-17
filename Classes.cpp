@@ -27,8 +27,12 @@ character::character(std::string fileSTEM) {
 			nickname = splitLine[1];
 		}
 		else if (splitLine[0] == "Rank") {
-			if (find(characterRankings.begin(), characterRankings.end(), splitLine[1]) != characterRankings.end())
-				rank = splitLine[1];
+			// Search for rank [1] in the character rankings
+			auto rankIter = find(characterRankings.begin(), characterRankings.end(), splitLine[1]);
+
+			// Assign the rank if it exists, otherwise stay unassigned
+			if (rankIter != characterRankings.end())
+				rank = std::distance(characterRankings.begin(), rankIter);
 		}
 		else if (splitLine[0] == "Member") {
 			member = splitLine[1];
@@ -44,7 +48,7 @@ character::character(std::string fileSTEM) {
 
 void character::print() {
 	std::cout << "Name: " << name << "\n";
-	std::cout << "Rank: " << rank << "\n";
+	std::cout << "Rank: " << characterRankings[rank] << "\n";
 	std::cout << "Member: " << member << "\n";
 	for (std::string aspect : aspects)
 		std::cout << "Aspect: " << aspect << "\n";
@@ -59,7 +63,7 @@ void character::fullprint(std::vector<unit> unitList) {
 	else {
 		// Print Name and Rank
 		std::cout << "Name: " << name << "\n";
-		std::cout << "Rank: " << rank << "\n";
+		std::cout << "Rank: " << characterRankings[rank] << "\n";
 
 		// Record the character's aspects and relations
 		std::vector<std::string> fullAspects = aspects;
@@ -125,9 +129,14 @@ unit::unit(std::string fileSTEM) {
 		std::vector<std::string> splitLine = { line.substr(0, line.find(": ")), line.substr(line.find(": ") + 2) };
 
 		// Depending on [0], set a variable to [1]
+
 		if (splitLine[0] == "Rank") {
-			if (find(unitRankings.begin(), unitRankings.end(), splitLine[1]) != unitRankings.end())
-				rank = splitLine[1];
+			// Search for rank [1] in the unit rankings
+			auto rankIter = find(unitRankings.begin(), unitRankings.end(), splitLine[1]);
+
+			// Assign the rank if it exists, otherwise stay unassigned
+			if (rankIter != unitRankings.end())
+				rank = std::distance(unitRankings.begin(), rankIter);
 		}
 		else if (splitLine[0] == "Member") {
 			member = splitLine[1];
@@ -143,7 +152,7 @@ unit::unit(std::string fileSTEM) {
 
 void unit::print() {
 	std::cout << "Name: " << name << "\n";
-	std::cout << "Rank: " << rank << "\n";
+	std::cout << "Rank: " << unitRankings[rank] << "\n";
 	std::cout << "Member: " << member << "\n";
 	for (std::string aspect : aspects)
 		std::cout << "Aspect: " << aspect << "\n";

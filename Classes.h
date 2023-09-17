@@ -5,15 +5,16 @@
 #include <fstream>
 
 // Declare Global variables
-const std::vector<std::string> unitRankings = {"Crew", "Squad", "Regiment", "Faction"};							// List of eligible unit rankings
-const std::vector<std::string> characterRankings = {"Known", "Notable", "Expert", "Adept", "Legend", "Myth"};	// List of eligible character rankings
+const std::vector<std::string> unitRankings = {"Unassigned", "Crew", "Squad", "Regiment", "Faction"};							// List of eligible unit rankings
+const std::vector<std::string> characterRankings = {"Unassigned", "Known", "Notable", "Expert", "Adept", "Legend", "Myth"};		// List of eligible character rankings
 
 // Abstract Entity Information
 class entity {
 public:
 	std::string name = "None";
-	std::string rank = "None";
 	std::string member = "None";
+
+	int rank = 0;
 
 	std::vector<std::string> aspects = {};
 	std::vector<std::string> relations = {};

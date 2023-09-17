@@ -5,12 +5,12 @@ The character tracker is used to manage the simple connections between multiple 
 ## To Do
 ### Current
 - [] Fully implement rankings
-	- [] Implement Character Rankings
+	- [X] Implement Character Rankings
 		- [X] Limit eliglibe rankings
-		- [] Store rankings as an integer
+		- [X] Store rankings as an integer
 	- [] Implement Unit Rankings
 		- [X] Limit eliglibe rankings
-		- [] Store rankings as an integer
+		- [X] Store rankings as an integer
 		- [] Limit number of members based on ranking
 ### Backlog
 - [] More intricate relations
