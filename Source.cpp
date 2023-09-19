@@ -38,7 +38,7 @@ int main()
         unitList.push_back(unit(entry.path().stem().string()));
     }
 
-    switch (support::prompt("Select", { "Verify", "Print", "Random Pull"})) {
+    switch (support::prompt("Select", { "Verify", "Print", "Random Pull", "Test New Function"})) {
     case 1:
         // Verify the units and characters
         interactions::verifyMemberships(charList, unitList);
@@ -66,6 +66,9 @@ int main()
         
         // Full print a random character
         charList[rand() % charList.size()].fullprint(unitList);
+        break;
+    case 4:
+        interactions::verifySizes(charList, unitList);
         break;
     }
 }

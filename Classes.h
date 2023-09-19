@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 // Declare Global variables
 const std::vector<std::string> unitRankings = {"Unassigned", "Crew", "Squad", "Regiment", "Faction"};							// List of eligible unit rankings
@@ -45,6 +46,9 @@ public:
 namespace interactions {
 	// Verify all members in the character and unit list
 	void verifyMemberships(std::vector<character> characterList, std::vector<unit> unitList);
+
+	// Verify the size of all units
+	void verifySizes(std::vector<character> characterList, std::vector<unit> unitList);
 
 	// Verify that all relations in a character list exist in the list
 	void verifyRelations(std::vector<character> list);

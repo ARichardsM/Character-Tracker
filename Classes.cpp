@@ -168,7 +168,7 @@ void interactions::verifyMemberships(std::vector<character> characterList, std::
 	// Variables
 	std::vector<std::string> unitNames = {"None"};
 
-	// Append all character names to charNames
+	// Append all unit names to unitNames
 	for (unit unit : unitList) {
 		unitNames.push_back(unit.name);
 	}
@@ -185,6 +185,60 @@ void interactions::verifyMemberships(std::vector<character> characterList, std::
 		// If the member's name can't be found in unitNames, report it
 		if (find(unitNames.begin(), unitNames.end(), unit.member) == unitNames.end())
 			std::cout << unit.member << " from " << unit.name << " cannot be found.\n";
+	}
+}
+
+void interactions::verifySizes(std::vector<character> characterList, std::vector<unit> unitList) {
+	// Variables
+	std::vector<std::string> unitNames = {  };
+	std::vector<std::vector<std::string>> unitInfo = { };
+	std::vector<int> unitSizes = { };
+
+	// Store the unit's name and necessary information and intilize the units' size
+	for (unit unit : unitList) {
+		//unitNames.push_back(unit.name);
+		unitInfo.push_back({ unit.name, std::to_string(unit.rank), unit.member });
+		unitSizes.push_back(0);
+	}
+
+	// Sort unit info in order of rank integer
+	std::sort(unitInfo.begin(), unitInfo.end(),
+		[](std::vector<std::string> a, std::vector<std::string> b) {
+			return stoi(a[1]) < stoi(b[1]);
+		});
+
+	// Store the unit's name via sorted order
+	for (std::vector<std::string> unit : unitInfo) {
+		unitNames.push_back(unit[0]);
+	}
+
+	// For each character
+	for (character character : characterList) {
+		// Try to find it's unit membership
+		auto charMem = find(unitNames.begin(), unitNames.end(), character.member);
+
+		// If it belongs to a unit, add to the unit's size
+		if (charMem != unitNames.end())
+			unitSizes[std::distance(unitNames.begin(), charMem)] += 1;
+	}
+
+	// For each unit
+	for (int i = 0; i < unitInfo.size(); i++) {
+		// Try to find it's unit membership
+		auto unitMem = find(unitNames.begin(), unitNames.end(), unitInfo[i][2]);
+
+		// If it belongs to a unit, add it's size to the unit's size
+		if (unitMem != unitNames.end())
+			unitSizes[std::distance(unitNames.begin(), unitMem)] += unitSizes[i];
+
+		// Print out the size
+		std::cout << "[" << unitRankings[stoi(unitInfo[i][1])] << "] " << unitNames[i] << ": Size " << unitSizes[i] << ".";
+
+		// If the size is invalid, report it
+		if (!(pow(2, stoi(unitInfo[i][1])) <= unitSizes[i] && unitSizes[i] <= (3 * pow(2, stoi(unitInfo[i][1]) - 1))))
+			std::cout << " Invalid Size";
+		
+		std::cout << "\n";
 	}
 }
 
