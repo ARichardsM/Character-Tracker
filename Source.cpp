@@ -44,6 +44,7 @@ int main()
         interactions::verifyMemberships(charList, unitList);
         interactions::verifyRelations(charList);
         interactions::verifyRelations(unitList);
+        interactions::verifySizes(charList, unitList);
         break;
     case 2:
         // Print all characters
@@ -68,7 +69,7 @@ int main()
         charList[rand() % charList.size()].fullprint(unitList);
         break;
     case 4:
-        interactions::verifySizes(charList, unitList);
+        
         break;
     }
 }
