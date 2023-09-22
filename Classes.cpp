@@ -20,7 +20,14 @@ character::character(std::string fileSTEM) {
 			continue;
 
 		// Split the line at `: `
-		std::vector<std::string> splitLine = { line.substr(0, line.find(": ")), line.substr(line.find(": ") + 2) };
+		std::vector<std::string> splitLine;
+
+		while (line.find(": ") != std::string::npos) {
+			splitLine.push_back(line.substr(0, line.find(": ")));
+			line = line.substr(line.find(": ") + 2);
+		}
+
+		splitLine.push_back(line);
 
 		// Depending on [0], set a variable to [1]
 		if (splitLine[0] == "Name") {
@@ -109,7 +116,7 @@ void character::fullprint(std::vector<unit> unitList) {
 			std::cout << "Aspect: " << aspect << "\n";
 
 		for (std::vector<std::string> relation : fullRelations)
-			std::cout << "Relations: " << relation[0] << " - " << relation[1] << "\n";
+			std::cout << "Relation: " << relation[0] << " - " << relation[1] << "\n";
 	}
 }
 
@@ -133,7 +140,14 @@ unit::unit(std::string fileSTEM) {
 			continue;
 
 		// Split the line at `: `
-		std::vector<std::string> splitLine = { line.substr(0, line.find(": ")), line.substr(line.find(": ") + 2) };
+		std::vector<std::string> splitLine;
+
+		while (line.find(": ") != std::string::npos) {
+			splitLine.push_back(line.substr(0, line.find(": ")));
+			line = line.substr(line.find(": ") + 2);
+		}
+
+		splitLine.push_back(line);
 
 		// Depending on [0], set a variable to [1]
 
@@ -171,7 +185,7 @@ void unit::print() {
 	for (std::string aspect : aspects)
 		std::cout << "Aspect: " << aspect << "\n";
 	for (std::vector<std::string> relation : relations)
-		std::cout << "Relations: " << relation[0] << " - " << relation[1] << "\n";
+		std::cout << "Relation: " << relation[0] << " - " << relation[1] << "\n";
 }
 
 /*
@@ -389,4 +403,29 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 			}
 		}
 	}
+}
+
+void interactions::writeToFile(std::vector<character> characterList, std::vector<unit> unitList) {
+	for (character chara : characterList) {
+		std::ofstream outFile("Characters/" + chara.name + ".txt");
+		outFile << "Rank: " << characterRankings[chara.rank] << "\n";
+		outFile << "Member: " << chara.member << "\n";
+		for (std::string aspect : chara.aspects)
+			outFile << "Aspect: " << aspect << "\n";
+		for (std::vector<std::string> relation : chara.relations)
+			outFile << "Relation: " << relation[0] << ": " << relation[1] << "\n";
+		outFile.close();
+	}
+
+	for (unit unit : unitList) {
+		std::ofstream outFile("Units/" + unit.name + ".txt");
+		outFile << "Rank: " << unitRankings[unit.rank] << "\n";
+		outFile << "Member: " << unit.member << "\n";
+		for (std::string aspect : unit.aspects)
+			outFile << "Aspect: " << aspect << "\n";
+		for (std::vector<std::string> relation : unit.relations)
+			outFile << "Relation: " << relation[0] << ": " << relation[1] << "\n";
+		outFile.close();
+	}
+	std::cout << "Write to File\n";
 }

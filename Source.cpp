@@ -50,6 +50,7 @@ int main()
             interactions::verifyRelations(charList);
             interactions::verifyRelations(unitList);
             interactions::verifySizes(charList, unitList);
+            interactions::addMissingRelations(charList, unitList);
             break;
         case 3:
             // Print all characters
@@ -74,7 +75,7 @@ int main()
             charList[rand() % charList.size()].fullprint(unitList);
             break;
         case 5:
-            interactions::addMissingRelations(charList, unitList);
+            interactions::writeToFile(charList, unitList);
             break;
         }
     }
