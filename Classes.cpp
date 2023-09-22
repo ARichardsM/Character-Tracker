@@ -41,7 +41,14 @@ character::character(std::string fileSTEM) {
 			aspects.push_back(splitLine[1]);
 		}
 		else if (splitLine[0] == "Relation") {
-			relations.push_back(splitLine[1]);
+			switch (splitLine.size()) {
+			case 2:
+				relations.push_back({ splitLine[1], "Unknown Relation" });
+				break;
+			case 3:
+				relations.push_back({ splitLine[1], splitLine[2] });
+				break;
+			}
 		}
 	}
 }
@@ -52,8 +59,8 @@ void character::print() {
 	std::cout << "Member: " << member << "\n";
 	for (std::string aspect : aspects)
 		std::cout << "Aspect: " << aspect << "\n";
-	for (std::string relation : relations)
-		std::cout << "Relations: " << relation << "\n";
+	for (std::vector<std::string> relation : relations)
+		std::cout << "Relations: " << relation[0] << " - " << relation[1] << "\n";
 }
 
 void character::fullprint(std::vector<unit> unitList) {
@@ -67,7 +74,7 @@ void character::fullprint(std::vector<unit> unitList) {
 
 		// Record the character's aspects and relations
 		std::vector<std::string> fullAspects = aspects;
-		std::vector<std::string> fullRelations = relations;
+		std::vector<std::vector<std::string>> fullRelations = relations;
 
 		// Set next member and initilize the full member vector
 		std::vector<std::string> fullMember;
@@ -101,8 +108,8 @@ void character::fullprint(std::vector<unit> unitList) {
 		for (std::string aspect : fullAspects)
 			std::cout << "Aspect: " << aspect << "\n";
 
-		for (std::string relation : fullRelations)
-			std::cout << "Relations: " << relation << "\n";
+		for (std::vector<std::string> relation : fullRelations)
+			std::cout << "Relations: " << relation[0] << " - " << relation[1] << "\n";
 	}
 }
 
@@ -145,7 +152,14 @@ unit::unit(std::string fileSTEM) {
 			aspects.push_back(splitLine[1]);
 		}
 		else if (splitLine[0] == "Relation") {
-			relations.push_back(splitLine[1]);
+			switch (splitLine.size()) {
+			case 2:
+				relations.push_back({ splitLine[1], "Unknown Relation" });
+				break;
+			case 3:
+				relations.push_back({ splitLine[1], splitLine[2] });
+				break;
+			}
 		}
 	}
 }
@@ -156,8 +170,8 @@ void unit::print() {
 	std::cout << "Member: " << member << "\n";
 	for (std::string aspect : aspects)
 		std::cout << "Aspect: " << aspect << "\n";
-	for (std::string relation : relations)
-		std::cout << "Relations: " << relation << "\n";
+	for (std::vector<std::string> relation : relations)
+		std::cout << "Relations: " << relation[0] << " - " << relation[1] << "\n";
 }
 
 /*
@@ -254,10 +268,10 @@ void interactions::verifyRelations(std::vector<character> list) {
 	// For each character
 	for (character character : list) {
 		// For each relation
-		for (std::string member : character.relations) {
+		for (std::vector<std::string> member : character.relations) {
 			// If the member's name can't be found in charNames, report it
-			if (find(charNames.begin(), charNames.end(), member) == charNames.end())
-				std::cout << member << " from " << character.name << " cannot be found.\n";
+			if (find(charNames.begin(), charNames.end(), member[0]) == charNames.end())
+				std::cout << member[0] << " from " << character.name << " cannot be found.\n";
 		}
 	}
 }
@@ -274,10 +288,105 @@ void interactions::verifyRelations(std::vector<unit> list) {
 	// For each unit
 	for (unit unit : list) {
 		// For each relation
-		for (std::string member : unit.relations) {
+		for (std::vector<std::string> member : unit.relations) {
 			// If the member's name can't be found in charNames, report it
-			if (find(unitNames.begin(), unitNames.end(), member) == unitNames.end())
-				std::cout << member << " from " << unit.name << " cannot be found.\n";
+			if (find(unitNames.begin(), unitNames.end(), member[0]) == unitNames.end())
+				std::cout << member[0] << " from " << unit.name << " cannot be found.\n";
+		}
+	}
+}
+
+void interactions::addMissingRelations(std::vector<character> &characterList, std::vector<unit> &unitList) {
+	// Variables
+	unsigned int entitySize = characterList.size() + unitList.size();
+	std::vector<std::vector<bool>> relationMatrix;
+	std::vector<std::string> names;
+
+	// Append all character names to names
+	for (character chara : characterList) {
+		names.push_back(chara.name);
+	}
+
+	// Append all unit names to names
+	for (unit unit : unitList) {
+		names.push_back(unit.name);
+	}
+
+	// Fill the relation matrix with false, representing no bond
+	for (int i = 0; i < entitySize; i++)
+		relationMatrix.push_back(std::vector<bool>(entitySize, false));
+
+	// For each character's relation
+	for (int i = 0; i < characterList.size(); i++) {
+		for (std::vector<std::string> relation : characterList[i].relations) {
+			// Find the relation's name in `names`
+			auto relPos = find(names.begin(), names.end(), relation[0]);
+			int intPos = std::distance(names.begin(), relPos);
+
+			// Modify the relation matrix
+			relationMatrix[i][intPos] = true;
+			relationMatrix[intPos][i] = true;
+		}
+	}
+	
+	// For each unit's relation
+	for (int i = 0; i < unitList.size(); i++) {
+		for (std::vector<std::string> relation : unitList[i].relations) {
+			// Find the relation's name in `names`
+			auto relPos = find(names.begin(), names.end(), relation[0]);
+			int intPos = std::distance(names.begin(), relPos);
+
+			// Adjust i to accomdate the characters
+			int adjI = i + characterList.size();
+
+			// Modify the relation matrix
+			relationMatrix[adjI][intPos] = true;
+			relationMatrix[intPos][adjI] = true;
+		}
+	}
+
+	// For each character
+	for (int i = 0; i < characterList.size(); i++) {
+		// Record the character's relation names
+		std::vector<std::string> relateNames;
+		for (std::vector<std::string> relation : characterList[i].relations) {
+			relateNames.push_back(relation[0]);
+		}
+
+		// For every entity
+		for (int j = 0; j < entitySize; j++) {
+			// if a relation doesn't exist, continue
+			if (!relationMatrix[i][j])
+				continue;
+
+			// if the relation isn't already present, add it
+			if (find(relateNames.begin(), relateNames.end(), names[j]) == relateNames.end()) {
+				characterList[i].relations.push_back({ names[j], "New Relation" });
+			}
+		}
+	}
+
+	// For each unit
+	for (int i = 0; i < unitList.size(); i++) {
+		// Adjust i to accomdate the characters
+		int adjI = i + characterList.size();
+
+		// Record the unit's relation names
+		std::vector<std::string> relateNames;
+		for (std::vector<std::string> relation : unitList[i].relations) {
+			relateNames.push_back(relation[0]);
+		}
+
+		// For every entity
+		for (int j = 0; j < entitySize; j++) {
+			// if a relation doesn't exist, continue
+			if (!relationMatrix[adjI][j])
+				continue;
+
+			// if the relation isn't already present, add it
+			if (find(relateNames.begin(), relateNames.end(), names[j]) == relateNames.end()) {
+				unitList[i].relations.push_back({ names[j], "New Relation" });
+			}
 		}
 	}
 }

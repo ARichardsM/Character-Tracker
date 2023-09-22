@@ -25,6 +25,9 @@ int support::prompt(std::string txt, std::vector<std::string> opts) {
 			std::cout << std::to_string(i + 1) << ". " << opts[i] << "\n";
 		}
 
+		// Denote the input line
+		std::cout << "> ";
+
 		// Take the user's input
 		std::cin >> userInput;
 

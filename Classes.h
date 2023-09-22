@@ -18,7 +18,7 @@ public:
 	int rank = 0;
 
 	std::vector<std::string> aspects = {};
-	std::vector<std::string> relations = {};
+	std::vector<std::vector<std::string>> relations = {};
 };
 
 // Unit Information
@@ -54,4 +54,7 @@ namespace interactions {
 	void verifyRelations(std::vector<character> list);
 	// Verify that all relations in a unit list exist in the list
 	void verifyRelations(std::vector<unit> list);
+
+	// Add any missing relations in the lists
+	void addMissingRelations(std::vector<character> &characterList, std::vector<unit> &unitList);
 }

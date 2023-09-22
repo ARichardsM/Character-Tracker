@@ -38,38 +38,44 @@ int main()
         unitList.push_back(unit(entry.path().stem().string()));
     }
 
-    switch (support::prompt("Select", { "Verify", "Print", "Random Pull", "Test New Function"})) {
-    case 1:
-        // Verify the units and characters
-        interactions::verifyMemberships(charList, unitList);
-        interactions::verifyRelations(charList);
-        interactions::verifyRelations(unitList);
-        interactions::verifySizes(charList, unitList);
-        break;
-    case 2:
-        // Print all characters
-        cout << "Characters" << endl;
-        for (character entry : charList) {
-            entry.print();
-            cout << endl;
-        }
+    bool cont = true;
+    while (cont) {
+        switch (support::prompt("Select", { "Done", "Verify", "Print", "Random Pull", "Test New Function" })) {
+        case 1:
+            cont = false;
+            break;
+        case 2:
+            // Verify the units and characters
+            interactions::verifyMemberships(charList, unitList);
+            interactions::verifyRelations(charList);
+            interactions::verifyRelations(unitList);
+            interactions::verifySizes(charList, unitList);
+            break;
+        case 3:
+            // Print all characters
+            cout << "Characters" << endl;
+            for (character entry : charList) {
+                entry.print();
+                cout << endl;
+            }
 
-        // Print all units
-        cout << "Units" << endl;
-        for (unit entry : unitList) {
-            entry.print();
-            cout << endl;
+            // Print all units
+            cout << "Units" << endl;
+            for (unit entry : unitList) {
+                entry.print();
+                cout << endl;
+            }
+            break;
+        case 4:
+            // Initialize rand
+            srand(time(0));
+
+            // Full print a random character
+            charList[rand() % charList.size()].fullprint(unitList);
+            break;
+        case 5:
+            interactions::addMissingRelations(charList, unitList);
+            break;
         }
-        break;
-    case 3:
-        // Initialize rand
-        srand(time(0));
-        
-        // Full print a random character
-        charList[rand() % charList.size()].fullprint(unitList);
-        break;
-    case 4:
-        
-        break;
     }
 }
