@@ -407,24 +407,62 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 
 void interactions::writeToFile(std::vector<character> characterList, std::vector<unit> unitList) {
 	for (character chara : characterList) {
+		// Variables for input file and spare contents
+		std::ifstream inFile("Characters/" + chara.name + ".txt");
+		std::string contents = "";
+
+		// For each line in the file
+		std::string line;
+		while (getline(inFile, line)) {
+			// if the string does not contain a `: `, save it for later
+			if (line.find(": ") == std::string::npos)
+				contents += line + "\n";
+		}
+		inFile.close();
+
+		// Reopen the file as an output file
 		std::ofstream outFile("Characters/" + chara.name + ".txt");
+
+		// Write the content from the character
 		outFile << "Rank: " << characterRankings[chara.rank] << "\n";
 		outFile << "Member: " << chara.member << "\n";
 		for (std::string aspect : chara.aspects)
 			outFile << "Aspect: " << aspect << "\n";
 		for (std::vector<std::string> relation : chara.relations)
 			outFile << "Relation: " << relation[0] << ": " << relation[1] << "\n";
+
+		// Rewrite the spare contents
+		outFile << contents;
 		outFile.close();
 	}
 
 	for (unit unit : unitList) {
+		// Variables for input file and spare contents
+		std::ifstream inFile("Units/" + unit.name + ".txt");
+		std::string contents = "";
+
+		// For each line in the file
+		std::string line;
+		while (getline(inFile, line)) {
+			// if the string does not contain a `: `, save it for later
+			if (line.find(": ") == std::string::npos)
+				contents += line + "\n";
+		}
+		inFile.close();
+
+		// Reopen the file as an output file
 		std::ofstream outFile("Units/" + unit.name + ".txt");
+
+		// Write the content from the unit
 		outFile << "Rank: " << unitRankings[unit.rank] << "\n";
 		outFile << "Member: " << unit.member << "\n";
 		for (std::string aspect : unit.aspects)
 			outFile << "Aspect: " << aspect << "\n";
 		for (std::vector<std::string> relation : unit.relations)
 			outFile << "Relation: " << relation[0] << ": " << relation[1] << "\n";
+
+		// Rewrite the spare contents
+		outFile << contents;
 		outFile.close();
 	}
 	std::cout << "Write to File\n";
