@@ -9,5 +9,6 @@ The character tracker is used to manage the simple connections between multiple 
 	- [X] Write to file without removing other file contents
 ### Backlog
 - [] On a failed verify, allow the user to automatically refractor all entites
+- [] Improved verifications
 - [] Puesdo-Random pull based on character and crew rank
 - [] General relation tags

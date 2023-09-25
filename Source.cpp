@@ -18,29 +18,45 @@ int main()
 {
     // Pull `Character Files` from the `Characters` Directory
     fs::path charPath = fs::current_path() / "Characters";
-    for (const auto& entry : fs::directory_iterator(charPath)) {
-        // Skip the template
-        if (entry.path().stem().string() == "Template Character")
-            continue;
 
-        // Add the character to the list
-        charList.push_back(character(entry.path().stem().string()));
-    }
+    if (exists(charPath))
+        for (const auto& entry : fs::directory_iterator(charPath)) {
+            // Skip the template
+            if (entry.path().stem().string() == "Template Character")
+                continue;
+
+            // Skip non-text documents
+            if (entry.path().extension().string() != ".txt")
+                continue;
+
+            // Add the character to the list
+            charList.push_back(character(entry.path().stem().string()));
+        }
+    else
+        cout << "'Characters' directory cannot be found.\n";
 
     // Pull `Unit Files` from the `Units` Directory
     fs::path unitPath = fs::current_path() / "Units";
-    for (const auto& entry : fs::directory_iterator(unitPath)) {
-        // Skip the template
-        if (entry.path().stem().string() == "Template Unit")
-            continue;
 
-        // Add the unit to the list
-        unitList.push_back(unit(entry.path().stem().string()));
-    }
+    if (exists(unitPath))
+        for (const auto& entry : fs::directory_iterator(unitPath)) {
+            // Skip the template
+            if (entry.path().stem().string() == "Template Unit")
+                continue;
+
+            // Skip non-text documents
+            if (entry.path().extension().string() != ".txt")
+                continue;
+
+            // Add the unit to the list
+            unitList.push_back(unit(entry.path().stem().string()));
+        }
+    else
+        cout << "'Units' directory cannot be found.\n";
 
     bool cont = true;
     while (cont) {
-        switch (support::prompt("Select", { "Done", "Verify", "Print", "Random Pull", "Test New Function" })) {
+        switch (support::prompt("Select", { "Done", "Verify", "Print", "Random Pull", "Write to File" })) {
         case 1:
             cont = false;
             break;
@@ -75,6 +91,7 @@ int main()
             charList[rand() % charList.size()].fullprint(unitList);
             break;
         case 5:
+            // Write all characters and units to their files
             interactions::writeToFile(charList, unitList);
             break;
         }

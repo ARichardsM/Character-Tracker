@@ -1,4 +1,5 @@
 Name: <NAME>
 Rank: <RANK>
+Member: <MEMBER>
 Aspect: <ASPECT>
 Relation: <RELATION>
