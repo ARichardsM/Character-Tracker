@@ -25,6 +25,7 @@ public:
 class unit : public entity {
 public:
 	unit(std::string fileSTEM);
+	unit() = default;
 
 	// Print out the unit
 	void print();
@@ -36,6 +37,7 @@ public:
 	std::string nickname = "None";
 
 	character(std::string fileSTEM);
+	character() = default;
 
 	// Print out the character
 	void print();
