@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <set>
 
 // Declare Global variables
 const std::vector<std::string> unitRankings = {"Unassigned", "Crew", "Squad", "Regiment", "Faction"};							// List of eligible unit rankings
@@ -47,15 +48,15 @@ public:
 
 namespace interactions {
 	// Verify all members in the character and unit list
-	void verifyMemberships(std::vector<character> characterList, std::vector<unit> unitList);
+	std::set<std::string> verifyMemberships(std::vector<character> characterList, std::vector<unit> unitList);
+
+	// Verify that all relations in a character list exist in the list
+	std::set<std::string> verifyRelations(std::vector<character> list);
+	// Verify that all relations in a unit list exist in the list
+	std::set<std::string> verifyRelations(std::vector<unit> list);
 
 	// Verify the size of all units
 	void verifySizes(std::vector<character> characterList, std::vector<unit> unitList);
-
-	// Verify that all relations in a character list exist in the list
-	void verifyRelations(std::vector<character> list);
-	// Verify that all relations in a unit list exist in the list
-	void verifyRelations(std::vector<unit> list);
 
 	// Add any missing relations in the lists
 	void addMissingRelations(std::vector<character> &characterList, std::vector<unit> &unitList);

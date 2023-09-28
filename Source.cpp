@@ -54,21 +54,43 @@ int main()
     else
         cout << "'Units' directory cannot be found.\n";
 
+    // Declare variables
     bool cont = true;
+    set<string> setA, setB;
+
+    // Verify the units
+    setA = interactions::verifyMemberships(charList, unitList);
+    setB = interactions::verifyRelations(unitList);
+
+    setA.insert(setB.begin(), setB.end());
+
+    // Verify the characters
+    setB = interactions::verifyRelations(charList);
+
+    // Report any missing entities
+    for (string unitName : setA)
+        cout << "The unit " << unitName << " cannot be found\n";
+
+    for (string charName : setB)
+        cout << "The character " << charName << " cannot be found\n";
+
+    cout << "\n";
+
     while (cont) {
-        switch (support::prompt("Select", { "Done", "Verify", "Print", "Random Pull", "Write to File" })) {
+        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Verify Relations", "Print", "Random Pull", "Write to File" })) {
         case 1:
+            // End the loop
             cont = false;
             break;
         case 2:
-            // Verify the units and characters
-            interactions::verifyMemberships(charList, unitList);
-            interactions::verifyRelations(charList);
-            interactions::verifyRelations(unitList);
+            // Verify the sizes of all units
             interactions::verifySizes(charList, unitList);
-            interactions::addMissingRelations(charList, unitList);
             break;
         case 3:
+            // Add any one-sided unit or character relations
+            interactions::addMissingRelations(charList, unitList);
+            break;
+        case 4:
             // Print all characters
             cout << "Characters" << endl;
             for (character entry : charList) {
@@ -83,14 +105,14 @@ int main()
                 cout << endl;
             }
             break;
-        case 4:
+        case 5:
             // Initialize rand
             srand(time(0));
 
             // Full print a random character
             charList[rand() % charList.size()].fullprint(unitList);
             break;
-        case 5:
+        case 6:
             // Write all characters and units to their files
             interactions::writeToFile(charList, unitList);
             break;

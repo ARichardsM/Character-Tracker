@@ -192,9 +192,10 @@ void unit::print() {
 	Interaction Scripts
 */
 
-void interactions::verifyMemberships(std::vector<character> characterList, std::vector<unit> unitList) {
+std::set<std::string> interactions::verifyMemberships(std::vector<character> characterList, std::vector<unit> unitList) {
 	// Variables
 	std::vector<std::string> unitNames = {"None"};
+	std::set<std::string> returnList;
 
 	// Append all unit names to unitNames
 	for (unit unit : unitList) {
@@ -205,15 +206,18 @@ void interactions::verifyMemberships(std::vector<character> characterList, std::
 	for (character character : characterList) {
 		// If the member's name can't be found in unitNames, report it
 		if (find(unitNames.begin(), unitNames.end(), character.member) == unitNames.end())
-			std::cout << character.member << " from " << character.name << " cannot be found.\n";
+			returnList.insert(character.member);
 	}
 
 	// For each unit
 	for (unit unit : unitList) {
 		// If the member's name can't be found in unitNames, report it
 		if (find(unitNames.begin(), unitNames.end(), unit.member) == unitNames.end())
-			std::cout << unit.member << " from " << unit.name << " cannot be found.\n";
+			returnList.insert(unit.member);
 	}
+
+	// Return the list
+	return returnList;
 }
 
 void interactions::verifySizes(std::vector<character> characterList, std::vector<unit> unitList) {
@@ -270,9 +274,10 @@ void interactions::verifySizes(std::vector<character> characterList, std::vector
 	}
 }
 
-void interactions::verifyRelations(std::vector<character> list) {
+std::set<std::string> interactions::verifyRelations(std::vector<character> list) {
 	// Variables
 	std::vector<std::string> charNames;
+	std::set<std::string> returnList;
 
 	// Append all character names to charNames
 	for (character character : list) {
@@ -283,16 +288,20 @@ void interactions::verifyRelations(std::vector<character> list) {
 	for (character character : list) {
 		// For each relation
 		for (std::vector<std::string> member : character.relations) {
-			// If the member's name can't be found in charNames, report it
+			// If the member's name can't be found in charNames, add it to the return
 			if (find(charNames.begin(), charNames.end(), member[0]) == charNames.end())
-				std::cout << member[0] << " from " << character.name << " cannot be found.\n";
+				returnList.insert(member[0]);
 		}
 	}
+
+	// Return the list
+	return returnList;
 }
 
-void interactions::verifyRelations(std::vector<unit> list) {
+std::set<std::string> interactions::verifyRelations(std::vector<unit> list) {
 	// Variables
 	std::vector<std::string> unitNames;
+	std::set<std::string> returnList;
 
 	// Append all unit names to unitNames
 	for (unit unit : list) {
@@ -305,9 +314,12 @@ void interactions::verifyRelations(std::vector<unit> list) {
 		for (std::vector<std::string> member : unit.relations) {
 			// If the member's name can't be found in charNames, report it
 			if (find(unitNames.begin(), unitNames.end(), member[0]) == unitNames.end())
-				std::cout << member[0] << " from " << unit.name << " cannot be found.\n";
+				returnList.insert(member[0]);
 		}
 	}
+
+	// Return the list
+	return returnList;
 }
 
 void interactions::addMissingRelations(std::vector<character> &characterList, std::vector<unit> &unitList) {
@@ -337,9 +349,12 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 			auto relPos = find(names.begin(), names.end(), relation[0]);
 			int intPos = std::distance(names.begin(), relPos);
 
-			// Modify the relation matrix
-			relationMatrix[i][intPos] = true;
-			relationMatrix[intPos][i] = true;
+			// If the relation exists
+			if (relPos != names.end()){
+				// Modify the relation matrix
+				relationMatrix[i][intPos] = true;
+				relationMatrix[intPos][i] = true;
+			}
 		}
 	}
 	
@@ -353,9 +368,12 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 			// Adjust i to accomdate the characters
 			int adjI = i + characterList.size();
 
-			// Modify the relation matrix
-			relationMatrix[adjI][intPos] = true;
-			relationMatrix[intPos][adjI] = true;
+			// If the relation exists
+			if (relPos != names.end()) {
+				// Modify the relation matrix
+				relationMatrix[adjI][intPos] = true;
+				relationMatrix[intPos][adjI] = true;
+			}
 		}
 	}
 
