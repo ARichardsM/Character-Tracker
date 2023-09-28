@@ -98,8 +98,11 @@ void character::fullprint(std::vector<unit> unitList) {
 					fullRelations.insert(fullRelations.end(), unit.relations.begin(), unit.relations.end());
 					fullMember.push_back(nextMember);
 
-					// Update the next member
-					nextMember = unit.member;
+					// Update the next member, while preventing an infinte loop
+					if (nextMember != unit.member)
+						nextMember = unit.member;
+					else
+						nextMember = "None";
 
 					break;
 				}
@@ -419,6 +422,86 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 			if (find(relateNames.begin(), relateNames.end(), names[j]) == relateNames.end()) {
 				unitList[i].relations.push_back({ names[j], "New Relation" });
 			}
+		}
+	}
+}
+
+void interactions::renameChar(std::set<std::string> unknownList, std::vector<character>& characterList) {
+	// Declare name variables
+	std::vector<std::string> possibleNames;
+	std::vector<std::string> trueNames;
+
+	// Append all character names to names
+	for (character chara : characterList) {
+		possibleNames.push_back(chara.name);
+	}
+
+	// Prompt for the true names
+	for (std::string unknownName : unknownList) {
+		int nameLoc = support::prompt("What is the true name of " + unknownName, possibleNames) - 1;
+		trueNames.push_back(possibleNames[nameLoc]);
+	}
+
+	// For every character's relation
+	for (character &chara : characterList) {
+		for (std::vector<std::string> &relation : chara.relations) {
+			// Try to find the relation's name in `unknownList`
+			auto relPos = find(unknownList.begin(), unknownList.end(), relation[0]);
+			int intPos = std::distance(unknownList.begin(), relPos);
+
+			// If the name was found, change it for the true name
+			if (relPos != unknownList.end())
+				relation[0] = trueNames[intPos];
+		}	
+	}
+}
+
+void interactions::renameUnit(std::set<std::string> unknownList, std::vector<character>& characterList, std::vector<unit>& unitList) {
+	// Declare name variables
+	std::vector<std::string> possibleNames;
+	std::vector<std::string> trueNames;
+
+	// Append all unit names to names
+	for (unit unit : unitList) {
+		possibleNames.push_back(unit.name);
+	}
+
+	// Prompt for the true names
+	for (std::string unknownName : unknownList) {
+		int nameLoc = support::prompt("What is the true name of " + unknownName, possibleNames) - 1;
+		trueNames.push_back(possibleNames[nameLoc]);
+	}
+
+	// For every character's member
+	for (character& chara : characterList) {
+		// Try to find the member's name in `unknownList`
+		auto relPos = find(unknownList.begin(), unknownList.end(), chara.member);
+		int intPos = std::distance(unknownList.begin(), relPos);
+
+		// If the name was found, change it for the true name
+		if (relPos != unknownList.end())
+			chara.member = trueNames[intPos];
+	}
+
+	// For every unit
+	for (unit& uni : unitList) {
+		// Try to find the member's name in `unknownList`
+		auto relPos = find(unknownList.begin(), unknownList.end(), uni.member);
+		int intPos = std::distance(unknownList.begin(), relPos);
+
+		// If the name was found, change it for the true name
+		if (relPos != unknownList.end())
+			uni.member = trueNames[intPos];
+
+		// For each of the unit's relations
+		for (std::vector<std::string>& relation : uni.relations) {
+			// Try to find the relation's name in `unknownList`
+			auto relPos = find(unknownList.begin(), unknownList.end(), relation[0]);
+			int intPos = std::distance(unknownList.begin(), relPos);
+
+			// If the name was found, change it for the true name
+			if (relPos != unknownList.end())
+				relation[0] = trueNames[intPos];
 		}
 	}
 }

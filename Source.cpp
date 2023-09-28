@@ -76,6 +76,10 @@ int main()
 
     cout << "\n";
 
+    // Rename all missing entities
+    interactions::renameChar(setB, charList);
+    interactions::renameUnit(setA, charList, unitList);
+
     while (cont) {
         switch (support::prompt("Select", { "Done", "Verify Unit Size", "Verify Relations", "Print", "Random Pull", "Write to File" })) {
         case 1:
@@ -95,14 +99,14 @@ int main()
             cout << "Characters" << endl;
             for (character entry : charList) {
                 entry.print();
-                cout << endl;
+                cout << "\n";
             }
 
             // Print all units
             cout << "Units" << endl;
             for (unit entry : unitList) {
                 entry.print();
-                cout << endl;
+                cout << "\n";
             }
             break;
         case 5:
@@ -111,6 +115,7 @@ int main()
 
             // Full print a random character
             charList[rand() % charList.size()].fullprint(unitList);
+            cout << "\n";
             break;
         case 6:
             // Write all characters and units to their files

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <set>
+#include "General.h"
 
 // Declare Global variables
 const std::vector<std::string> unitRankings = {"Unassigned", "Crew", "Squad", "Regiment", "Faction"};							// List of eligible unit rankings
@@ -60,6 +61,11 @@ namespace interactions {
 
 	// Add any missing relations in the lists
 	void addMissingRelations(std::vector<character> &characterList, std::vector<unit> &unitList);
+
+	// Rename all characters
+	void renameChar(std::set<std::string> unknownList, std::vector<character>& characterList);
+	// Rename all units
+	void renameUnit(std::set<std::string> unknownList, std::vector<character>& characterList, std::vector<unit>& unitList);
 
 	// Write list contents to their respective files
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);

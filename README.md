@@ -5,8 +5,8 @@ The character tracker is used to manage the simple connections between multiple 
 ## To Do
 ### Current
 - [] Improved verifications
-	- [] Verify with outputs
-	- [] On a failed verify, allow the user to automatically refractor all entites
+	- [X] Verify with outputs
+	- [X] On a failed verify, allow the user to automatically rename all entites
 	- [] Basic unit tests
 ### Backlog
 - [] Puesdo-Random pull based on character and crew rank
