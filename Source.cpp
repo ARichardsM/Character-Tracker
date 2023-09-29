@@ -81,7 +81,7 @@ int main()
     interactions::renameUnit(setA, charList, unitList);
 
     while (cont) {
-        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Verify Relations", "Print", "Random Pull", "Write to File" })) {
+        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Print", "Random Pull", "Write to File" })) {
         case 1:
             // End the loop
             cont = false;
@@ -89,6 +89,7 @@ int main()
         case 2:
             // Verify the sizes of all units
             interactions::verifySizes(charList, unitList);
+            cout << "\n";
             break;
         case 3:
             // Add any one-sided unit or character relations

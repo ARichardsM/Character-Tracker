@@ -1,4 +1,3 @@
-Name: <NAME>
 Rank: <RANK>
 Member: <MEMBER>
 Aspect: <ASPECT>
