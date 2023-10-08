@@ -11,11 +11,13 @@ The project consists of the four scripts shown in the table below.
 | Classes.cpp  | Contains scripts for the classes and interactions used by Source.cpp.             |
 | UnitTest.cpp | Unit tests for the Classes.cpp scripts using Microsoft Unit Testing for C/C++.    |
 
-## Backlog
+## Current
 - [ ] Selective Printing
   - [ ] Print seperated by character rank
   - [ ] Print all members of a selected unit
   - [ ] Puesdo-Random print based on character and unit rank
+
+## Backlog
 - [ ] General relation tags
 - [ ] More unit tests
 - [ ] Improved file reading
