@@ -14,11 +14,16 @@ The project consists of the four scripts shown in the table below.
 ## Current
 - [ ] Selective Printing
   - [ ] Print seperated by character rank
-  - [ ] Print all members of a selected unit
+  - [X] Print all members of a selected unit
   - [ ] Puesdo-Random print based on character and unit rank
 
 ## Backlog
 - [ ] General relation tags
 - [ ] More unit tests
 - [ ] Improved file reading
-- [ ] String Character and Unit Constructor
+  - [ ] String Character and Unit Constructor
+  - [ ] Allow multiple delims
+- [ ] Improve handling of missing entities
+  - [ ] Disable the random pull if there are any missing entities
+  - [ ] Allow a missing crew to be set to multiple crews
+  - [ ] Allow a missing entity to be removed

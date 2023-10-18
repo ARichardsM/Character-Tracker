@@ -76,12 +76,19 @@ int main()
 
     cout << "\n";
 
-    // Rename all missing entities
-    interactions::renameChar(setB, charList);
-    interactions::renameUnit(setA, charList, unitList);
+    // If there are missing entities
+    if ((setA.size() != 0) || (setB.size() != 0)) {
+        if (support::prompt("Would you like to rename the entities?", { "Yes", "No" }) == 1) {
+            // Rename all missing entities
+            interactions::renameChar(setB, charList);
+            interactions::renameUnit(setA, charList, unitList);
+        }
+    }
+
+    
 
     while (cont) {
-        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Print", "Random Pull", "Write to File" })) {
+        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Print", "Random Pull", "Write to File", "Test"})) {
         case 1:
             // End the loop
             cont = false;
@@ -121,6 +128,21 @@ int main()
         case 6:
             // Write all characters and units to their files
             interactions::writeToFile(charList, unitList);
+            break;
+        case 7:
+            // Declare unit name variable
+            vector<string> crewNames;
+
+            // Append all unit names to names
+            for (unit unit : unitList) {
+                crewNames.push_back(unit.name);
+            }
+
+            // Generate the rules
+            vector<string> rulesList = interactions::genPrintRules(crewNames);
+
+            // Print according to the rules
+            interactions::printRules(rulesList, charList, unitList);
             break;
         }
     }

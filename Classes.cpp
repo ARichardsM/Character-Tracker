@@ -568,3 +568,162 @@ void interactions::writeToFile(std::vector<character> characterList, std::vector
 	}
 	std::cout << "Write to File\n";
 }
+
+std::vector<std::string> interactions::genPrintRules(std::vector<std::string> crewNames) {
+	// Declare Variables
+	std::vector<std::string> rulesList = {};
+	bool cont = true;
+
+	// Until the user calls 'Done'
+	while (cont) {
+		// If there are rules in the rules list
+		if (rulesList.size() != 0) {
+			// Print out the rules
+			std::cout << "Current Rules\n";
+			for (std::string rule : rulesList)
+				std::cout << rule << "\n";
+
+		}
+
+		// Prompt the user
+		switch (support::prompt("Select", { "Done", "Add Rule", "Remove Rule" })) {
+		case 1:
+			// Break the while loop
+			cont = false;
+			break;
+		case 2:
+		{
+			// Declare the variable for all possible rules
+			std::vector<std::string> possibleRules = {};
+
+			// If the limit by entity was set to crew
+			if (find(rulesList.begin(), rulesList.end(), "Only:Crew") != rulesList.end()) {
+				for (std::string rank : unitRankings) {
+					// If the rank is not already in the rules list, add it to the possible rules
+					if (find(rulesList.begin(), rulesList.end(), "Ranking:" + rank) == rulesList.end())
+						possibleRules.push_back("Ranking:" + rank);
+				}
+			}
+			// If the limit by entity was set to character
+			else if (find(rulesList.begin(), rulesList.end(), "Only:Character") != rulesList.end()) {
+				for (std::string rank : characterRankings) {
+					// If the rank is not already in the rules list, add it to the possible rules
+					if (find(rulesList.begin(), rulesList.end(), "Ranking:" + rank) == rulesList.end())
+						possibleRules.push_back("Ranking:" + rank);
+				}
+			}
+			else
+				// Add a rule to limit by entity type
+				possibleRules.insert(possibleRules.end(), { "Only:Crew", "Only:Character" });
+
+			// If there are no member rules currently in the rules list
+			if (std::find_if(rulesList.begin(), rulesList.end(), [](const std::string& str)
+				{ return str.find("Member") != std::string::npos; }) == rulesList.end()) {
+
+				// Add a rule to limit by membership
+				for (std::string crew : crewNames)
+					possibleRules.push_back("Member:" + crew);
+			}
+
+			// Prompt for a rule selection
+			int selection = support::prompt("Select a Rule to Add", possibleRules);
+
+			// Add the selected rule to the rules list
+			if (selection != -1)
+				rulesList.push_back(possibleRules[selection - 1]);
+			break;
+		}
+		case 3:
+		{
+			// If the rules list is empty, do nothing
+			if (rulesList.size() == 0)
+				break;
+
+			// Prompt for a rule selection
+			int selection = support::prompt("Select a Rule to Remove", rulesList) - 1;
+
+			// If the selected rule is one of the `Only` rules
+			if (rulesList[selection].find("Only:") != std::string::npos) {
+				// Remove the selected rule
+				rulesList.erase(rulesList.begin() + selection);
+
+				// Remove all `Ranking` rules
+				for (int i = rulesList.size() - 1; i >= 0; i--) {
+					if (rulesList[i].find("Ranking:") != std::string::npos)
+						rulesList.erase(rulesList.begin() + i);
+				}
+			} else 
+				// Remove the selected rule
+				rulesList.erase(rulesList.begin() + selection);
+
+			break;
+		}
+		}
+	}
+
+	// Return the list of rules
+	return rulesList;
+}
+
+void interactions::printRules(std::vector<std::string> rulesList, std::vector<character> characterList, std::vector<unit> unitList) {
+	// Declare variable for holding entity information
+	std::vector<std::vector<std::string>> possibleEntities = {};
+	std::vector<std::string> possibleNames = {};
+
+	// Pull all neccessary entity information
+	for (character ent : characterList){
+		possibleNames.push_back(ent.name);
+		possibleEntities.push_back({ ent.name, characterRankings[ent.rank], ent.member });
+	}
+
+	for (unit ent : unitList){
+		possibleNames.push_back(ent.name);
+		possibleEntities.push_back({ ent.name, characterRankings[ent.rank], ent.member });
+	}
+
+	// For each of the rules
+	for (std::string rule : rulesList) {
+		// Declare variable to note the filtered entities
+		std::vector<bool> filtEnti = {};
+
+		// For every possible entity
+		for (std::vector<std::string> ent : possibleEntities) {
+			// 'Only' Rules
+			// 'Ranking' Rules
+
+			// 'Member' Rules
+			if (rule.substr(0, rule.find(":")) == "Member") {
+				// Verify the membership
+				if (rule.substr(rule.find(":") + 1) == ent[2])
+					filtEnti.push_back(false);
+				else
+					filtEnti.push_back(true);
+			}
+		}
+
+		// Filter out entities that don't follow the current rule
+		for (int i = filtEnti.size() - 1; i >= 0; i--) {
+			if (filtEnti[i]){
+				possibleNames.erase(possibleNames.begin() + i);
+				possibleEntities.erase(possibleEntities.begin() + i);
+			}
+		}
+		
+	}
+
+	// Print based on possible names
+	for (character ent : characterList) {
+		if (find(possibleNames.begin(), possibleNames.end(), ent.name) != possibleNames.end()) {
+			ent.print();
+			std::cout << "\n";
+		}
+	}
+
+	for (unit ent : unitList) {
+		if (find(possibleNames.begin(), possibleNames.end(), ent.name) != possibleNames.end()) {
+			ent.print();
+			std::cout << "\n";
+		}
+	}
+	
+}

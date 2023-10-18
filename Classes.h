@@ -69,4 +69,10 @@ namespace interactions {
 
 	// Write list contents to their respective files
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);
+
+	// Generate a set of rules for printing
+	std::vector<std::string> genPrintRules(std::vector<std::string> crewNames);
+
+	// Print according to a vector of rules
+	void printRules(std::vector<std::string> rulesList, std::vector<character> characterList, std::vector<unit> unitList);
 }
