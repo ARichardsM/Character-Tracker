@@ -130,19 +130,26 @@ int main()
             interactions::writeToFile(charList, unitList);
             break;
         case 7:
-            // Declare unit name variable
-            vector<string> crewNames;
+            if (support::prompt("Which Print?", { "Print by Rules", "Print by Ranking" }) == 1) {
+                // Declare unit name variable
+                vector<string> crewNames;
 
-            // Append all unit names to names
-            for (unit unit : unitList) {
-                crewNames.push_back(unit.name);
+                // Append all unit names to names
+                for (unit unit : unitList) {
+                    crewNames.push_back(unit.name);
+                }
+
+                // Generate the rules
+                vector<string> rulesList = interactions::genPrintRules(crewNames);
+
+                // Print according to the rules
+                interactions::printRules(rulesList, charList, unitList);
+            } else {
+                // Print according to the ranks
+                interactions::printRank(charList, unitList);
             }
 
-            // Generate the rules
-            vector<string> rulesList = interactions::genPrintRules(crewNames);
-
-            // Print according to the rules
-            interactions::printRules(rulesList, charList, unitList);
+            
             break;
         }
     }

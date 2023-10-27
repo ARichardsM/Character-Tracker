@@ -13,7 +13,7 @@ The project consists of the four scripts shown in the table below.
 
 ## Current
 - [ ] Selective Printing
-  - [ ] Print seperated by character rank
+  - [X] Print seperated by character rank
   - [X] Print all members of a selected unit
   - [ ] Puesdo-Random print based on character and unit rank
 
@@ -23,6 +23,7 @@ The project consists of the four scripts shown in the table below.
 - [ ] Improved file reading
   - [ ] String Character and Unit Constructor
   - [ ] Allow multiple delims
+  - [ ] Allow markdown files
 - [ ] Improve handling of missing entities
   - [ ] Disable the random pull if there are any missing entities
   - [ ] Allow a missing crew to be set to multiple crews

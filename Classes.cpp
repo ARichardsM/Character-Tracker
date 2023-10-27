@@ -678,7 +678,7 @@ void interactions::printRules(std::vector<std::string> rulesList, std::vector<ch
 
 	for (unit ent : unitList){
 		possibleNames.push_back(ent.name);
-		possibleEntities.push_back({ ent.name, characterRankings[ent.rank], ent.member });
+		possibleEntities.push_back({ ent.name, unitRankings[ent.rank], ent.member });
 	}
 
 	// For each of the rules
@@ -726,4 +726,54 @@ void interactions::printRules(std::vector<std::string> rulesList, std::vector<ch
 		}
 	}
 	
+}
+
+void interactions::printRank(std::vector<character> characterList, std::vector<unit> unitList) {
+	// Declare a variable to track the previously printed rank
+	int prevRank = -1;
+
+	// Sort characters in order of rank integer
+	std::sort(characterList.begin(), characterList.end(),
+		[](character a, character b) {
+			return a.rank < b.rank;
+		});
+
+	// Sort units in order of rank integer
+	std::sort(unitList.begin(), unitList.end(),
+		[](unit a, unit b) {
+			return a.rank < b.rank;
+		});
+
+	// For each unit
+	for (unit uni : unitList) {
+		// If the rank has changed, print a new header
+		if (prevRank != uni.rank) {
+			std::cout << "\n" << unitRankings[uni.rank] << "\n";
+			prevRank = uni.rank;
+		}
+
+		// Print the unit and it's membership
+		std::cout << uni.name;
+		if (uni.member != "None")
+			std::cout << " [" << uni.member << "]";
+		std::cout << "\n";
+	}
+
+	// For each character
+	for (character chara : characterList) {
+		// If the rank has changed, print a new header
+		if (prevRank != chara.rank) {
+			std::cout << "\n" << characterRankings[chara.rank] << "\n";
+			prevRank = chara.rank;
+		}
+
+		// Print the unit and it's membership
+		std::cout << chara.name;
+		if (chara.member != "None")
+			std::cout << " [" << chara.member << "]";
+		std::cout << "\n";
+	}
+
+	// Final newline for formatting
+	std::cout << "\n";
 }
