@@ -130,7 +130,28 @@ int main()
             interactions::writeToFile(charList, unitList);
             break;
         case 7:
-            if (support::prompt("Which Print?", { "Print by Rules", "Print by Ranking" }) == 1) {
+            // Determine print type
+            int printSelect = support::prompt("Which Print?", { "Print All", "Print by Rules", "Full Print by Rules", "Print by Ranking" });
+
+            switch (printSelect) {
+            case 1:
+                // Print all characters
+                cout << "Characters" << endl;
+                for (character entry : charList) {
+                    entry.print();
+                    cout << "\n";
+                }
+
+                // Print all units
+                cout << "Units" << endl;
+                for (unit entry : unitList) {
+                    entry.print();
+                    cout << "\n";
+                }
+
+                break;
+            case 2: 
+            {
                 // Declare unit name variable
                 vector<string> crewNames;
 
@@ -144,9 +165,32 @@ int main()
 
                 // Print according to the rules
                 interactions::printRules(rulesList, charList, unitList);
-            } else {
+
+                break;
+            }
+            case 3:
+            {
+                // Declare unit name variable
+                vector<string> crewNames;
+
+                // Append all unit names to names
+                for (unit unit : unitList) {
+                    crewNames.push_back(unit.name);
+                }
+
+                // Generate the rules
+                vector<string> rulesList = interactions::genPrintRules(crewNames);
+
+                // Print according to the rules
+                interactions::fullPrintRules(rulesList, charList, unitList);
+
+                break;
+            }
+            case 4:
                 // Print according to the ranks
                 interactions::printRank(charList, unitList);
+
+                break;
             }
 
             

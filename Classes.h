@@ -77,4 +77,6 @@ namespace interactions {
 	void printRules(std::vector<std::string> rulesList, std::vector<character> characterList, std::vector<unit> unitList);
 	// Print according to rank
 	void printRank(std::vector<character> characterList, std::vector<unit> unitList);
+	// Full print according to a vector of rules
+	void fullPrintRules(std::vector<std::string> rulesList, std::vector<character> characterList, std::vector<unit> unitList);
 }

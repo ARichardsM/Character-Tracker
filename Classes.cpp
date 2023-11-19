@@ -229,9 +229,8 @@ void interactions::verifySizes(std::vector<character> characterList, std::vector
 	std::vector<std::vector<std::string>> unitInfo = { };
 	std::vector<int> unitSizes = { };
 
-	// Store the unit's name and necessary information and intilize the units' size
+	// Store the unit's name and necessary information and initialize the units' size
 	for (unit unit : unitList) {
-		//unitNames.push_back(unit.name);
 		unitInfo.push_back({ unit.name, std::to_string(unit.rank), unit.member });
 		unitSizes.push_back(0);
 	}
@@ -614,7 +613,7 @@ std::vector<std::string> interactions::genPrintRules(std::vector<std::string> cr
 			}
 			else
 				// Add a rule to limit by entity type
-				possibleRules.insert(possibleRules.end(), { "Only:Crew", "Only:Character" });
+				possibleRules.insert(possibleRules.end(), { "Only:Unit", "Only:Character" });
 
 			// If there are no member rules currently in the rules list
 			if (std::find_if(rulesList.begin(), rulesList.end(), [](const std::string& str)
@@ -673,12 +672,12 @@ void interactions::printRules(std::vector<std::string> rulesList, std::vector<ch
 	// Pull all neccessary entity information
 	for (character ent : characterList){
 		possibleNames.push_back(ent.name);
-		possibleEntities.push_back({ ent.name, characterRankings[ent.rank], ent.member });
+		possibleEntities.push_back({ ent.name, characterRankings[ent.rank], ent.member, "Character"});
 	}
 
 	for (unit ent : unitList){
 		possibleNames.push_back(ent.name);
-		possibleEntities.push_back({ ent.name, unitRankings[ent.rank], ent.member });
+		possibleEntities.push_back({ ent.name, unitRankings[ent.rank], ent.member, "Unit"});
 	}
 
 	// For each of the rules
@@ -688,11 +687,27 @@ void interactions::printRules(std::vector<std::string> rulesList, std::vector<ch
 
 		// For every possible entity
 		for (std::vector<std::string> ent : possibleEntities) {
+			std::string ruleType = rule.substr(0, rule.find(":"));
 			// 'Only' Rules
+			if (ruleType == "Only") {
+				// Verify the unit type
+				if (rule.substr(rule.find(":") + 1) == ent[3])
+					filtEnti.push_back(false);
+				else
+					filtEnti.push_back(true);
+			}
+
 			// 'Ranking' Rules
+			if (ruleType == "Ranking") {
+				// Verify the ranking
+				if (rule.substr(rule.find(":") + 1) == ent[1])
+					filtEnti.push_back(false);
+				else
+					filtEnti.push_back(true);
+			}
 
 			// 'Member' Rules
-			if (rule.substr(0, rule.find(":")) == "Member") {
+			if (ruleType == "Member") {
 				// Verify the membership
 				if (rule.substr(rule.find(":") + 1) == ent[2])
 					filtEnti.push_back(false);
@@ -776,4 +791,77 @@ void interactions::printRank(std::vector<character> characterList, std::vector<u
 
 	// Final newline for formatting
 	std::cout << "\n";
+}
+
+void interactions::fullPrintRules(std::vector<std::string> rulesList, std::vector<character> characterList, std::vector<unit> unitList) {
+	// Declare variable for holding entity information
+	std::vector<std::vector<std::string>> possibleEntities = {};
+	std::vector<std::string> possibleNames = {};
+
+	// Pull all neccessary entity information
+	for (character ent : characterList) {
+		possibleNames.push_back(ent.name);
+		possibleEntities.push_back({ ent.name, characterRankings[ent.rank], ent.member, "Character" });
+	}
+
+	// For each of the rules
+	for (std::string rule : rulesList) {
+		// Declare variable to note the filtered entities
+		std::vector<bool> filtEnti = {};
+
+		// For every possible entity
+		for (std::vector<std::string> ent : possibleEntities) {
+			std::string ruleType = rule.substr(0, rule.find(":"));
+			// 'Only' Rules
+			if (ruleType == "Only") {
+				// Verify the unit type
+				if (rule.substr(rule.find(":") + 1) == ent[3])
+					filtEnti.push_back(false);
+				else
+					filtEnti.push_back(true);
+			}
+
+			// 'Ranking' Rules
+			if (ruleType == "Ranking") {
+				// Verify the ranking
+				if (rule.substr(rule.find(":") + 1) == ent[1])
+					filtEnti.push_back(false);
+				else
+					filtEnti.push_back(true);
+			}
+
+			// 'Member' Rules
+			if (ruleType == "Member") {
+				// Verify the membership
+				if (rule.substr(rule.find(":") + 1) == ent[2])
+					filtEnti.push_back(false);
+				else
+					filtEnti.push_back(true);
+			}
+		}
+
+		// Filter out entities that don't follow the current rule
+		for (int i = filtEnti.size() - 1; i >= 0; i--) {
+			if (filtEnti[i]) {
+				possibleNames.erase(possibleNames.begin() + i);
+				possibleEntities.erase(possibleEntities.begin() + i);
+			}
+		}
+
+	}
+
+	// Break if there are no possible names
+	if (possibleNames.size() == 0)
+		return;
+
+	int select = rand() % possibleNames.size();
+
+	// Print based on possible names
+	for (character ent : characterList) {
+		if (ent.name == possibleNames[select]) {
+			ent.fullprint(unitList);
+			std::cout << "\n";
+		}
+	}
+
 }
