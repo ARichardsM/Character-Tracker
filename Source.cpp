@@ -88,6 +88,7 @@ int main()
     
 
     while (cont) {
+
         switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Print", "Random Pull", "Write to File", "Test"})) {
         case 1:
             // End the loop
@@ -130,71 +131,55 @@ int main()
             interactions::writeToFile(charList, unitList);
             break;
         case 7:
-            // Determine print type
-            int printSelect = support::prompt("Which Print?", { "Print All", "Print by Rules", "Full Print by Rules", "Print by Ranking" });
+            // Prompt user for the desired print
+            int printSelect = support::prompt("Which Print?", { "[All] Print", "[All] Print By Rank", "[All] Random Full Print",
+                "[Filter] Print", "[Filter] Print By Rank", "[Filter] Random Full Print" });
 
+            // Create temporary copies of the list
+            vector<character> tempCharList = charList;
+            vector<unit> tempUnitList = unitList;
+
+            // Potentially apply a filter
+            if (printSelect > 3) {
+                // Declare unit name variable
+                vector<string> unitNames;
+
+                // Append all unit names to unitNames
+                for (unit unit : unitList) {
+                    unitNames.push_back(unit.name);
+                }
+
+                // Generate the rules
+                vector<string> rulesList = rules::genRules(unitNames);
+
+                // Filter according to the rules
+                rules::filterRules(rulesList, tempCharList, tempUnitList);
+            }
+
+            // Determine the print type
+            printSelect = (printSelect - 1) % 3;
+
+            // Perform the specified print
             switch (printSelect) {
+            case 0:
+                // Print all characters and units
+                output::printAll(tempCharList, tempUnitList);
+
+                break;
             case 1:
-                // Print all characters
-                cout << "Characters" << endl;
-                for (character entry : charList) {
-                    entry.print();
-                    cout << "\n";
-                }
-
-                // Print all units
-                cout << "Units" << endl;
-                for (unit entry : unitList) {
-                    entry.print();
-                    cout << "\n";
-                }
-
-                break;
-            case 2: 
-            {
-                // Declare unit name variable
-                vector<string> crewNames;
-
-                // Append all unit names to names
-                for (unit unit : unitList) {
-                    crewNames.push_back(unit.name);
-                }
-
-                // Generate the rules
-                vector<string> rulesList = interactions::genPrintRules(crewNames);
-
-                // Print according to the rules
-                interactions::printRules(rulesList, charList, unitList);
-
-                break;
-            }
-            case 3:
-            {
-                // Declare unit name variable
-                vector<string> crewNames;
-
-                // Append all unit names to names
-                for (unit unit : unitList) {
-                    crewNames.push_back(unit.name);
-                }
-
-                // Generate the rules
-                vector<string> rulesList = interactions::genPrintRules(crewNames);
-
-                // Print according to the rules
-                interactions::fullPrintRules(rulesList, charList, unitList);
-
-                break;
-            }
-            case 4:
                 // Print according to the ranks
-                interactions::printRank(charList, unitList);
+                output::printRank(tempCharList, tempUnitList);
+
+                break;
+            case 2:
+                // Print according to the ranks
+                output::printFull(tempCharList, tempUnitList);
 
                 break;
             }
-
-            
+          
             break;
         }
+
     }
 }

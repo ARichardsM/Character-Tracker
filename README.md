@@ -1,6 +1,6 @@
 # Character Tracker
 ## Description
-Replacement for a previous code, Bond Tracker, a C++ Commandline Script.
+Replacement for a previous code, Bond Tracker, a C++ Console Script.
 The character tracker is used to manage the simple connections between multiple characters and groups of characters, referred to as Units.
 The project consists of the four scripts shown in the table below.
 <br> <br>

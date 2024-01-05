@@ -8,8 +8,8 @@
 #include "General.h"
 
 // Declare Global variables
-const std::vector<std::string> unitRankings = {"Unassigned", "Crew", "Squad", "Regiment", "Faction"};							// List of eligible unit rankings
-const std::vector<std::string> characterRankings = {"Unassigned", "Known", "Notable", "Expert", "Adept", "Legend", "Myth"};		// List of eligible character rankings
+const std::vector<std::string> unitRankings = {"Unassigned", "Crew", "Squad", "Regiment", "Faction"};											// List of eligible unit rankings
+const std::vector<std::string> characterRankings = {"Unassigned", "Known", "Novice", "Apprentice", "Adept", "Expert", "Legend", "Myth"};		// List of eligible character rankings
 
 // Abstract Entity Information
 class entity {
@@ -30,7 +30,7 @@ public:
 	unit() = default;
 
 	// Print out the unit
-	void print();
+	void print() const;
 };
 
 // Character Information
@@ -42,9 +42,9 @@ public:
 	character() = default;
 
 	// Print out the character
-	void print();
+	void print() const;
 	// Print out the character and all member unit information
-	void fullprint(std::vector<unit> unitList);
+	void fullprint(const std::vector<unit>& unitList) const;
 };
 
 namespace interactions {
@@ -60,7 +60,7 @@ namespace interactions {
 	void verifySizes(std::vector<character> characterList, std::vector<unit> unitList);
 
 	// Add any missing relations in the lists
-	void addMissingRelations(std::vector<character> &characterList, std::vector<unit> &unitList);
+	void addMissingRelations(std::vector<character>& characterList, std::vector<unit>& unitList);
 
 	// Rename all characters
 	void renameChar(std::set<std::string> unknownList, std::vector<character>& characterList);
@@ -69,14 +69,20 @@ namespace interactions {
 
 	// Write list contents to their respective files
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);
+}
 
-	// Generate a set of rules for printing
-	std::vector<std::string> genPrintRules(std::vector<std::string> crewNames);
-
-	// Print according to a vector of rules
-	void printRules(std::vector<std::string> rulesList, std::vector<character> characterList, std::vector<unit> unitList);
+namespace output {
+	// Print all in the provided vectors
+	void printAll(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 	// Print according to rank
-	void printRank(std::vector<character> characterList, std::vector<unit> unitList);
+	void printRank(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 	// Full print according to a vector of rules
-	void fullPrintRules(std::vector<std::string> rulesList, std::vector<character> characterList, std::vector<unit> unitList);
+	void printFull(const std::vector<character>& characterList, const std::vector<unit>& unitList);
+}
+
+namespace rules {
+	// Generate a set of rules for printing
+	std::vector<std::string> genRules(const std::vector<std::string>& crewNames);
+	// Filter the two lists according to the rules
+	void filterRules(const std::vector<std::string>& rulesList, std::vector<character>& characterList, std::vector<unit>& unitList);
 }
