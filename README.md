@@ -12,19 +12,15 @@ The project consists of the four scripts shown in the table below.
 | UnitTest.cpp | Unit tests for the Classes.cpp scripts using Microsoft Unit Testing for C/C++.    |
 
 ## Current
-- [X] Selective Printing
-  - [X] Print seperated by character rank
-  - [X] Print all members of a selected unit
-  - [X] Puesdo-Random print based on character and unit rank
+- [ ] Improved file reading
+  - [ ] String Character and Unit Constructor
+  - [ ] Allow multiple delims
+  - [ ] Allow markdown files
 
 ## Backlog
 - [ ] General relation tags
 - [ ] More unit tests
 - [ ] Print a set number of entities
-- [ ] Improved file reading
-  - [ ] String Character and Unit Constructor
-  - [ ] Allow multiple delims
-  - [ ] Allow markdown files
 - [ ] Improve handling of missing entities
   - [ ] Disable the random pull if there are any missing entities
   - [ ] Allow a missing crew to be set to multiple crews
