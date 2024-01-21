@@ -89,7 +89,7 @@ int main()
 
     while (cont) {
 
-        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Print", "Random Pull", "Write to File", "Test"})) {
+        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Test", "Random Pull", "Write to File", "Print"})) {
         case 1:
             // End the loop
             cont = false;
@@ -104,20 +104,13 @@ int main()
             interactions::addMissingRelations(charList, unitList);
             break;
         case 4:
-            // Print all characters
-            cout << "Characters" << endl;
-            for (character entry : charList) {
-                entry.print();
-                cout << "\n";
-            }
+        {
+            vector<string> temp = input::splitDelim("Test: Test by string - This is a good test!");
+            for (string line : temp)
+                cout << line << "\n";
 
-            // Print all units
-            cout << "Units" << endl;
-            for (unit entry : unitList) {
-                entry.print();
-                cout << "\n";
-            }
             break;
+        }
         case 5:
             // Initialize rand
             srand(time(0));

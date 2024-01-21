@@ -758,7 +758,7 @@ void output::printAll(const std::vector<character>& characterList, const std::ve
 	}
 }
 
-void output::printRank(const std::vector<character>& characterList, const std::vector<unit>& unitList) {
+void output::printRank(std::vector<character> characterList, std::vector<unit> unitList) {
 	// Declare a variable to track the previously printed rank
 	int prevRank = -1;
 
@@ -818,4 +818,48 @@ void output::printFull(const std::vector<character>& characterList, const std::v
 
 	// Full print the selected character
 	characterList[select].fullprint(unitList);
+}
+
+std::vector<std::string> input::splitDelim(std::string input) {
+	// Variables for delims and their found position
+	std::vector<std::string> delimList = { ": ", " - ", " > "};
+	std::vector<int> delimPos;
+
+	// Variable for the return
+	std::vector<std::string> splitLine;
+
+	// Split a maximum of ten times
+	for (int i = 0; i < 10; i++) {
+		// Find each delim in the string
+		for (std::string delim : delimList) {
+			// Find the delim
+			int relPos = input.find(delim);
+
+			// If the delim doesn't appear, set it to the array's size
+			if (relPos == -1)
+				delimPos.push_back(input.size());
+			else
+				delimPos.push_back(input.find(delim));
+		}
+
+		// Determine the first delim to appear
+		auto minEleIter = std::min_element(delimPos.begin(), delimPos.end());
+		int minEle = std::distance(delimPos.begin(), minEleIter);
+
+		// If no delim's appeared, break
+		if (delimPos[minEle] == input.size())
+			break;
+
+		// Split the line and continue with the remainder
+		splitLine.push_back(input.substr(0, input.find(delimList[minEle])));
+		input = input.substr(input.find(delimList[minEle]) + delimList[minEle].size());
+
+		// Clear the delim positions
+		delimPos.clear();
+	}
+
+	// Add the rest of the line to the return
+	splitLine.push_back(input);
+
+	return splitLine;
 }

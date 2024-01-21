@@ -71,11 +71,16 @@ namespace interactions {
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);
 }
 
+namespace input {
+	// Split a string based on a list of delims
+	std::vector<std::string> splitDelim(std::string input);
+}
+
 namespace output {
 	// Print all in the provided vectors
 	void printAll(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 	// Print according to rank
-	void printRank(const std::vector<character>& characterList, const std::vector<unit>& unitList);
+	void printRank(std::vector<character> characterList, std::vector<unit> unitList);
 	// Full print according to a vector of rules
 	void printFull(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 }
