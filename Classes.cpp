@@ -863,3 +863,68 @@ std::vector<std::string> input::splitDelim(std::string input) {
 
 	return splitLine;
 }
+
+void entity::addFeature(std::string featString) {
+	// Split the input string by delims
+	std::vector<std::string> feat = input::splitDelim(featString);
+
+	// Name: Set the name to [1]
+	if (feat[0] == "Name") {
+		name = feat[1];
+	}
+	// Member: Set the member to [1]
+	else if (feat[0] == "Member") {
+		member = feat[1];
+	}
+	// Aspect: Add [1] to the aspect array
+	else if (feat[0] == "Aspect") {
+		aspects.push_back(feat[1]);
+	}
+	// Relation: Add [1] to the relation array with a descriptor ([2] if available)
+	else if (feat[0] == "Relation") {
+		switch (feat.size()) {
+		case 2:
+			relations.push_back({ feat[1], "Unknown Relation" });
+			break;
+		case 3:
+			relations.push_back({ feat[1], feat[2] });
+			break;
+		}
+	}
+	else
+		std::cout << "Unexpected Feature: " << feat[0] << "\n";
+}
+
+void unit::addFeature(std::string featString) {
+	// Split the input string by delims
+	std::vector<std::string> feat = input::splitDelim(featString);
+
+	// Rank: Set the rank to [1]'s integer equivalent
+	if (feat[0] == "Rank") {
+		// Search for rank [1] in the character rankings
+		auto rankIter = find(unitRankings.begin(), unitRankings.end(), feat[1]);
+
+		// Assign the rank if it exists, otherwise stay unassigned
+		if (rankIter != unitRankings.end())
+			rank = std::distance(unitRankings.begin(), rankIter);
+	}
+	else
+		entity::addFeature(featString);
+}
+
+void character::addFeature(std::string featString) {
+	// Split the input string by delims
+	std::vector<std::string> feat = input::splitDelim(featString);
+
+	// Rank: Set the rank to [1]'s integer equivalent
+	if (feat[0] == "Rank") {
+		// Search for rank [1] in the character rankings
+		auto rankIter = find(characterRankings.begin(), characterRankings.end(), feat[1]);
+
+		// Assign the rank if it exists, otherwise stay unassigned
+		if (rankIter != characterRankings.end())
+			rank = std::distance(characterRankings.begin(), rankIter);
+	}
+	else
+		entity::addFeature(featString);
+}

@@ -13,7 +13,7 @@ The project consists of the four scripts shown in the table below.
 
 ## Current
 - [ ] Improved file reading
-  - [ ] String Character and Unit Constructor
+  - [X] String Character and Unit Constructor
   - [X] Allow multiple delims
   - [ ] Allow markdown files
 

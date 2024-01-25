@@ -21,6 +21,9 @@ public:
 
 	std::vector<std::string> aspects = {};
 	std::vector<std::vector<std::string>> relations = {};
+
+	// Add a feature based on an input string
+	void addFeature(std::string featString);
 };
 
 // Unit Information
@@ -28,6 +31,9 @@ class unit : public entity {
 public:
 	unit(std::string fileSTEM);
 	unit() = default;
+
+	// Add a feature based on an input string
+	void addFeature(std::string featString);
 
 	// Print out the unit
 	void print() const;
@@ -40,6 +46,9 @@ public:
 
 	character(std::string fileSTEM);
 	character() = default;
+
+	// Add a feature based on an input string
+	void addFeature(std::string featString);
 
 	// Print out the character
 	void print() const;

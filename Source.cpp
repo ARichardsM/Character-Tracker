@@ -109,6 +109,9 @@ int main()
             for (string line : temp)
                 cout << line << "\n";
 
+            character newB;
+            newB.addFeature("Name: John");
+            cout << newB.name << "\n";
             break;
         }
         case 5:
