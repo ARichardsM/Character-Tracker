@@ -15,7 +15,7 @@ The project consists of the four scripts shown in the table below.
 - [ ] Improved file reading
   - [X] String Character and Unit Constructor
   - [X] Allow multiple delims
-  - [ ] Allow markdown files
+  - [X] Allow markdown files
 
 ## Backlog
 - [ ] General relation tags

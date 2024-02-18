@@ -29,7 +29,7 @@ public:
 // Unit Information
 class unit : public entity {
 public:
-	unit(std::string fileSTEM);
+	unit(const std::string& file);
 	unit() = default;
 
 	// Add a feature based on an input string
@@ -44,7 +44,7 @@ class character : public entity {
 public:
 	std::string nickname = "None";
 
-	character(std::string fileSTEM);
+	character(const std::string& file);
 	character() = default;
 
 	// Add a feature based on an input string
@@ -78,6 +78,11 @@ namespace interactions {
 
 	// Write list contents to their respective files
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);
+	
+	// Load from a multi-character markdown file
+	void loadMD(std::vector<character>& characterList, std::string file);
+	// Load from a multi-unit markdown file
+	void loadMD(std::vector<unit>& unitList, std::string file);
 }
 
 namespace input {

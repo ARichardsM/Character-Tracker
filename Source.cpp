@@ -105,13 +105,8 @@ int main()
             break;
         case 4:
         {
-            vector<string> temp = input::splitDelim("Test: Test by string - This is a good test!");
-            for (string line : temp)
-                cout << line << "\n";
-
-            character newB;
-            newB.addFeature("Name: John");
-            cout << newB.name << "\n";
+            interactions::loadMD(charList, "Input A");
+            interactions::loadMD(unitList, "Input B");
             break;
         }
         case 5:

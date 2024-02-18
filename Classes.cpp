@@ -4,59 +4,19 @@
 	Character Scripts
 */
 
-character::character(std::string fileSTEM) {
+character::character(const std::string& file) {
 	// Set the name to be the file's stem
-	name = fileSTEM;
+	name = file;
 
 	// Access the character's file
 	std::ifstream inputFile;
-	inputFile.open("Characters/" + fileSTEM + ".txt");
+	inputFile.open("Characters/" + file + ".txt");
 
 	// For each line
 	std::string line;
 	while (getline(inputFile, line)) {
-		// if the string does not contain a `: `, skip
-		if (line.find(": ") == std::string::npos)
-			continue;
-
-		// Split the line at `: `
-		std::vector<std::string> splitLine;
-
-		while (line.find(": ") != std::string::npos) {
-			splitLine.push_back(line.substr(0, line.find(": ")));
-			line = line.substr(line.find(": ") + 2);
-		}
-
-		splitLine.push_back(line);
-
-		// Depending on [0], set a variable to [1]
-		if (splitLine[0] == "Name") {
-			nickname = splitLine[1];
-		}
-		else if (splitLine[0] == "Rank") {
-			// Search for rank [1] in the character rankings
-			auto rankIter = find(characterRankings.begin(), characterRankings.end(), splitLine[1]);
-
-			// Assign the rank if it exists, otherwise stay unassigned
-			if (rankIter != characterRankings.end())
-				rank = std::distance(characterRankings.begin(), rankIter);
-		}
-		else if (splitLine[0] == "Member") {
-			member = splitLine[1];
-		}
-		else if (splitLine[0] == "Aspect") {
-			aspects.push_back(splitLine[1]);
-		}
-		else if (splitLine[0] == "Relation") {
-			switch (splitLine.size()) {
-			case 2:
-				relations.push_back({ splitLine[1], "Unknown Relation" });
-				break;
-			case 3:
-				relations.push_back({ splitLine[1], splitLine[2] });
-				break;
-			}
-		}
+		// Add the feature
+		addFeature(line);
 	}
 }
 
@@ -127,57 +87,19 @@ void character::fullprint(const std::vector<unit>& unitList) const {
 	Unit Scripts
 */
 
-unit::unit(std::string fileSTEM) {
+unit::unit(const std::string& file) {
 	// Set the unit's name
-	name = fileSTEM;
+	name = file;
 
 	// Access the unit's file
 	std::ifstream inputFile;
-	inputFile.open("Units/" + fileSTEM + ".txt");
+	inputFile.open("Units/" + file + ".txt");
 
 	// For each line
 	std::string line;
 	while (getline(inputFile, line)) {
-		// if the string does not contain a `: `, skip
-		if (line.find(": ") == std::string::npos)
-			continue;
-
-		// Split the line at `: `
-		std::vector<std::string> splitLine;
-
-		while (line.find(": ") != std::string::npos) {
-			splitLine.push_back(line.substr(0, line.find(": ")));
-			line = line.substr(line.find(": ") + 2);
-		}
-
-		splitLine.push_back(line);
-
-		// Depending on [0], set a variable to [1]
-
-		if (splitLine[0] == "Rank") {
-			// Search for rank [1] in the unit rankings
-			auto rankIter = find(unitRankings.begin(), unitRankings.end(), splitLine[1]);
-
-			// Assign the rank if it exists, otherwise stay unassigned
-			if (rankIter != unitRankings.end())
-				rank = std::distance(unitRankings.begin(), rankIter);
-		}
-		else if (splitLine[0] == "Member") {
-			member = splitLine[1];
-		}
-		else if (splitLine[0] == "Aspect") {
-			aspects.push_back(splitLine[1]);
-		}
-		else if (splitLine[0] == "Relation") {
-			switch (splitLine.size()) {
-			case 2:
-				relations.push_back({ splitLine[1], "Unknown Relation" });
-				break;
-			case 3:
-				relations.push_back({ splitLine[1], splitLine[2] });
-				break;
-			}
-		}
+		// Add the feature
+		addFeature(line);
 	}
 }
 
@@ -891,8 +813,6 @@ void entity::addFeature(std::string featString) {
 			break;
 		}
 	}
-	else
-		std::cout << "Unexpected Feature: " << feat[0] << "\n";
 }
 
 void unit::addFeature(std::string featString) {
@@ -927,4 +847,70 @@ void character::addFeature(std::string featString) {
 	}
 	else
 		entity::addFeature(featString);
+}
+
+void interactions::loadMD(std::vector<character>& characterList, std::string file) {
+	// Access the character markdown file
+	std::ifstream inputFile;
+	inputFile.open("Characters/" + file + ".md");
+
+	// Initialize current character index
+	int charIn = -1;
+
+	// For each line
+	std::string line;
+	while (getline(inputFile, line)) {
+		// Search for the header delim
+		int findPos = line.find("# ");
+
+		// If the delim appears, add a character and index it
+		if (findPos != -1) {
+			charIn = characterList.size();
+			characterList.push_back(character());
+			characterList[charIn].name = line.substr(findPos + 2);
+			continue;
+		}
+
+		// If no character is indexed, skip
+		if (charIn == -1)
+			continue;
+
+		// Attempt to add a festure
+		characterList[charIn].addFeature(line);
+	}
+
+	return;
+}
+
+void interactions::loadMD(std::vector<unit>& unitList, std::string file) {
+	// Access the character markdown file
+	std::ifstream inputFile;
+	inputFile.open("Units/" + file + ".md");
+
+	// Initialize current character index
+	int charIn = -1;
+
+	// For each line
+	std::string line;
+	while (getline(inputFile, line)) {
+		// Search for the header delim
+		int findPos = line.find("# ");
+
+		// If the delim appears, add a character and index it
+		if (findPos != -1) {
+			charIn = unitList.size();
+			unitList.push_back(unit());
+			unitList[charIn].name = line.substr(findPos + 2);
+			continue;
+		}
+
+		// If no character is indexed, skip
+		if (charIn == -1)
+			continue;
+
+		// Attempt to add a festure
+		unitList[charIn].addFeature(line);
+	}
+
+	return;
 }
