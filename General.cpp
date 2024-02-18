@@ -26,7 +26,7 @@ int support::prompt(std::string txt, std::vector<std::string> opts) {
 		}
 
 		// Denote the input line
-		std::cout << "> ";
+		std::cout << "\n> ";
 
 		// Take the user's input
 		std::cin >> userInput;

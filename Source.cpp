@@ -4,7 +4,7 @@
 #include <fstream>
 #include <filesystem>
 
-#include "Classes.h"
+#include "Tracker.h"
 #include "General.h"
 
 using namespace std;
@@ -25,12 +25,13 @@ int main()
             if (entry.path().stem().string() == "Template Character")
                 continue;
 
-            // Skip non-text documents
-            if (entry.path().extension().string() != ".txt")
-                continue;
+            // Check and add if the file is .txt
+            if (entry.path().extension().string() == ".txt")
+                charList.push_back(character(entry.path().stem().string()));
 
-            // Add the character to the list
-            charList.push_back(character(entry.path().stem().string()));
+            // Check and add if the file is .md
+            if (entry.path().extension().string() == ".md")
+                interactions::loadMD(charList, entry.path().stem().string());
         }
     else
         cout << "'Characters' directory cannot be found.\n";
@@ -44,12 +45,13 @@ int main()
             if (entry.path().stem().string() == "Template Unit")
                 continue;
 
-            // Skip non-text documents
-            if (entry.path().extension().string() != ".txt")
-                continue;
+            // Check and add if the file is .txt
+            if (entry.path().extension().string() == ".txt")
+                unitList.push_back(unit(entry.path().stem().string()));
 
-            // Add the unit to the list
-            unitList.push_back(unit(entry.path().stem().string()));
+            // Check and add if the file is .md
+            if (entry.path().extension().string() == ".md")
+                interactions::loadMD(unitList, entry.path().stem().string());
         }
     else
         cout << "'Units' directory cannot be found.\n";
