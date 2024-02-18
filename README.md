@@ -12,13 +12,10 @@ The project consists of the four scripts shown in the table below.
 | UnitTest.cpp | Unit tests for the Classes.cpp scripts using Microsoft Unit Testing for C/C++.    |
 
 ## Current
-- [ ] Improved file reading
-  - [X] String Character and Unit Constructor
-  - [X] Allow multiple delims
-  - [X] Allow markdown files
+- [ ] General relation tags
+- [ ] History feature
 
 ## Backlog
-- [ ] General relation tags
 - [ ] More unit tests
 - [ ] Print a set number of entities
 - [ ] Improve handling of missing entities
