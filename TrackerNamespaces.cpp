@@ -98,10 +98,10 @@ std::set<std::string> interactions::verifyRelations(std::vector<character> list)
 	// For each character
 	for (character character : list) {
 		// For each relation
-		for (std::vector<std::string> member : character.relations) {
+		for (entity::relation member : character.relationVec) {
 			// If the member's name can't be found in charNames, add it to the return
-			if (find(charNames.begin(), charNames.end(), member[0]) == charNames.end())
-				returnList.insert(member[0]);
+			if (find(charNames.begin(), charNames.end(), member.partner) == charNames.end())
+				returnList.insert(member.partner);
 		}
 	}
 
@@ -122,10 +122,10 @@ std::set<std::string> interactions::verifyRelations(std::vector<unit> list) {
 	// For each unit
 	for (unit unit : list) {
 		// For each relation
-		for (std::vector<std::string> member : unit.relations) {
+		for (entity::relation member : unit.relationVec) {
 			// If the member's name can't be found in charNames, report it
-			if (find(unitNames.begin(), unitNames.end(), member[0]) == unitNames.end())
-				returnList.insert(member[0]);
+			if (find(unitNames.begin(), unitNames.end(), member.partner) == unitNames.end())
+				returnList.insert(member.partner);
 		}
 	}
 
@@ -155,9 +155,9 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 
 	// For each character's relation
 	for (int i = 0; i < characterList.size(); i++) {
-		for (std::vector<std::string> relation : characterList[i].relations) {
+		for (entity::relation relation : characterList[i].relationVec) {
 			// Find the relation's name in `names`
-			auto relPos = find(names.begin(), names.end(), relation[0]);
+			auto relPos = find(names.begin(), names.end(), relation.partner);
 			int intPos = std::distance(names.begin(), relPos);
 
 			// If the relation exists
@@ -171,9 +171,9 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 	
 	// For each unit's relation
 	for (int i = 0; i < unitList.size(); i++) {
-		for (std::vector<std::string> relation : unitList[i].relations) {
+		for (entity::relation relation : unitList[i].relationVec) {
 			// Find the relation's name in `names`
-			auto relPos = find(names.begin(), names.end(), relation[0]);
+			auto relPos = find(names.begin(), names.end(), relation.partner);
 			int intPos = std::distance(names.begin(), relPos);
 
 			// Adjust i to accomdate the characters
@@ -192,8 +192,8 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 	for (int i = 0; i < characterList.size(); i++) {
 		// Record the character's relation names
 		std::vector<std::string> relateNames;
-		for (std::vector<std::string> relation : characterList[i].relations) {
-			relateNames.push_back(relation[0]);
+		for (entity::relation relation : characterList[i].relationVec) {
+			relateNames.push_back(relation.partner);
 		}
 
 		// For every entity
@@ -204,7 +204,10 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 
 			// if the relation isn't already present, add it
 			if (find(relateNames.begin(), relateNames.end(), names[j]) == relateNames.end()) {
-				characterList[i].relations.push_back({ names[j], "New Relation" });
+				entity::relation newRel;
+				newRel.partner = names[j];
+				newRel.desc = "New Relation";
+				characterList[i].relationVec.push_back(newRel);
 			}
 		}
 	}
@@ -216,8 +219,8 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 
 		// Record the unit's relation names
 		std::vector<std::string> relateNames;
-		for (std::vector<std::string> relation : unitList[i].relations) {
-			relateNames.push_back(relation[0]);
+		for (entity::relation relation : unitList[i].relationVec) {
+			relateNames.push_back(relation.partner);
 		}
 
 		// For every entity
@@ -228,7 +231,10 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 
 			// if the relation isn't already present, add it
 			if (find(relateNames.begin(), relateNames.end(), names[j]) == relateNames.end()) {
-				unitList[i].relations.push_back({ names[j], "New Relation" });
+				entity::relation newRel;
+				newRel.partner = names[j];
+				newRel.desc = "New Relation";
+				unitList[i].relationVec.push_back(newRel);
 			}
 		}
 	}
@@ -252,14 +258,14 @@ void interactions::renameChar(std::set<std::string> unknownList, std::vector<cha
 
 	// For every character's relation
 	for (character &chara : characterList) {
-		for (std::vector<std::string> &relation : chara.relations) {
+		for (entity::relation &relation : chara.relationVec) {
 			// Try to find the relation's name in `unknownList`
-			auto relPos = find(unknownList.begin(), unknownList.end(), relation[0]);
+			auto relPos = find(unknownList.begin(), unknownList.end(), relation.partner);
 			int intPos = std::distance(unknownList.begin(), relPos);
 
 			// If the name was found, change it for the true name
 			if (relPos != unknownList.end())
-				relation[0] = trueNames[intPos];
+				relation.partner = trueNames[intPos];
 		}	
 	}
 }
@@ -302,14 +308,14 @@ void interactions::renameUnit(std::set<std::string> unknownList, std::vector<cha
 			uni.member = trueNames[intPos];
 
 		// For each of the unit's relations
-		for (std::vector<std::string>& relation : uni.relations) {
+		for (entity::relation &relation : uni.relationVec) {
 			// Try to find the relation's name in `unknownList`
-			auto relPos = find(unknownList.begin(), unknownList.end(), relation[0]);
+			auto relPos = find(unknownList.begin(), unknownList.end(), relation.partner);
 			int intPos = std::distance(unknownList.begin(), relPos);
 
 			// If the name was found, change it for the true name
 			if (relPos != unknownList.end())
-				relation[0] = trueNames[intPos];
+				relation.partner = trueNames[intPos];
 		}
 	}
 }
@@ -337,8 +343,8 @@ void interactions::writeToFile(std::vector<character> characterList, std::vector
 		outFile << "Member: " << chara.member << "\n";
 		for (std::string aspect : chara.aspects)
 			outFile << "Aspect: " << aspect << "\n";
-		for (std::vector<std::string> relation : chara.relations)
-			outFile << "Relation: " << relation[0] << ": " << relation[1] << "\n";
+		for (entity::relation relation : chara.relationVec)
+			outFile << "Relation: " << relation.partner << ": " << relation.desc << "\n";
 
 		// Rewrite the spare contents
 		outFile << contents;
@@ -367,8 +373,8 @@ void interactions::writeToFile(std::vector<character> characterList, std::vector
 		outFile << "Member: " << unit.member << "\n";
 		for (std::string aspect : unit.aspects)
 			outFile << "Aspect: " << aspect << "\n";
-		for (std::vector<std::string> relation : unit.relations)
-			outFile << "Relation: " << relation[0] << ": " << relation[1] << "\n";
+		for (entity::relation relation : unit.relationVec)
+			outFile << "Relation: " << relation.partner << ": " << relation.desc << "\n";
 
 		// Rewrite the spare contents
 		outFile << contents;
@@ -673,7 +679,139 @@ std::vector<std::string> input::splitDelim(std::string input) {
 	return splitLine;
 }
 
+void input::loadChar(std::string file, std::vector<character>& characterList, std::vector<std::string>& history) {
+	// Text file loading lambda
+	auto loadCharTXT = [&]() {
+		// Add the character to the character list
+		int charIn = characterList.size();
+		characterList.push_back(character());
 
+		// Access the character's file
+		std::ifstream inputFile;
+		inputFile.open("Characters/" + file);
+
+		// For each line
+		std::string line;
+		while (getline(inputFile, line)) {
+			// Add the feature
+			characterList[charIn].addFeature(line, history);
+		}
+
+		// Add the character's name
+		characterList[charIn].name = file.substr(0, file.find("."));
+	};
+
+	// Markdown file loading lambda
+	auto loadCharMD = [&]() {
+		// Access the character markdown file
+		std::ifstream inputFile;
+		inputFile.open("Characters/" + file);
+
+		// Initialize current character index
+		int charIn = -1;
+
+		// For each line
+		std::string line;
+		while (getline(inputFile, line)) {
+			// Search for the header delim
+			int findPos = line.find("# ");
+
+			// If the delim appears, add a character and index it
+			if (findPos != -1) {
+				charIn = characterList.size();
+				characterList.push_back(character());
+				characterList[charIn].name = line.substr(findPos + 2);
+				continue;
+			}
+
+			// If no character is indexed, skip
+			if (charIn == -1)
+				continue;
+
+			// Attempt to add a festure
+			characterList[charIn].addFeature(line);
+		}
+	};
+
+	// Skip the template
+	if (file.substr(0, file.find(".")) == "Template Character")
+		return;
+
+	// Check and add if the file is .txt
+	if (file.substr(file.find(".")) == ".txt")
+		loadCharTXT();
+
+	// Check and add if the file is .md
+	if (file.substr(file.find(".")) == ".md")
+		loadCharMD();
+}
+
+void input::loadUnit(std::string file, std::vector<unit>& unitList, std::vector<std::string>& history) {
+	// Text file loading lambda
+	auto loadUnitTXT = [&]() {
+		// Add the unit to the unit list
+		int unitIn = unitList.size();
+		unitList.push_back(unit());
+
+		// Access the unit's file
+		std::ifstream inputFile;
+		inputFile.open("Units/" + file);
+
+		// For each line
+		std::string line;
+		while (getline(inputFile, line)) {
+			// Add the feature
+			unitList[unitIn].addFeature(line, history);
+		}
+
+		// Add the unit's name
+		unitList[unitIn].name = file.substr(0, file.find("."));
+	};
+
+	// Markdown file loading lambda
+	auto loadUnitMD = [&]() {
+		// Access the unit markdown file
+		std::ifstream inputFile;
+		inputFile.open("Units/" + file);
+
+		// Initialize current unit index
+		int unitIn = -1;
+
+		// For each line
+		std::string line;
+		while (getline(inputFile, line)) {
+			// Search for the header delim
+			int findPos = line.find("# ");
+
+			// If the delim appears, add a unit and index it
+			if (findPos != -1) {
+				unitIn = unitList.size();
+				unitList.push_back(unit());
+				unitList[unitIn].name = line.substr(findPos + 2);
+				continue;
+			}
+
+			// If no unit is indexed, skip
+			if (unitIn == -1)
+				continue;
+
+			// Attempt to add a festure
+			unitList[unitIn].addFeature(line);
+		}
+	};
+
+	// Skip the template
+	if (file.substr(0, file.find(".")) == "Template Unit")
+		return;
+
+	// Check and add if the file is .txt
+	if (file.substr(file.find(".")) == ".txt")
+		loadUnitTXT();
+
+	// Check and add if the file is .md
+	if (file.substr(file.find(".")) == ".md")
+		loadUnitMD();
+}
 
 void interactions::loadMD(std::vector<character>& characterList, std::string file) {
 	// Access the character markdown file

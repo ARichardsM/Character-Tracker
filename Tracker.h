@@ -14,16 +14,28 @@ const std::vector<std::string> characterRankings = {"Unassigned", "Known", "Novi
 // Abstract Entity Information
 class entity {
 public:
+	struct relation {
+		std::string partner;
+		std::string desc;
+		std::vector<std::string> tags;
+
+		// Return the relation as a string
+		std::string returnRelation();
+	};
+
 	std::string name = "None";
 	std::string member = "None";
 
 	int rank = 0;
+	int historyInd = -1;
 
 	std::vector<std::string> aspects = {};
-	std::vector<std::vector<std::string>> relations = {};
+	std::vector<relation> relationVec;
 
 	// Add a feature based on an input string
 	void addFeature(std::string featString);
+	// Add a feature or add to history based on an input string
+	void addFeature(std::string featString, std::vector<std::string>& history);
 };
 
 // Unit Information
@@ -34,9 +46,13 @@ public:
 
 	// Add a feature based on an input string
 	void addFeature(std::string featString);
+	// Add a feature or add to history based on an input string
+	void addFeature(std::string featString, std::vector<std::string>& history);
 
 	// Print out the unit
 	void print() const;
+	// Output the unit
+	std::string output() const;
 };
 
 // Character Information
@@ -49,9 +65,13 @@ public:
 
 	// Add a feature based on an input string
 	void addFeature(std::string featString);
+	// Add a feature or add to history based on an input string
+	void addFeature(std::string featString, std::vector<std::string>& history);
 
 	// Print out the character
 	void print() const;
+	// Output the character
+	std::string output() const;
 	// Print out the character and all member unit information
 	void fullprint(const std::vector<unit>& unitList) const;
 };
@@ -88,6 +108,10 @@ namespace interactions {
 namespace input {
 	// Split a string based on a list of delims
 	std::vector<std::string> splitDelim(std::string input);
+	// Load a character from a file
+	void loadChar(std::string file, std::vector<character>& characterList, std::vector<std::string>& history);
+	// Load a unit from a file
+	void loadUnit(std::string file, std::vector<unit>& unitList, std::vector<std::string>& history);
 }
 
 namespace output {

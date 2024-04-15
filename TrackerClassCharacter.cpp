@@ -1,39 +1,6 @@
 #include "Tracker.h"
 
 /*
-	Entity Scripts
-*/
-
-void entity::addFeature(std::string featString) {
-	// Split the input string by delims
-	std::vector<std::string> feat = input::splitDelim(featString);
-
-	// Name: Set the name to [1]
-	if (feat[0] == "Name") {
-		name = feat[1];
-	}
-	// Member: Set the member to [1]
-	else if (feat[0] == "Member") {
-		member = feat[1];
-	}
-	// Aspect: Add [1] to the aspect array
-	else if (feat[0] == "Aspect") {
-		aspects.push_back(feat[1]);
-	}
-	// Relation: Add [1] to the relation array with a descriptor ([2] if available)
-	else if (feat[0] == "Relation") {
-		switch (feat.size()) {
-		case 2:
-			relations.push_back({ feat[1], "Unknown Relation" });
-			break;
-		case 3:
-			relations.push_back({ feat[1], feat[2] });
-			break;
-		}
-	}
-}
-
-/*
 	Character Scripts
 */
 
@@ -59,8 +26,24 @@ void character::print() const {
 	std::cout << "Member: " << member << "\n";
 	for (std::string aspect : aspects)
 		std::cout << "Aspect: " << aspect << "\n";
-	for (std::vector<std::string> relation : relations)
-		std::cout << "Relations: " << relation[0] << " - " << relation[1] << "\n";
+	for (relation relation : relationVec) {
+		std::cout << "Relations: " << relation.returnRelation() << "\n";
+	}
+}
+
+std::string character::output() const {
+	std::string returnStr;
+
+	returnStr += "Name: " + name + "\n";
+	returnStr += "Rank: " + characterRankings[rank] + "\n";
+	returnStr += "Member: " + member + "\n";
+	for (std::string aspect : aspects)
+		returnStr += "Aspect: " + aspect + "\n";
+	for (relation relation : relationVec) {
+		returnStr += "Relations: " + relation.returnRelation() + "\n";
+	}
+
+	return returnStr;
 }
 
 void character::fullprint(const std::vector<unit>& unitList) const {
@@ -74,7 +57,15 @@ void character::fullprint(const std::vector<unit>& unitList) const {
 
 		// Record the character's aspects and relations
 		std::vector<std::string> fullAspects = aspects;
-		std::vector<std::vector<std::string>> fullRelations = relations;
+		std::vector<std::vector<std::string>> fullRelations;
+		for (relation rel : relationVec) {
+			std::vector<std::string> relString;
+			relString.push_back(rel.partner);
+			for (std::string tag : rel.tags)
+				relString.push_back(tag);
+			relString.push_back(rel.desc);
+			fullRelations.push_back(relString);
+		}
 
 		// Set next member and initilize the full member vector
 		std::vector<std::string> fullMember;
@@ -88,8 +79,17 @@ void character::fullprint(const std::vector<unit>& unitList) const {
 				if (unit.name == nextMember) {
 					// Add the aspects, relations and membership
 					fullAspects.insert(fullAspects.end(), unit.aspects.begin(), unit.aspects.end());
-					fullRelations.insert(fullRelations.end(), unit.relations.begin(), unit.relations.end());
 					fullMember.push_back(nextMember);
+					std::vector<std::vector<std::string>> newRelations;
+					for (relation rel : unit.relationVec) {
+						std::vector<std::string> relString;
+						relString.push_back(rel.partner);
+						for (std::string tag : rel.tags)
+							relString.push_back(tag);
+						relString.push_back(rel.desc);
+						newRelations.push_back(relString);
+					}
+					fullRelations.insert(fullRelations.end(), newRelations.begin(), newRelations.end());
 
 					// Update the next member, while preventing an infinte loop
 					if (nextMember != unit.member)
@@ -133,49 +133,19 @@ void character::addFeature(std::string featString) {
 		entity::addFeature(featString);
 }
 
-/*
-	Unit Scripts
-*/
-
-unit::unit(const std::string& file) {
-	// Set the unit's name
-	name = file;
-
-	// Access the unit's file
-	std::ifstream inputFile;
-	inputFile.open("Units/" + file + ".txt");
-
-	// For each line
-	std::string line;
-	while (getline(inputFile, line)) {
-		// Add the feature
-		addFeature(line);
-	}
-}
-
-void unit::print() const {
-	std::cout << "Name: " << name << "\n";
-	std::cout << "Rank: " << unitRankings[rank] << "\n";
-	std::cout << "Member: " << member << "\n";
-	for (std::string aspect : aspects)
-		std::cout << "Aspect: " << aspect << "\n";
-	for (std::vector<std::string> relation : relations)
-		std::cout << "Relation: " << relation[0] << " - " << relation[1] << "\n";
-}
-
-void unit::addFeature(std::string featString) {
-	// Split the input string by delims
+void character::addFeature(std::string featString, std::vector<std::string>& history) {
+	// Attempt to split the input string by delims
 	std::vector<std::string> feat = input::splitDelim(featString);
 
 	// Rank: Set the rank to [1]'s integer equivalent
 	if (feat[0] == "Rank") {
 		// Search for rank [1] in the character rankings
-		auto rankIter = find(unitRankings.begin(), unitRankings.end(), feat[1]);
+		auto rankIter = find(characterRankings.begin(), characterRankings.end(), feat[1]);
 
 		// Assign the rank if it exists, otherwise stay unassigned
-		if (rankIter != unitRankings.end())
-			rank = std::distance(unitRankings.begin(), rankIter);
+		if (rankIter != characterRankings.end())
+			rank = std::distance(characterRankings.begin(), rankIter);
 	}
 	else
-		entity::addFeature(featString);
+		entity::addFeature(featString, history);
 }

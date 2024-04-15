@@ -13,6 +13,7 @@ namespace fs = filesystem;
 // Global variables
 vector<character> charList; // Contains all characters as the `character` class
 vector<unit> unitList;      // Contains all units as the `unit` class
+vector<string> history;     // Contains all entity history as a string
 
 int main()
 {
@@ -20,19 +21,9 @@ int main()
     fs::path charPath = fs::current_path() / "Characters";
 
     if (exists(charPath))
-        for (const auto& entry : fs::directory_iterator(charPath)) {
-            // Skip the template
-            if (entry.path().stem().string() == "Template Character")
-                continue;
-
-            // Check and add if the file is .txt
-            if (entry.path().extension().string() == ".txt")
-                charList.push_back(character(entry.path().stem().string()));
-
-            // Check and add if the file is .md
-            if (entry.path().extension().string() == ".md")
-                interactions::loadMD(charList, entry.path().stem().string());
-        }
+        for (const auto& entry : fs::directory_iterator(charPath))
+            // Load the character
+            input::loadChar(entry.path().filename().string(), charList, history);
     else
         cout << "'Characters' directory cannot be found.\n";
 
@@ -40,19 +31,9 @@ int main()
     fs::path unitPath = fs::current_path() / "Units";
 
     if (exists(unitPath))
-        for (const auto& entry : fs::directory_iterator(unitPath)) {
-            // Skip the template
-            if (entry.path().stem().string() == "Template Unit")
-                continue;
-
-            // Check and add if the file is .txt
-            if (entry.path().extension().string() == ".txt")
-                unitList.push_back(unit(entry.path().stem().string()));
-
-            // Check and add if the file is .md
-            if (entry.path().extension().string() == ".md")
-                interactions::loadMD(unitList, entry.path().stem().string());
-        }
+        for (const auto& entry : fs::directory_iterator(unitPath))
+            // Load the unit
+            input::loadUnit(entry.path().filename().string(), unitList, history);
     else
         cout << "'Units' directory cannot be found.\n";
 
@@ -107,8 +88,18 @@ int main()
             break;
         case 4:
         {
-            interactions::loadMD(charList, "Input A");
-            interactions::loadMD(unitList, "Input B");
+            charList[0].relationVec[0].tags.push_back("Newest");
+            charList[0].relationVec[0].tags.push_back("Newest2");
+
+            cout << charList[0].output();
+            cout << charList[0].historyInd;
+            cout << unitList[0].output();
+
+            cout << charList.size();
+            input::loadChar("Settler A.txt", charList, history);
+            cout << charList.size();
+            cout << charList[6].historyInd;
+            cout << history[0];
             break;
         }
         case 5:
