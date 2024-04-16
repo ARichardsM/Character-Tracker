@@ -635,6 +635,10 @@ void output::printFull(const std::vector<character>& characterList, const std::v
 	characterList[select].fullprint(unitList);
 }
 
+void output::logListsMD(const std::vector<character>& characterList, const std::vector<unit>& unitList) {
+	return;
+}
+
 std::vector<std::string> input::splitDelim(std::string input) {
 	// Variables for delims and their found position
 	std::vector<std::string> delimList = { ": ", " - ", " > "};
@@ -729,7 +733,7 @@ void input::loadChar(std::string file, std::vector<character>& characterList, st
 				continue;
 
 			// Attempt to add a festure
-			characterList[charIn].addFeature(line);
+			characterList[charIn].addFeature(line, history);
 		}
 	};
 
@@ -796,7 +800,7 @@ void input::loadUnit(std::string file, std::vector<unit>& unitList, std::vector<
 				continue;
 
 			// Attempt to add a festure
-			unitList[unitIn].addFeature(line);
+			unitList[unitIn].addFeature(line, history);
 		}
 	};
 
@@ -811,70 +815,4 @@ void input::loadUnit(std::string file, std::vector<unit>& unitList, std::vector<
 	// Check and add if the file is .md
 	if (file.substr(file.find(".")) == ".md")
 		loadUnitMD();
-}
-
-void interactions::loadMD(std::vector<character>& characterList, std::string file) {
-	// Access the character markdown file
-	std::ifstream inputFile;
-	inputFile.open("Characters/" + file + ".md");
-
-	// Initialize current character index
-	int charIn = -1;
-
-	// For each line
-	std::string line;
-	while (getline(inputFile, line)) {
-		// Search for the header delim
-		int findPos = line.find("# ");
-
-		// If the delim appears, add a character and index it
-		if (findPos != -1) {
-			charIn = characterList.size();
-			characterList.push_back(character());
-			characterList[charIn].name = line.substr(findPos + 2);
-			continue;
-		}
-
-		// If no character is indexed, skip
-		if (charIn == -1)
-			continue;
-
-		// Attempt to add a festure
-		characterList[charIn].addFeature(line);
-	}
-
-	return;
-}
-
-void interactions::loadMD(std::vector<unit>& unitList, std::string file) {
-	// Access the character markdown file
-	std::ifstream inputFile;
-	inputFile.open("Units/" + file + ".md");
-
-	// Initialize current character index
-	int charIn = -1;
-
-	// For each line
-	std::string line;
-	while (getline(inputFile, line)) {
-		// Search for the header delim
-		int findPos = line.find("# ");
-
-		// If the delim appears, add a character and index it
-		if (findPos != -1) {
-			charIn = unitList.size();
-			unitList.push_back(unit());
-			unitList[charIn].name = line.substr(findPos + 2);
-			continue;
-		}
-
-		// If no character is indexed, skip
-		if (charIn == -1)
-			continue;
-
-		// Attempt to add a festure
-		unitList[charIn].addFeature(line);
-	}
-
-	return;
 }

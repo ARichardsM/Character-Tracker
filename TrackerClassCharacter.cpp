@@ -4,22 +4,6 @@
 	Character Scripts
 */
 
-character::character(const std::string& file) {
-	// Set the name to be the file's stem
-	name = file;
-
-	// Access the character's file
-	std::ifstream inputFile;
-	inputFile.open("Characters/" + file + ".txt");
-
-	// For each line
-	std::string line;
-	while (getline(inputFile, line)) {
-		// Add the feature
-		addFeature(line);
-	}
-}
-
 void character::print() const {
 	std::cout << "Name: " << name << "\n";
 	std::cout << "Rank: " << characterRankings[rank] << "\n";

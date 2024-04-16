@@ -41,7 +41,6 @@ public:
 // Unit Information
 class unit : public entity {
 public:
-	unit(const std::string& file);
 	unit() = default;
 
 	// Add a feature based on an input string
@@ -60,7 +59,6 @@ class character : public entity {
 public:
 	std::string nickname = "None";
 
-	character(const std::string& file);
 	character() = default;
 
 	// Add a feature based on an input string
@@ -98,11 +96,6 @@ namespace interactions {
 
 	// Write list contents to their respective files
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);
-	
-	// Load from a multi-character markdown file
-	void loadMD(std::vector<character>& characterList, std::string file);
-	// Load from a multi-unit markdown file
-	void loadMD(std::vector<unit>& unitList, std::string file);
 }
 
 namespace input {
@@ -121,6 +114,8 @@ namespace output {
 	void printRank(std::vector<character> characterList, std::vector<unit> unitList);
 	// Full print according to a vector of rules
 	void printFull(const std::vector<character>& characterList, const std::vector<unit>& unitList);
+	// Write the character and unit list to two seperate markdown files
+	void logListsMD(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 }
 
 namespace rules {

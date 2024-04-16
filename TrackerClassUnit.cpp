@@ -4,22 +4,6 @@
 	Unit Scripts
 */
 
-unit::unit(const std::string& file) {
-	// Set the unit's name
-	name = file;
-
-	// Access the unit's file
-	std::ifstream inputFile;
-	inputFile.open("Units/" + file + ".txt");
-
-	// For each line
-	std::string line;
-	while (getline(inputFile, line)) {
-		// Add the feature
-		addFeature(line);
-	}
-}
-
 void unit::print() const {
 	std::cout << "Name: " << name << "\n";
 	std::cout << "Rank: " << unitRankings[rank] << "\n";
