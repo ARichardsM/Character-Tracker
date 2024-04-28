@@ -115,7 +115,7 @@ namespace output {
 	// Full print according to a vector of rules
 	void printFull(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 	// Write the character and unit list to two seperate markdown files
-	void logListsMD(const std::vector<character>& characterList, const std::vector<unit>& unitList);
+	void logListsMD(const std::vector<character>& characterList, const std::vector<unit>& unitList, const std::vector<std::string>& history);
 }
 
 namespace rules {

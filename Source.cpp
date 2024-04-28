@@ -88,18 +88,7 @@ int main()
             break;
         case 4:
         {
-            charList[0].relationVec[0].tags.push_back("Newest");
-            charList[0].relationVec[0].tags.push_back("Newest2");
-
-            cout << charList[0].output();
-            cout << charList[0].historyInd;
-            cout << unitList[0].output();
-
-            cout << charList.size();
-            input::loadChar("Settler A.txt", charList, history);
-            cout << charList.size();
-            cout << charList[6].historyInd;
-            cout << history[0];
+            output::logListsMD(charList, unitList, history);
             break;
         }
         case 5:
@@ -111,8 +100,20 @@ int main()
             cout << "\n";
             break;
         case 6:
-            // Write all characters and units to their files
-            interactions::writeToFile(charList, unitList);
+            // Prompt user for the desired write
+            int writeSelect = support::prompt("Which Wrie?", { "[All] Markdown", "[All] File" });
+
+            // Perform the specified write
+            switch (writeSelect) {
+            case 0:
+                // Write all characters and units to markdown files
+                output::logListsMD(charList, unitList, history);
+                break;
+            case 1:
+                // Write all characters and units to their files
+                interactions::writeToFile(charList, unitList);
+                break;
+
             break;
         case 7:
             // Prompt user for the desired print

@@ -24,7 +24,7 @@ std::string unit::output() const {
 	for (std::string aspect : aspects)
 		returnStr += "Aspect: " + aspect + "\n";
 	for (relation relation : relationVec) {
-		returnStr += "Relations: " + relation.returnRelation() + "\n";
+		returnStr += "Relation: " + relation.returnRelation() + "\n";
 	}
 
 	return returnStr;

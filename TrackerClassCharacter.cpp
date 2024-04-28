@@ -18,13 +18,12 @@ void character::print() const {
 std::string character::output() const {
 	std::string returnStr;
 
-	returnStr += "Name: " + name + "\n";
 	returnStr += "Rank: " + characterRankings[rank] + "\n";
 	returnStr += "Member: " + member + "\n";
 	for (std::string aspect : aspects)
 		returnStr += "Aspect: " + aspect + "\n";
 	for (relation relation : relationVec) {
-		returnStr += "Relations: " + relation.returnRelation() + "\n";
+		returnStr += "Relation: " + relation.returnRelation() + "\n";
 	}
 
 	return returnStr;

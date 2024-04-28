@@ -380,7 +380,6 @@ void interactions::writeToFile(std::vector<character> characterList, std::vector
 		outFile << contents;
 		outFile.close();
 	}
-	std::cout << "Write to File\n";
 }
 
 std::vector<std::string> rules::genRules(const std::vector<std::string>& crewNames) {
@@ -635,8 +634,37 @@ void output::printFull(const std::vector<character>& characterList, const std::v
 	characterList[select].fullprint(unitList);
 }
 
-void output::logListsMD(const std::vector<character>& characterList, const std::vector<unit>& unitList) {
-	return;
+void output::logListsMD(const std::vector<character>& characterList, const std::vector<unit>& unitList, const std::vector<std::string>& history) {
+	// Variables for output file
+	std::ofstream outFileChar("characterMD.md");
+
+	for (character chara : characterList) {
+		// Write the content from the character
+		outFileChar << "# " << chara.name << "\n";
+		outFileChar << chara.output();
+
+		if (chara.historyInd != -1)
+			outFileChar << history[chara.historyInd];
+	}
+
+	// Close the Out File
+	outFileChar.close();
+
+	// Variables for output file
+	std::ofstream outFileUnit("unitMD.md");
+
+	for (unit unit : unitList) {
+
+		// Write the content from the unit
+		outFileUnit << "# " << unit.name << "\n";
+		outFileUnit << unit.output();
+
+		if (unit.historyInd != -1)
+			outFileUnit << history[unit.historyInd];
+	}
+
+	// Close the Out File
+	outFileUnit.close();
 }
 
 std::vector<std::string> input::splitDelim(std::string input) {
