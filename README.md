@@ -20,15 +20,13 @@ The project consists of the four scripts shown in the table below.
 | UnitTest.cpp              | Unit tests for the Classes.cpp scripts using Microsoft Unit Testing for C/C++.    |
 
 ## Current
-- [X] General relation tags - Adds tags to relations, which are printed when printing as a markdown file.
-- [X] History feature - History can be pulled from the input files and are included when printing as a markdown file.
-
-## Backlog
-- [ ] Print a set number of entities
 - [ ] Improve handling of missing entities
   - [ ] Disable the random pull if there are any missing entities
   - [ ] Allow a missing crew to be set to multiple crews
   - [ ] Allow a missing entity to be removed
+
+## Backlog
+- [ ] Print a set number of entities
 - [ ] Refactor
 
 ## TBD
