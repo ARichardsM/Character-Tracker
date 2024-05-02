@@ -48,8 +48,6 @@ public:
 	// Add a feature or add to history based on an input string
 	void addFeature(std::string featString, std::vector<std::string>& history);
 
-	// Print out the unit
-	void print() const;
 	// Output the unit
 	std::string output() const;
 };
@@ -57,8 +55,6 @@ public:
 // Character Information
 class character : public entity {
 public:
-	std::string nickname = "None";
-
 	character() = default;
 
 	// Add a feature based on an input string
@@ -66,8 +62,6 @@ public:
 	// Add a feature or add to history based on an input string
 	void addFeature(std::string featString, std::vector<std::string>& history);
 
-	// Print out the character
-	void print() const;
 	// Output the character
 	std::string output() const;
 	// Print out the character and all member unit information

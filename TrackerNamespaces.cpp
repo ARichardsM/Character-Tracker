@@ -560,14 +560,14 @@ void output::printAll(const std::vector<character>& characterList, const std::ve
 	// Print all characters
 	std::cout << "Characters" << "\n";
 	for (character entry : characterList) {
-		entry.print();
+		std::cout << entry.output();
 		std::cout << "\n";
 	}
 
 	// Print all units
 	std::cout << "Units" << "\n";
 	for (unit entry : unitList) {
-		entry.print();
+		std::cout << entry.output();
 		std::cout << "\n";
 	}
 }

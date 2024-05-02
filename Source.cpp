@@ -72,7 +72,7 @@ int main()
 
     while (cont) {
 
-        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Test", "Random Pull", "Write to File", "Print"})) {
+        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Test", "Random Pull", "Write to File", "Print" })) {
         case 1:
             // End the loop
             cont = false;
@@ -100,8 +100,9 @@ int main()
             cout << "\n";
             break;
         case 6:
+        {
             // Prompt user for the desired write
-            int writeSelect = support::prompt("Which Wrie?", { "[All] Markdown", "[All] File" });
+            int writeSelect = support::prompt("Which Write?", { "[All] Markdown", "[All] File" });
 
             // Perform the specified write
             switch (writeSelect) {
@@ -113,8 +114,10 @@ int main()
                 // Write all characters and units to their files
                 interactions::writeToFile(charList, unitList);
                 break;
+            }
 
             break;
+        }
         case 7:
             // Prompt user for the desired print
             int printSelect = support::prompt("Which Print?", { "[All] Print", "[All] Print By Rank", "[All] Random Full Print",

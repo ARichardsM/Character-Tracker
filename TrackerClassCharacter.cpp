@@ -4,17 +4,6 @@
 	Character Scripts
 */
 
-void character::print() const {
-	std::cout << "Name: " << name << "\n";
-	std::cout << "Rank: " << characterRankings[rank] << "\n";
-	std::cout << "Member: " << member << "\n";
-	for (std::string aspect : aspects)
-		std::cout << "Aspect: " << aspect << "\n";
-	for (relation relation : relationVec) {
-		std::cout << "Relations: " << relation.returnRelation() << "\n";
-	}
-}
-
 std::string character::output() const {
 	std::string returnStr;
 
@@ -32,7 +21,7 @@ std::string character::output() const {
 void character::fullprint(const std::vector<unit>& unitList) const {
 	// If not a member, simply print
 	if (member == "None")
-		print();
+		std::cout << output();
 	else {
 		// Print Name and Rank
 		std::cout << "Name: " << name << "\n";

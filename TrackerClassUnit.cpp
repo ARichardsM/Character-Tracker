@@ -4,17 +4,6 @@
 	Unit Scripts
 */
 
-void unit::print() const {
-	std::cout << "Name: " << name << "\n";
-	std::cout << "Rank: " << unitRankings[rank] << "\n";
-	std::cout << "Member: " << member << "\n";
-	for (std::string aspect : aspects)
-		std::cout << "Aspect: " << aspect << "\n";
-	for (relation relation : relationVec) {
-		std::cout << "Relations: " << relation.returnRelation() << "\n";
-	}
-}
-
 std::string unit::output() const {
 	std::string returnStr;
 
