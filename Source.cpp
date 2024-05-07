@@ -88,7 +88,9 @@ int main()
             break;
         case 4:
         {
-            output::logListsMD(charList, unitList, history);
+            interactions::deleteChar("Raider B", charList);
+            interactions::deleteUnit("Raider Camp", charList, unitList);
+            interactions::deleteChar("Raider D", charList);
             break;
         }
         case 5:

@@ -30,4 +30,4 @@ The project consists of the four scripts shown in the table below.
 - [ ] Refactor
 
 ## TBD
-- [ ] Implement a testing system
+- [ ] Implement an improved testing system

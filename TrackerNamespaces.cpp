@@ -844,3 +844,63 @@ void input::loadUnit(std::string file, std::vector<unit>& unitList, std::vector<
 	if (file.substr(file.find(".")) == ".md")
 		loadUnitMD();
 }
+
+void interactions::deleteChar(const std::string& removeChar, std::vector<character>& characterList) {
+	bool removed = false;
+
+	// If element is found found, erase it 
+	for (int i = characterList.size() - 1; i >= 0; i--) {
+		if (characterList[i].name == removeChar){
+			characterList.erase(characterList.begin() + i);
+			break;
+		}
+	}
+
+	// If a character is removed
+	if (removed) {
+		// Remove the unit from the characterList
+		for (int i = characterList.size() - 1; i >= 0; i--) {
+			for (int j = characterList[i].relationVec.size() - 1; j >= 0; j--) {
+				if (characterList[i].relationVec[j].partner == removeChar)
+					characterList[i].relationVec.erase(characterList[i].relationVec.begin() + j);
+			}
+		}
+	}
+
+	return;
+}
+
+void interactions::deleteUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
+	bool removed = false;
+
+	// If element is found found, erase it 
+	for (int i = unitList.size() - 1; i >= 0; i--) {
+		if (unitList[i].name == removeUnit) {
+			unitList.erase(unitList.begin() + i);
+			removed = true;
+			break;
+		}
+	}
+
+	// If a unit is removed
+	if (removed) {
+		// Remove the unit from the characterList
+		for (int i = characterList.size() - 1; i >= 0; i--) {
+			if (characterList[i].member == removeUnit)
+				characterList[i].member = "None";
+		}
+
+		// Remove the unit from the unitList
+		for (int i = unitList.size() - 1; i >= 0; i--) {
+			if (unitList[i].member == removeUnit)
+				unitList[i].member = "None";
+
+			for (int j = unitList[i].relationVec.size() - 1; j >= 0; j--) {
+				if (unitList[i].relationVec[j].partner == removeUnit)
+					unitList[i].relationVec.erase(unitList[i].relationVec.begin() + j);
+			}
+		}
+	}
+
+	return;
+}

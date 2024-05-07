@@ -7,6 +7,7 @@
 std::string character::output() const {
 	std::string returnStr;
 
+	returnStr += "Name: " + name + "\n";
 	returnStr += "Rank: " + characterRankings[rank] + "\n";
 	returnStr += "Member: " + member + "\n";
 	for (std::string aspect : aspects)
