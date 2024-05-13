@@ -905,6 +905,20 @@ void interactions::deleteUnit(const std::string& removeUnit, std::vector<charact
 	return;
 }
 
+void recPrint(const std::vector<unit>& unitList, int thisUnitInd, int depth) {
+	for (int i = 0; i < depth; i++)
+		std::cout << "    ";
+
+	std::cout << unitList[thisUnitInd].name << " Depth: " << depth << "\n";
+
+	for (int i = 0; i < unitList.size(); i++) {
+		if (unitList[i].member != unitList[thisUnitInd].name)
+			continue;
+		recPrint(unitList, i, depth + 1);
+	}
+	return;
+}
+
 void output::printFullUnit(const std::vector<character>& characterList, const std::vector<unit>& unitList) {
 	// Variables
 	std::vector<std::vector<std::string>> unitInfo;
@@ -964,5 +978,18 @@ void output::printFullUnit(const std::vector<character>& characterList, const st
 
 		if (memSize > 0)
 			std::cout << "  - " << unitMembers[i].back() << "\n";
+	}
+
+	// For each unit
+	for (int i = 0; i < unitList.size(); i++) {
+		// Try to find it's unit membership
+		auto unitMem = find(unitNames.begin(), unitNames.end(), unitList[i].name);
+
+		//std::cout << unitList[i].name;
+
+		// If it doesn't belongs to a unit
+		if (unitList[i].member == "None") {
+			recPrint(unitList, i, 0);
+		}
 	}
 }
