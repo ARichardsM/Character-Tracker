@@ -93,7 +93,7 @@ int main()
             interactions::deleteUnit("Raider Camp", charList, unitList);
             interactions::deleteChar("Raider D", charList);
             */
-
+            
             output::printFullUnit(charList, unitList);
             break;
         }
