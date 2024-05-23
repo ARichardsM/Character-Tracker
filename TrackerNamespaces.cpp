@@ -906,26 +906,30 @@ void interactions::deleteUnit(const std::string& removeUnit, std::vector<charact
 }
 
 void recPrint(const std::vector<unit>& unitList, const std::vector<character>& characterList, const std::vector<std::vector<std::string>>& unitDets, int thisUnitInd, int depth) {
+	// Print blanks for indentation
 	for (int i = 0; i < depth; i++)
 		std::cout << "    ";
+
+	// Print the name and rank
 	std::cout << "[" << unitRankings[unitList[thisUnitInd].rank] << "] ";
 	std::cout << unitList[thisUnitInd].name;
 
+	// Print the size and max size
 	for (std::vector<std::string> currUnit : unitDets) {
 		if (currUnit[0] == unitList[thisUnitInd].name) {
 			std::cout << " (" << currUnit[1] << "/";
-			std::cout << (3 * pow(2, unitList[thisUnitInd].rank - 1)) << ")";
+			std::cout << (3 * pow(2, unitList[thisUnitInd].rank - 1)) << ")\n";
 		}
 	}
 
-	std::cout << " Depth: " << depth << "\n";
-
+	// Print any units that belongs to this unit
 	for (int i = 0; i < unitList.size(); i++) {
 		if (unitList[i].member != unitList[thisUnitInd].name)
 			continue;
 		recPrint(unitList, characterList, unitDets, i, depth + 1);
 	}
 
+	// Print any character that belongs to this unit
 	for (character currChar: characterList) {
 		if (currChar.member != unitList[thisUnitInd].name)
 			continue;
@@ -942,13 +946,10 @@ void recPrint(const std::vector<unit>& unitList, const std::vector<character>& c
 
 void output::printFullUnit(const std::vector<character>& characterList, const std::vector<unit>& unitList) {
 	// Variables
-	std::vector<std::vector<std::string>> unitInfo;
-	std::vector<std::vector<std::string>> unitMembers;
-	std::vector<std::string> unitNames;
-	//std::vector<std::string> unitMembers;
-	std::vector<int> unitSizes;
 	std::vector<std::vector<std::string>> unitDets;
-	std::string returnString;
+	std::vector<std::vector<std::string>> unitInfo;
+	std::vector<std::string> unitNames;
+	std::vector<int> unitSizes;
 
 	// Store the unit's name and necessary information and initialize the units' size
 	for (unit unit : unitList) {
@@ -966,7 +967,6 @@ void output::printFullUnit(const std::vector<character>& characterList, const st
 	for (std::vector<std::string> unit : unitInfo) {
 		unitNames.push_back(unit[0]);
 		unitDets.push_back({ unit[0], "0" });
-		unitMembers.push_back({});
 	}
 
 	// For each character
@@ -977,7 +977,6 @@ void output::printFullUnit(const std::vector<character>& characterList, const st
 		// If it belongs to a unit, add to the unit's size
 		if (charMem != unitNames.end()){
 			unitSizes[std::distance(unitNames.begin(), charMem)] += 1;
-			unitMembers[std::distance(unitNames.begin(), charMem)].push_back(character.name);
 		}
 	}
 
@@ -991,18 +990,6 @@ void output::printFullUnit(const std::vector<character>& characterList, const st
 			unitSizes[std::distance(unitNames.begin(), unitMem)] += unitSizes[i];
 
 		unitDets[i][1] = std::to_string(unitSizes[i]);
-
-		// Print out the size
-		std::cout << "[" << unitRankings[stoi(unitInfo[i][1])] << "] " << unitNames[i] << " (" << unitSizes[i] << "/" << (3 * pow(2, stoi(unitInfo[i][1]) - 1)) << ")\n";
-
-		int memSize = unitMembers[i].size() - 1;
-
-		for (int j = 0; j < memSize; j++) {
-			std::cout << "  - " << unitMembers[i][j] << "\n";
-		}
-
-		if (memSize > 0)
-			std::cout << "  - " << unitMembers[i].back() << "\n";
 	}
 
 	// For each unit
@@ -1012,7 +999,22 @@ void output::printFullUnit(const std::vector<character>& characterList, const st
 
 		// If it doesn't belongs to a unit
 		if (unitList[i].member == "None") {
+			// Recusive print it and it's members
 			recPrint(unitList, characterList, unitDets, i, 0);
 		}
 	}
+
+	// Print a newline for spacing
+	std::cout << "\n";
+}
+
+
+void missingEntity::refacChar(const std::string& missingChar, std::vector<character>& characterList) {
+	support::prompt("The character " + missingChar + " is missing", { "Rename", "Delete", "Split", "Merge" });
+	return;
+}
+
+void missingEntity::refacUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
+	support::prompt("The unit " + missingUnit + " is missing", {"Rename", "Delete", "Split", "Merge" });
+	return;
 }

@@ -105,6 +105,13 @@ namespace interactions {
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);
 }
 
+namespace missingEntity{
+	// Refactor a character
+	void refacChar(const std::string& missingChar, std::vector<character>& characterList);
+	// Refactor a unit
+	void refacUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
+}
+
 namespace input {
 	// Split a string based on a list of delims
 	std::vector<std::string> splitDelim(std::string input);

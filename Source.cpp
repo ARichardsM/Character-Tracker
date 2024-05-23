@@ -61,6 +61,16 @@ int main()
 
     // If there are missing entities
     if ((setA.size() != 0) || (setB.size() != 0)) {
+        if (support::prompt("Refactor missing entities?", { "Yes", "No" }) == 1) {
+            // Refactor missing units
+            for (string unitName : setA)
+                missingEntity::refacUnit(unitName, charList, unitList);
+
+            // Refactor missing characters
+            for (string charName : setB)
+                missingEntity::refacChar(charName, charList);
+        }
+
         if (support::prompt("Would you like to rename the entities?", { "Yes", "No" }) == 1) {
             // Rename all missing entities
             interactions::renameChar(setB, charList);
