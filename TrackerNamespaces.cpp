@@ -845,9 +845,7 @@ void input::loadUnit(std::string file, std::vector<unit>& unitList, std::vector<
 		loadUnitMD();
 }
 
-void interactions::deleteChar(const std::string& removeChar, std::vector<character>& characterList) {
-	bool removed = false;
-
+void missingEntity::deleteChar(const std::string& removeChar, std::vector<character>& characterList) {
 	// If element is found found, erase it 
 	for (int i = characterList.size() - 1; i >= 0; i--) {
 		if (characterList[i].name == removeChar){
@@ -856,49 +854,40 @@ void interactions::deleteChar(const std::string& removeChar, std::vector<charact
 		}
 	}
 
-	// If a character is removed
-	if (removed) {
-		// Remove the unit from the characterList
-		for (int i = characterList.size() - 1; i >= 0; i--) {
-			for (int j = characterList[i].relationVec.size() - 1; j >= 0; j--) {
-				if (characterList[i].relationVec[j].partner == removeChar)
-					characterList[i].relationVec.erase(characterList[i].relationVec.begin() + j);
-			}
+	// Remove the unit from the characterList
+	for (int i = characterList.size() - 1; i >= 0; i--) {
+		for (int j = characterList[i].relationVec.size() - 1; j >= 0; j--) {
+			if (characterList[i].relationVec[j].partner == removeChar)
+				characterList[i].relationVec.erase(characterList[i].relationVec.begin() + j);
 		}
 	}
 
 	return;
 }
 
-void interactions::deleteUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
-	bool removed = false;
-
+void missingEntity::deleteUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
 	// If element is found found, erase it 
 	for (int i = unitList.size() - 1; i >= 0; i--) {
 		if (unitList[i].name == removeUnit) {
 			unitList.erase(unitList.begin() + i);
-			removed = true;
 			break;
 		}
 	}
 
-	// If a unit is removed
-	if (removed) {
-		// Remove the unit from the characterList
-		for (int i = characterList.size() - 1; i >= 0; i--) {
-			if (characterList[i].member == removeUnit)
-				characterList[i].member = "None";
-		}
+	// Remove the unit from the characterList
+	for (int i = characterList.size() - 1; i >= 0; i--) {
+		if (characterList[i].member == removeUnit)
+			characterList[i].member = "None";
+	}
 
-		// Remove the unit from the unitList
-		for (int i = unitList.size() - 1; i >= 0; i--) {
-			if (unitList[i].member == removeUnit)
-				unitList[i].member = "None";
+	// Remove the unit from the unitList
+	for (int i = unitList.size() - 1; i >= 0; i--) {
+		if (unitList[i].member == removeUnit)
+			unitList[i].member = "None";
 
-			for (int j = unitList[i].relationVec.size() - 1; j >= 0; j--) {
-				if (unitList[i].relationVec[j].partner == removeUnit)
-					unitList[i].relationVec.erase(unitList[i].relationVec.begin() + j);
-			}
+		for (int j = unitList[i].relationVec.size() - 1; j >= 0; j--) {
+			if (unitList[i].relationVec[j].partner == removeUnit)
+				unitList[i].relationVec.erase(unitList[i].relationVec.begin() + j);
 		}
 	}
 
@@ -1010,11 +999,45 @@ void output::printFullUnit(const std::vector<character>& characterList, const st
 
 
 void missingEntity::refacChar(const std::string& missingChar, std::vector<character>& characterList) {
-	support::prompt("The character " + missingChar + " is missing", { "Rename", "Delete", "Split", "Merge" });
+	int selection = support::prompt("The character " + missingChar + " is missing", { "Rename", "Delete", "Split", "Merge" });
+
+	switch (selection) {
+	case 1:
+		std::cout << "Rename\n";
+		break;
+	case 2:
+		std::cout << "Delete\n";
+		deleteChar(missingChar, characterList);
+		break;
+	case 3:
+		std::cout << "Split\n";
+		break;
+	case 4:
+		std::cout << "Merge\n";
+		break;
+	}
+
 	return;
 }
 
 void missingEntity::refacUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
-	support::prompt("The unit " + missingUnit + " is missing", {"Rename", "Delete", "Split", "Merge" });
+	int selection = support::prompt("The unit " + missingUnit + " is missing", {"Rename", "Delete", "Split", "Merge" });
+
+	switch (selection) {
+	case 1:
+		std::cout << "Rename\n";
+		break;
+	case 2:
+		std::cout << "Delete\n";
+		deleteUnit(missingUnit, characterList, unitList);
+		break;
+	case 3:
+		std::cout << "Split\n";
+		break;
+	case 4:
+		std::cout << "Merge\n";
+		break;
+	}
+
 	return;
 }

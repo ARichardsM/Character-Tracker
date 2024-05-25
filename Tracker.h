@@ -88,11 +88,6 @@ namespace interactions {
 	// Rename all units
 	void renameUnit(std::set<std::string> unknownList, std::vector<character>& characterList, std::vector<unit>& unitList);
 
-	// Delete a selected character
-	void deleteChar(const std::string& removeChar, std::vector<character>& characterList);
-	// Delete a selected unit
-	void deleteUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
-
 	// Split a selected unit
 	void splitUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
 
@@ -110,6 +105,11 @@ namespace missingEntity{
 	void refacChar(const std::string& missingChar, std::vector<character>& characterList);
 	// Refactor a unit
 	void refacUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
+
+	// Delete a selected character
+	void deleteChar(const std::string& removeChar, std::vector<character>& characterList);
+	// Delete a selected unit
+	void deleteUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
 }
 
 namespace input {
