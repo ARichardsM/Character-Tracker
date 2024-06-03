@@ -845,10 +845,10 @@ void input::loadUnit(std::string file, std::vector<unit>& unitList, std::vector<
 		loadUnitMD();
 }
 
-void missingEntity::deleteChar(const std::string& removeChar, std::vector<character>& characterList) {
+void missingEntity::deleteChar(const std::string& missingChar, std::vector<character>& characterList) {
 	// If element is found found, erase it 
 	for (int i = characterList.size() - 1; i >= 0; i--) {
-		if (characterList[i].name == removeChar){
+		if (characterList[i].name == missingChar){
 			characterList.erase(characterList.begin() + i);
 			break;
 		}
@@ -857,7 +857,7 @@ void missingEntity::deleteChar(const std::string& removeChar, std::vector<charac
 	// Remove the unit from the characterList
 	for (int i = characterList.size() - 1; i >= 0; i--) {
 		for (int j = characterList[i].relationVec.size() - 1; j >= 0; j--) {
-			if (characterList[i].relationVec[j].partner == removeChar)
+			if (characterList[i].relationVec[j].partner == missingChar)
 				characterList[i].relationVec.erase(characterList[i].relationVec.begin() + j);
 		}
 	}
@@ -865,10 +865,10 @@ void missingEntity::deleteChar(const std::string& removeChar, std::vector<charac
 	return;
 }
 
-void missingEntity::deleteUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
+void missingEntity::deleteUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
 	// If element is found found, erase it 
 	for (int i = unitList.size() - 1; i >= 0; i--) {
-		if (unitList[i].name == removeUnit) {
+		if (unitList[i].name == missingUnit) {
 			unitList.erase(unitList.begin() + i);
 			break;
 		}
@@ -876,17 +876,17 @@ void missingEntity::deleteUnit(const std::string& removeUnit, std::vector<charac
 
 	// Remove the unit from the characterList
 	for (int i = characterList.size() - 1; i >= 0; i--) {
-		if (characterList[i].member == removeUnit)
+		if (characterList[i].member == missingUnit)
 			characterList[i].member = "None";
 	}
 
 	// Remove the unit from the unitList
 	for (int i = unitList.size() - 1; i >= 0; i--) {
-		if (unitList[i].member == removeUnit)
+		if (unitList[i].member == missingUnit)
 			unitList[i].member = "None";
 
 		for (int j = unitList[i].relationVec.size() - 1; j >= 0; j--) {
-			if (unitList[i].relationVec[j].partner == removeUnit)
+			if (unitList[i].relationVec[j].partner == missingUnit)
 				unitList[i].relationVec.erase(unitList[i].relationVec.begin() + j);
 		}
 	}
@@ -1004,6 +1004,7 @@ void missingEntity::refacChar(const std::string& missingChar, std::vector<charac
 	switch (selection) {
 	case 1:
 		std::cout << "Rename\n";
+		renameChar(missingChar, characterList);
 		break;
 	case 2:
 		std::cout << "Delete\n";
@@ -1026,6 +1027,7 @@ void missingEntity::refacUnit(const std::string& missingUnit, std::vector<charac
 	switch (selection) {
 	case 1:
 		std::cout << "Rename\n";
+		renameUnit(missingUnit, characterList, unitList);
 		break;
 	case 2:
 		std::cout << "Delete\n";
@@ -1040,4 +1042,60 @@ void missingEntity::refacUnit(const std::string& missingUnit, std::vector<charac
 	}
 
 	return;
+}
+
+void missingEntity::renameChar(const std::string& missingChar, std::vector<character>& characterList) {
+	// Declare name variables
+	std::vector<std::string> possibleNames;
+
+	// Append all character names to names
+	for (character chara : characterList) {
+		possibleNames.push_back(chara.name);
+	}
+
+	// Prompt for the true names
+	int nameLoc = support::prompt("What is the true name of " + missingChar, possibleNames) - 1;
+
+	// For every character's relation
+	for (character& chara : characterList) {
+		for (entity::relation& relation : chara.relationVec) {
+			// If the missing char's name was found, change it for the true name
+			if (relation.partner == missingChar)
+				relation.partner = possibleNames[nameLoc];
+		}
+	}
+}
+
+void missingEntity::renameUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
+	// Declare name variables
+	std::vector<std::string> possibleNames;
+
+	// Append all unit names to names
+	for (unit unit : unitList) {
+		possibleNames.push_back(unit.name);
+	}
+
+	// Prompt for the true names
+	int nameLoc = support::prompt("What is the true name of " + missingUnit, possibleNames) - 1;
+
+	// For every character's member
+	for (character& chara : characterList) {
+		// If the missing unit's name was found, change it for the true name
+		if (chara.member == missingUnit)
+			chara.member = possibleNames[nameLoc];
+	}
+
+	// For every unit
+	for (unit& uni : unitList) {
+		// If the missing unit's name is the member, change it for the true name
+		if (uni.member == missingUnit)
+			uni.member = possibleNames[nameLoc];
+
+		// For each of the unit's relations
+		for (entity::relation& relation : uni.relationVec) {
+			// If the missing unit's name was found, change it for the true name
+			if (relation.partner == missingUnit)
+				relation.partner = possibleNames[nameLoc];
+		}
+	}
 }

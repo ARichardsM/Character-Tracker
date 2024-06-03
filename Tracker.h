@@ -107,9 +107,14 @@ namespace missingEntity{
 	void refacUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
 
 	// Delete a selected character
-	void deleteChar(const std::string& removeChar, std::vector<character>& characterList);
+	void deleteChar(const std::string& missingChar, std::vector<character>& characterList);
 	// Delete a selected unit
-	void deleteUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
+	void deleteUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
+
+	// Rename all characters
+	void renameChar(const std::string& missingChar, std::vector<character>& characterList);
+	// Rename all units
+	void renameUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
 }
 
 namespace input {
