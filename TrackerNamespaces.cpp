@@ -999,7 +999,7 @@ void output::printFullUnit(const std::vector<character>& characterList, const st
 
 
 void missingEntity::refacChar(const std::string& missingChar, std::vector<character>& characterList) {
-	int selection = support::prompt("The character " + missingChar + " is missing", { "Rename", "Delete", "Split", "Merge" });
+	int selection = support::prompt("The character " + missingChar + " is missing", { "Rename", "Delete", "Merge" });
 
 	switch (selection) {
 	case 1:
@@ -1011,9 +1011,6 @@ void missingEntity::refacChar(const std::string& missingChar, std::vector<charac
 		deleteChar(missingChar, characterList);
 		break;
 	case 3:
-		std::cout << "Split\n";
-		break;
-	case 4:
 		std::cout << "Merge\n";
 		break;
 	}
@@ -1035,6 +1032,7 @@ void missingEntity::refacUnit(const std::string& missingUnit, std::vector<charac
 		break;
 	case 3:
 		std::cout << "Split\n";
+		splitUnit(missingUnit, characterList, unitList);
 		break;
 	case 4:
 		std::cout << "Merge\n";
@@ -1098,4 +1096,42 @@ void missingEntity::renameUnit(const std::string& missingUnit, std::vector<chara
 				relation.partner = possibleNames[nameLoc];
 		}
 	}
+}
+
+void missingEntity::splitUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
+	std::vector<int> freeChars;
+	std::vector<std::string> possibleNames;
+	std::vector<int> newNames;
+
+	// Append all unit names to names
+	for (unit unit : unitList) {
+		possibleNames.push_back(unit.name);
+	}
+
+	// Note all characters the are part of the unit
+	for (character& chara : characterList) {
+		if (chara.member == missingUnit) {
+			// Prompt for a new unit
+			int select = support::prompt("What unit does " + chara.name + " now belong to?", possibleNames) - 1;
+
+			// Change the character's unit
+			chara.member = possibleNames[select];
+		}
+	}
+
+	for (unit& curUnit : unitList) {
+		if (curUnit.member == missingUnit) {
+			// Prompt for a new unit
+			int select = support::prompt("What unit does " + curUnit.name + " now belong to?", possibleNames) - 1;
+
+			// Change the unit's unit
+			if (possibleNames[select] == curUnit.name){
+				curUnit.member = "None";
+			}
+			else {
+				curUnit.member = possibleNames[select];
+			}
+		}
+	}
+
 }

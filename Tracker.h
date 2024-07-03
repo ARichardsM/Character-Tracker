@@ -115,6 +115,9 @@ namespace missingEntity{
 	void renameChar(const std::string& missingChar, std::vector<character>& characterList);
 	// Rename all units
 	void renameUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
+
+	// Split a unit into other units
+	void splitUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
 }
 
 namespace input {
