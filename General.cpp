@@ -44,3 +44,16 @@ int support::prompt(std::string txt, std::vector<std::string> opts) {
 
 	return stoi(userInput);
 }
+
+int simpleFind::find(const std::vector<std::string>& arr, const std::string& val) {
+	// Try to find val
+	auto loc = find(arr.begin(), arr.end(), val);
+
+	// If it's in the array return it
+	if (loc != arr.end()) {
+		return std::distance(arr.begin(), loc);
+	} 
+
+	// Otherwise return -1
+	return -1;
+}

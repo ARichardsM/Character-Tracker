@@ -149,3 +149,8 @@ namespace rules {
 	// Filter the two lists according to the rules
 	void filterRules(const std::vector<std::string>& rulesList, std::vector<character>& characterList, std::vector<unit>& unitList);
 }
+
+namespace simpleFind {
+	int find(const std::vector<character>& arr, const std::string& val);
+	int find(const std::vector<unit>& arr, const std::string& val);
+}

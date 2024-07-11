@@ -47,6 +47,11 @@ void character::fullprint(const std::vector<unit>& unitList) const {
 		// While a next member exists
 		while (nextMember != "None") {
 
+			// Check if the member exists
+			if (simpleFind::find(unitList, nextMember) == -1)
+				break;
+
+
 			// Find the unit the entity belongs to
 			for (unit unit : unitList) {
 				if (unit.name == nextMember) {

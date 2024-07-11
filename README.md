@@ -21,9 +21,9 @@ The project consists of the four scripts shown in the table below.
 
 ## Current
 - [ ] Improve handling of missing entities
-  - [ ] Disable the random pull if there are any missing entities
-  - [ ] Allow a missing crew to be set to multiple crews
-  - [ ] Allow a missing entity to be removed
+  - [X] Disable the random pull if there are any missing entities
+  - [X] Allow a missing crew to be set to multiple crews
+  - [X] Allow a missing entity to be removed
 
 ## Backlog
 - [ ] Print a set number of entities

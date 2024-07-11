@@ -999,7 +999,7 @@ void output::printFullUnit(const std::vector<character>& characterList, const st
 
 
 void missingEntity::refacChar(const std::string& missingChar, std::vector<character>& characterList) {
-	int selection = support::prompt("The character " + missingChar + " is missing", { "Rename", "Delete", "Merge" });
+	int selection = support::prompt("The character " + missingChar + " is missing", { "Rename", "Delete" });
 
 	switch (selection) {
 	case 1:
@@ -1010,16 +1010,13 @@ void missingEntity::refacChar(const std::string& missingChar, std::vector<charac
 		std::cout << "Delete\n";
 		deleteChar(missingChar, characterList);
 		break;
-	case 3:
-		std::cout << "Merge\n";
-		break;
 	}
 
 	return;
 }
 
 void missingEntity::refacUnit(const std::string& missingUnit, std::vector<character>& characterList, std::vector<unit>& unitList) {
-	int selection = support::prompt("The unit " + missingUnit + " is missing", {"Rename", "Delete", "Split", "Merge" });
+	int selection = support::prompt("The unit " + missingUnit + " is missing", {"Rename", "Delete", "Split" });
 
 	switch (selection) {
 	case 1:
@@ -1033,9 +1030,6 @@ void missingEntity::refacUnit(const std::string& missingUnit, std::vector<charac
 	case 3:
 		std::cout << "Split\n";
 		splitUnit(missingUnit, characterList, unitList);
-		break;
-	case 4:
-		std::cout << "Merge\n";
 		break;
 	}
 
@@ -1134,4 +1128,24 @@ void missingEntity::splitUnit(const std::string& missingUnit, std::vector<charac
 		}
 	}
 
+}
+
+int simpleFind::find(const std::vector<character>& arr, const std::string& val) {
+	std::vector<std::string> names;
+
+	// Convert to strings
+	for (character chara : arr)
+		names.push_back(chara.name);
+
+	return find(names, val);
+}
+
+int simpleFind::find(const std::vector<unit>& arr, const std::string& val) {
+	std::vector<std::string> names;
+
+	// Convert to strings
+	for (unit uni : arr)
+		names.push_back(uni.name);
+
+	return find(names, val);
 }

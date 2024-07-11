@@ -104,7 +104,9 @@ int main()
             interactions::deleteChar("Raider D", charList);
             */
             
-            output::printFullUnit(charList, unitList);
+            //output::printFullUnit(charList, unitList);
+
+            cout << simpleFind::find(charList, "Raider");
             break;
         }
         case 5:
