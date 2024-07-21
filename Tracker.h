@@ -83,19 +83,6 @@ namespace interactions {
 	// Add any missing relations in the lists
 	void addMissingRelations(std::vector<character>& characterList, std::vector<unit>& unitList);
 
-	// Rename all characters
-	void renameChar(std::set<std::string> unknownList, std::vector<character>& characterList);
-	// Rename all units
-	void renameUnit(std::set<std::string> unknownList, std::vector<character>& characterList, std::vector<unit>& unitList);
-
-	// Split a selected unit
-	void splitUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
-
-	// Merge two characters into one
-	void mergeChar(const std::string& removeChar, std::vector<character>& characterList);
-	// Merge two units into one
-	void mergeUnit(const std::string& removeUnit, std::vector<character>& characterList, std::vector<unit>& unitList);
-
 	// Write list contents to their respective files
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);
 }

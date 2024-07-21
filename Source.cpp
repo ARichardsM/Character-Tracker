@@ -70,12 +70,6 @@ int main()
             for (string charName : setB)
                 missingEntity::refacChar(charName, charList);
         }
-
-        if (support::prompt("Would you like to rename the entities?", { "Yes", "No" }) == 1) {
-            // Rename all missing entities
-            interactions::renameChar(setB, charList);
-            interactions::renameUnit(setA, charList, unitList);
-        }
     }
 
     

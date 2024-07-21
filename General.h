@@ -15,8 +15,6 @@ namespace support {
 	int prompt(std::string txt, std::vector<std::string> opts);
 }
 
-#include "Tracker.h"
-
 namespace simpleFind {
 	int find(const std::vector<std::string>& arr, const std::string& val);
 }
