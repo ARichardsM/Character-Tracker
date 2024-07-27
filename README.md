@@ -16,17 +16,16 @@ The project consists of the four scripts shown in the table below.
 | TrackerClassCharacter.cpp | Contains scripts for the character class.                                         |
 | TrackerClassUnit.cpp      | Contains scripts for the unit class.                                              |
 | TrackerNamespaces.cpp     | Contains scripts for the tracker interactions.                                    |
+| TrackerNamespacesME.cpp   | Contains scripts for the tracker "Missing Entity" interactions.                   |
 |---------------------------|-----------------------------------------------------------------------------------|
 | UnitTest.cpp              | Unit tests for the Classes.cpp scripts using Microsoft Unit Testing for C/C++.    |
 
 ## Current
-- [X] Improve handling of missing entities
-  - [X] Disable the random pull if there are any missing entities
-  - [X] Allow a missing crew to be set to multiple crews
-  - [X] Allow a missing entity to be removed
+- [X] Print a set number of entities
+  - [ ] Set Number Exclusive Pull from all entities
+  - [ ] Set Number Exclusive Pull from allowed entities (Rules)
 
 ## Backlog
-- [ ] Print a set number of entities
 - [ ] Refactor
 
 ## TBD
