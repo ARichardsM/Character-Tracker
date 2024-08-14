@@ -128,6 +128,9 @@ namespace output {
 
 	// Print units and mention members
 	void printFullUnit(const std::vector<character>& characterList, const std::vector<unit>& unitList);
+
+	// Full print according to a vector of rules
+	void multiPrint(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 }
 
 namespace rules {

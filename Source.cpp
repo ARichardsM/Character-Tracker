@@ -92,15 +92,7 @@ int main()
             break;
         case 4:
         {
-            /*
-            interactions::deleteChar("Raider B", charList);
-            interactions::deleteUnit("Raider Camp", charList, unitList);
-            interactions::deleteChar("Raider D", charList);
-            */
-            
-            //output::printFullUnit(charList, unitList);
-
-            cout << simpleFind::find(charList, "Raider");
+            output::multiPrint(charList, unitList);
             break;
         }
         case 5:
