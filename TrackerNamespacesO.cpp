@@ -21,9 +21,6 @@ void output::multiPrint(const std::vector<character>& characterList, const std::
 
 		std::vector<bool> arr(characterList.size(), false);
 
-		for (bool in : arr)
-			std::cout << in << " INIT ARRAY \n";
-
 		for (int i = 0; i < entNum; i++) {
 			int random_value = std::rand() % characterList.size();
 
@@ -38,11 +35,6 @@ void output::multiPrint(const std::vector<character>& characterList, const std::
 
 			
 		}
-
-		for (bool in : arr)
-			std::cout << in << " After ARRAY \n";
-
-		std::cout << entNum;
 
 		// Print all characters
 		std::cout << "Characters" << "\n";
@@ -60,14 +52,33 @@ void output::multiPrint(const std::vector<character>& characterList, const std::
 		if (entNum > unitList.size())
 			entNum = unitList.size();
 
-		std::cout << entNum;
+		std::vector<bool> arr(unitList.size(), false);
+
+		for (int i = 0; i < entNum; i++) {
+			int random_value = std::rand() % unitList.size();
+
+			while (arr[random_value]) {
+				random_value = random_value + 1;
+
+				if (random_value >= arr.size())
+					random_value = 0;
+			}
+
+			arr[random_value] = true;
+
+
+		}
 
 		// Print all units
 		std::cout << "Units" << "\n";
-		for (unit entry : unitList) {
-			std::cout << entry.output();
-			std::cout << "\n";
+		for (int i = 0; i < unitList.size(); i++) {
+			if (arr[i]) {
+				std::cout << unitList[i].output();
+				std::cout << "\n";
+			}
+
 		}
+
 		break;
 	}
 	}
