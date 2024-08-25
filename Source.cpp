@@ -124,15 +124,15 @@ int main()
         }
         case 7:
             // Prompt user for the desired print
-            int printSelect = support::prompt("Which Print?", { "[All] Print", "[All] Print By Rank", "[All] Random Full Print",
-                "[Filter] Print", "[Filter] Print By Rank", "[Filter] Random Full Print" });
+            int printSelectA = support::prompt("Apply A Filter?", { "Yes", "No" });
+            int printSelectB = support::prompt("What Type Of Print?", { "Print All", "Print By Rank", "Random Full Print", "Print Multiple" });
 
             // Create temporary copies of the list
             vector<character> tempCharList = charList;
             vector<unit> tempUnitList = unitList;
 
             // Potentially apply a filter
-            if (printSelect > 3) {
+            if (printSelectA == 1) {
                 // Declare unit name variable
                 vector<string> unitNames;
 
@@ -148,28 +148,30 @@ int main()
                 rules::filterRules(rulesList, tempCharList, tempUnitList);
             }
 
-            // Determine the print type
-            printSelect = (printSelect - 1) % 3;
-
             // Perform the specified print
-            switch (printSelect) {
-            case 0:
+            switch (printSelectB) {
+            case 1:
                 // Print all characters and units
                 output::printAll(tempCharList, tempUnitList);
 
                 break;
-            case 1:
+            case 2:
                 // Print according to the ranks
                 output::printRank(tempCharList, tempUnitList);
 
                 break;
-            case 2:
+            case 3:
                 // Print according to the ranks
                 output::printFull(tempCharList, tempUnitList);
 
                 break;
+            case 4:
+                // Print according to the ranks
+                output::multiPrint(tempCharList, tempUnitList);
+
+                break;
             }
-          
+                      
             break;
         }
 

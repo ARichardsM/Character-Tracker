@@ -22,8 +22,8 @@ The project consists of the four scripts shown in the table below.
 
 ## Current
 - [X] Print a set number of entities
-  - [ ] Set Number Exclusive Pull from all entities
-  - [ ] Set Number Exclusive Pull from allowed entities (Rules)
+  - [X] Set Number Exclusive Pull from all entities
+  - [X] Set Number Exclusive Pull from allowed entities (Rules)
 
 ## Backlog
 - [ ] Refactor

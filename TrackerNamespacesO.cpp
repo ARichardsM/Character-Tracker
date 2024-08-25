@@ -2,7 +2,7 @@
 
 void output::multiPrint(const std::vector<character>& characterList, const std::vector<unit>& unitList) {
 	std::string printNum;
-	int entNum;
+	int entNum, entType;
 
 	std::srand(std::time(nullptr));
 
@@ -13,7 +13,17 @@ void output::multiPrint(const std::vector<character>& characterList, const std::
 
 	entNum = std::stoi(printNum);
 
-	switch (support::prompt("Which Type of Entity?", { "Character", "Crew" })) {
+	if (characterList.size() == 0) {
+		entType = 2;
+	}
+	else if (unitList.size() == 0) {
+		entType = 1;
+	}
+	else {
+		entType = support::prompt("Which Type of Entity?", { "Character", "Crew" });
+	}
+
+	switch (entType) {
 	case 1:
 	{
 		if (entNum > characterList.size())

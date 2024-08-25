@@ -129,7 +129,7 @@ namespace output {
 	// Print units and mention members
 	void printFullUnit(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 
-	// Full print according to a vector of rules
+	// Print multiple characters or units, chosen randomly
 	void multiPrint(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 }
 
