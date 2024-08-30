@@ -21,12 +21,22 @@ The project consists of the four scripts shown in the table below.
 | UnitTest.cpp              | Unit tests for the Classes.cpp scripts using Microsoft Unit Testing for C/C++.    |
 
 ## Current
-- [X] Print a set number of entities
-  - [X] Set Number Exclusive Pull from all entities
-  - [X] Set Number Exclusive Pull from allowed entities (Rules)
+- [ ] Refactor
+	- [ ] Refactor All CPP Files
+		- [ ] Refactor Source.cpp
+		- [ ] Refactor General.cpp
+		- [ ] Refactor TrackerClassEntity.cpp 
+		- [ ] Refactor TrackerClassCharacter.cpp
+		- [ ] Refactor TrackerClassUnit.cpp
+		- [ ] Refactor TrackerNamespaces.cpp
+		- [ ] Refactor TrackerNamespacesME.cpp
+	- [ ] Rename & Reorganzie Files
+	- [ ] Rewrite README.md
+		- [ ] New Backlog
+		- [ ] Improve Description
 
 ## Backlog
-- [ ] Refactor
+
 
 ## TBD
 - [ ] Implement an improved testing system
