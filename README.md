@@ -32,11 +32,14 @@ The project consists of the four scripts shown in the table below.
 		- [ ] Refactor TrackerNamespacesME.cpp
 	- [ ] Rename & Reorganzie Files
 	- [ ] Rewrite README.md
-		- [ ] New Backlog
+		- [X] New Backlog
 		- [ ] Improve Description
 
 ## Backlog
-
+- [ ] General Input Parameter Document
+- [ ] Character and Unit List Classes
+- [ ] Output Via Connection
+- [ ] Alter Relations
+- [ ] Implement an improved testing system
 
 ## TBD
-- [ ] Implement an improved testing system
