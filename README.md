@@ -24,7 +24,7 @@ The project consists of the four scripts shown in the table below.
 - [ ] Refactor
 	- [ ] Refactor All CPP Files
 		- [ ] Refactor Source.cpp
-		- [ ] Refactor General.cpp
+		- [X] Refactor General.cpp
 		- [ ] Refactor TrackerClassEntity.cpp 
 		- [ ] Refactor TrackerClassCharacter.cpp
 		- [ ] Refactor TrackerClassUnit.cpp

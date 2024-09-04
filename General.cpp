@@ -1,8 +1,7 @@
 /*
- * general.cpp
- *
+ *	General.cpp
+ *	CPP File for the functions defined in General.h
  *  Created on: Oct 9, 2018
- *      Author: Adrian
  */
 
 #include "General.h"
@@ -18,7 +17,7 @@ int support::prompt(std::string txt, std::vector<std::string> opts) {
 	bool validIn = false;
 	while (!validIn) {
 		// Print the opening text
-		std::cout << txt << "\nPossible Options:\n";
+		std::cout << txt << "\n";
 
 		// Print each option
 		for (int i = 0; i < opts.size(); i++) {
@@ -37,7 +36,7 @@ int support::prompt(std::string txt, std::vector<std::string> opts) {
 
 		// If valid, save, if not, repeat
 		if (!validIn)
-			std::cout << "Invalid Input\n";
+			std::cout << "Input is invalid, please try again.\n";
 
 		std::cout << "\n";
 	}

@@ -1,8 +1,7 @@
 /*
- * General.h
- *
+ *	General.h
+ *	Contains simple functions that could easily be repurposed in the future.
  *  Created on: Oct 9, 2018
- *      Author: Adrian
  */
 
 #pragma once
