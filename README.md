@@ -25,11 +25,12 @@ The project consists of the four scripts shown in the table below.
 	- [ ] Refactor All CPP Files
 		- [ ] Refactor Source.cpp
 		- [X] Refactor General.cpp
-		- [ ] Refactor TrackerClassEntity.cpp 
+		- [X] Refactor TrackerClassEntity.cpp 
 		- [ ] Refactor TrackerClassCharacter.cpp
 		- [ ] Refactor TrackerClassUnit.cpp
 		- [ ] Refactor TrackerNamespaces.cpp
 		- [ ] Refactor TrackerNamespacesME.cpp
+		- [ ] Refactor TrackerNamespacesO.cpp
 	- [ ] Rename & Reorganzie Files
 	- [ ] Rewrite README.md
 		- [X] New Backlog
@@ -37,6 +38,9 @@ The project consists of the four scripts shown in the table below.
 
 ## Backlog
 - [ ] General Input Parameter Document
+	- [ ] Entity Feature Switch Case
+- [ ] Entity Relation Tag System
+- [ ] Simple Relation Constructor
 - [ ] Character and Unit List Classes
 - [ ] Output Via Connection
 - [ ] Alter Relations

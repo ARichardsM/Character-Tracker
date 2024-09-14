@@ -50,7 +50,7 @@ void entity::addFeature(std::string featString, std::vector<std::string>& histor
 
 	// If the input cannot split
 	if (feat.size() == 1) {
-		// If no history has been added preciously
+		// If no history has been added previously
 		if (historyInd == -1) {
 			// Add a new history entry and note the index
 			historyInd = history.size();
