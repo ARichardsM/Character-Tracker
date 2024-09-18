@@ -29,7 +29,7 @@ The project consists of the four scripts shown in the table below.
 		- [ ] Refactor TrackerClassCharacter.cpp
 		- [ ] Refactor TrackerClassUnit.cpp
 		- [ ] Refactor TrackerNamespaces.cpp
-		- [ ] Refactor TrackerNamespacesME.cpp
+		- [X] Refactor TrackerNamespacesME.cpp
 		- [ ] Refactor TrackerNamespacesO.cpp
 	- [ ] Rename & Reorganzie Files
 	- [ ] Rewrite README.md
