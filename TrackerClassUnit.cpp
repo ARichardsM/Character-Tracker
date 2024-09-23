@@ -19,7 +19,7 @@ std::string unit::output() const {
 	return returnStr;
 }
 
-void unit::addFeature(std::string featString) {
+void unit::addFeature(const std::string& featString) {
 	// Split the input string by delims
 	std::vector<std::string> feat = input::splitDelim(featString);
 
@@ -36,18 +36,18 @@ void unit::addFeature(std::string featString) {
 		entity::addFeature(featString);
 }
 
-void unit::addFeature(std::string featString, std::vector<std::string>& history) {
+void unit::addFeature(const std::string& featString, std::vector<std::string>& history) {
 	// Attempt to split the input string by delims
 	std::vector<std::string> feat = input::splitDelim(featString);
 
 	// Rank: Set the rank to [1]'s integer equivalent
 	if (feat[0] == "Rank") {
 		// Search for rank [1] in the character rankings
-		auto rankIter = find(unitRankings.begin(), unitRankings.end(), feat[1]);
+		int rankIt = simpleFind::find(unitRankings, feat[1]);
 
 		// Assign the rank if it exists, otherwise stay unassigned
-		if (rankIter != unitRankings.end())
-			rank = std::distance(unitRankings.begin(), rankIter);
+		if (rankIt != -1)
+			rank = rankIt;
 	}
 	else
 		entity::addFeature(featString, history);

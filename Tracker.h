@@ -33,20 +33,21 @@ public:
 	std::vector<relation> relationVec;
 
 	// Add a feature based on an input string
-	void addFeature(std::string featString);
+	void addFeature(const std::string& featString);
 	// Add a feature or add to history based on an input string
-	void addFeature(std::string featString, std::vector<std::string>& history);
+	void addFeature(const std::string& featString, std::vector<std::string>& history);
 };
 
 // Unit Information
 class unit : public entity {
 public:
+	// Initializer
 	unit() = default;
 
 	// Add a feature based on an input string
-	void addFeature(std::string featString);
+	void addFeature(const std::string& featString);
 	// Add a feature or add to history based on an input string
-	void addFeature(std::string featString, std::vector<std::string>& history);
+	void addFeature(const std::string& featString, std::vector<std::string>& history);
 
 	// Output the unit
 	std::string output() const;
@@ -55,6 +56,7 @@ public:
 // Character Information
 class character : public entity {
 public:
+	// Initializer
 	character() = default;
 
 	// Add a feature based on an input string

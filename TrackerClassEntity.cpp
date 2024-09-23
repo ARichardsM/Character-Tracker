@@ -4,7 +4,7 @@
 	Entity Scripts
 */
 
-void entity::addFeature(std::string featString) {
+void entity::addFeature(const std::string& featString) {
 	// Split the input string by delims
 	std::vector<std::string> feat = input::splitDelim(featString);
 
@@ -44,7 +44,7 @@ void entity::addFeature(std::string featString) {
 	}
 }
 
-void entity::addFeature(std::string featString, std::vector<std::string>& history) {
+void entity::addFeature(const std::string& featString, std::vector<std::string>& history) {
 	// Attempt to split the input string by delims
 	std::vector<std::string> feat = input::splitDelim(featString);
 
