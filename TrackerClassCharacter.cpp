@@ -94,23 +94,6 @@ void character::fullprint(const std::vector<unit>& unitList) const {
 	}
 }
 
-void character::addFeature(std::string featString) {
-	// Split the input string by delims
-	std::vector<std::string> feat = input::splitDelim(featString);
-
-	// Rank: Set the rank to [1]'s integer equivalent
-	if (feat[0] == "Rank") {
-		// Search for rank [1] in the character rankings
-		auto rankIter = find(characterRankings.begin(), characterRankings.end(), feat[1]);
-
-		// Assign the rank if it exists, otherwise stay unassigned
-		if (rankIter != characterRankings.end())
-			rank = std::distance(characterRankings.begin(), rankIter);
-	}
-	else
-		entity::addFeature(featString);
-}
-
 void character::addFeature(std::string featString, std::vector<std::string>& history) {
 	// Attempt to split the input string by delims
 	std::vector<std::string> feat = input::splitDelim(featString);
@@ -118,11 +101,10 @@ void character::addFeature(std::string featString, std::vector<std::string>& his
 	// Rank: Set the rank to [1]'s integer equivalent
 	if (feat[0] == "Rank") {
 		// Search for rank [1] in the character rankings
-		auto rankIter = find(characterRankings.begin(), characterRankings.end(), feat[1]);
+		int rankIt = simpleFind::find(characterRankings, feat[1]);
 
 		// Assign the rank if it exists, otherwise stay unassigned
-		if (rankIter != characterRankings.end())
-			rank = std::distance(characterRankings.begin(), rankIter);
+		rank = std::max(0, rankIt);
 	}
 	else
 		entity::addFeature(featString, history);

@@ -44,8 +44,6 @@ public:
 	// Initializer
 	unit() = default;
 
-	// Add a feature based on an input string
-	void addFeature(const std::string& featString);
 	// Add a feature or add to history based on an input string
 	void addFeature(const std::string& featString, std::vector<std::string>& history);
 
@@ -59,8 +57,6 @@ public:
 	// Initializer
 	character() = default;
 
-	// Add a feature based on an input string
-	void addFeature(std::string featString);
 	// Add a feature or add to history based on an input string
 	void addFeature(std::string featString, std::vector<std::string>& history);
 
