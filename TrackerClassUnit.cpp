@@ -12,9 +12,8 @@ std::string unit::output() const {
 	returnStr += "Member: " + member + "\n";
 	for (std::string aspect : aspects)
 		returnStr += "Aspect: " + aspect + "\n";
-	for (relation relation : relationVec) {
+	for (relation relation : relationVec)
 		returnStr += "Relation: " + relation.returnRelation() + "\n";
-	}
 
 	return returnStr;
 }

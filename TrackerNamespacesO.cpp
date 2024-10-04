@@ -114,7 +114,7 @@ void output::printFull(const std::vector<character>& characterList, const std::v
 	int select = rand() % characterList.size();
 
 	// Full print the selected character
-	characterList[select].fullprint(unitList);
+	output::charPrintFull(characterList[select], unitList);
 }
 
 
@@ -306,5 +306,80 @@ void output::multiPrint(const std::vector<character>& characterList, const std::
 
 		break;
 	}
+	}
+}
+
+void output::charPrintFull(const character& acter, const std::vector<unit>& unitList) {
+	// If not a member, simply print
+	if (acter.member == "None")
+		std::cout << acter.output();
+	else {
+		// Print Name and Rank
+		std::cout << "Name: " << acter.name << "\n";
+		std::cout << "Rank: " << characterRankings[acter.rank] << "\n";
+
+		// Record the character's aspects and relations
+		std::vector<std::string> fullAspects = acter.aspects;
+		std::vector<std::vector<std::string>> fullRelations;
+		for (entity::relation rel : acter.relationVec) {
+			std::vector<std::string> relString;
+			relString.push_back(rel.partner);
+			for (std::string tag : rel.tags)
+				relString.push_back(tag);
+			relString.push_back(rel.desc);
+			fullRelations.push_back(relString);
+		}
+
+		// Set next member and initilize the full member vector
+		std::vector<std::string> fullMember;
+		std::string nextMember = acter.member;
+
+		// While a next member exists
+		while (nextMember != "None") {
+
+			// Check if the member exists
+			if (simpleFind::find(unitList, nextMember) == -1)
+				break;
+
+
+			// Find the unit the entity belongs to
+			for (unit unit : unitList) {
+				if (unit.name == nextMember) {
+					// Add the aspects, relations and membership
+					fullAspects.insert(fullAspects.end(), unit.aspects.begin(), unit.aspects.end());
+					fullMember.push_back(nextMember);
+					std::vector<std::vector<std::string>> newRelations;
+					for (entity::relation rel : unit.relationVec) {
+						std::vector<std::string> relString;
+						relString.push_back(rel.partner);
+						for (std::string tag : rel.tags)
+							relString.push_back(tag);
+						relString.push_back(rel.desc);
+						newRelations.push_back(relString);
+					}
+					fullRelations.insert(fullRelations.end(), newRelations.begin(), newRelations.end());
+
+					// Update the next member, while preventing an infinte loop
+					if (nextMember != unit.member)
+						nextMember = unit.member;
+					else
+						nextMember = "None";
+
+					break;
+				}
+			}
+		}
+
+		// Print the full memberships, aspects and relations
+		std::cout << "Member: ";
+		for (std::string membership : std::vector<std::string>(fullMember.begin(), fullMember.end() - 1))
+			std::cout << membership << " - ";
+		std::cout << fullMember.back() << "\n";
+
+		for (std::string aspect : fullAspects)
+			std::cout << "Aspect: " << aspect << "\n";
+
+		for (std::vector<std::string> relation : fullRelations)
+			std::cout << "Relation: " << relation[0] << " - " << relation[1] << "\n";
 	}
 }

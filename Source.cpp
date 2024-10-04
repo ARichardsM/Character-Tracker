@@ -100,7 +100,7 @@ int main()
             srand(time(0));
 
             // Full print a random character
-            charList[rand() % charList.size()].fullprint(unitList);
+            output::charPrintFull(charList[rand() % charList.size()], unitList);
             cout << "\n";
             break;
         case 6:

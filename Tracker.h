@@ -62,8 +62,6 @@ public:
 
 	// Output the character
 	std::string output() const;
-	// Print out the character and all member unit information
-	void fullprint(const std::vector<unit>& unitList) const;
 };
 
 namespace interactions {
@@ -123,6 +121,9 @@ namespace output {
 	void printFull(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 	// Write the character and unit list to two seperate markdown files
 	void logListsMD(const std::vector<character>& characterList, const std::vector<unit>& unitList, const std::vector<std::string>& history);
+
+	// Print out the character and all member unit information
+	void charPrintFull(const character& acter, const std::vector<unit>& unitList);
 
 	// Print units and mention members
 	void printFullUnit(const std::vector<character>& characterList, const std::vector<unit>& unitList);
