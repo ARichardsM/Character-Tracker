@@ -1,5 +1,10 @@
 #include "Tracker.h"
 
+/*
+* Output Namespace Functions
+*
+*/
+
 void recPrint(const std::vector<unit>& unitList, const std::vector<character>& characterList, const std::vector<std::vector<std::string>>& unitDets, int thisUnitInd, int depth) {
 	// Print blanks for indentation
 	for (int i = 0; i < depth; i++)
@@ -216,11 +221,14 @@ void output::logListsMD(const std::vector<character>& characterList, const std::
 }
 
 void output::multiPrint(const std::vector<character>& characterList, const std::vector<unit>& unitList) {
+	// Initialize Variables
 	std::string printNum;
 	int entNum, entType;
 
+	// Initialize Random
 	std::srand(std::time(nullptr));
 
+	// Determine number of entities to print
 	do {
 		std::cout << "How Many Entities Should Be Output? \t";
 		std::cin >> printNum;
@@ -228,6 +236,7 @@ void output::multiPrint(const std::vector<character>& characterList, const std::
 
 	entNum = std::stoi(printNum);
 
+	// Determine whether to print characters or units
 	if (characterList.size() == 0) {
 		entType = 2;
 	}
@@ -238,30 +247,37 @@ void output::multiPrint(const std::vector<character>& characterList, const std::
 		entType = support::prompt("Which Type of Entity?", { "Character", "Crew" });
 	}
 
+	// Based on the entity being printed
 	switch (entType) {
 	case 1:
 	{
+		// Bound characters to print
 		if (entNum > characterList.size())
 			entNum = characterList.size();
 
+		// Prepare bool array of characters to print
 		std::vector<bool> arr(characterList.size(), false);
 
+		// For the number of characters to print
 		for (int i = 0; i < entNum; i++) {
+			// Select a random character
 			int random_value = std::rand() % characterList.size();
 
+			// If the character is going to be printed already
 			while (arr[random_value]) {
+				// Increment the selection value
 				random_value = random_value + 1;
 
+				// Bound the selection value
 				if (random_value >= arr.size())
 					random_value = 0;
 			}
 
+			// Mark the character to be printed
 			arr[random_value] = true;
-
-			
 		}
 
-		// Print all characters
+		// Print all marked characters
 		std::cout << "Characters" << "\n";
 		for (int i = 0; i < characterList.size(); i++) {
 			if (arr[i]) {
@@ -274,27 +290,33 @@ void output::multiPrint(const std::vector<character>& characterList, const std::
 	}
 	case 2:
 	{
+		// Bound units to print
 		if (entNum > unitList.size())
 			entNum = unitList.size();
 
+		// Prepare bool array of units to print
 		std::vector<bool> arr(unitList.size(), false);
 
+		// For the number of units to print
 		for (int i = 0; i < entNum; i++) {
+			// Select a random unit
 			int random_value = std::rand() % unitList.size();
 
+			// If the unit is going to be printed already
 			while (arr[random_value]) {
+				// Increment the selection value
 				random_value = random_value + 1;
 
+				// Bound the selection value
 				if (random_value >= arr.size())
 					random_value = 0;
 			}
 
+			// Mark the unit to be printed
 			arr[random_value] = true;
-
-
 		}
 
-		// Print all units
+		// Print all marked units
 		std::cout << "Units" << "\n";
 		for (int i = 0; i < unitList.size(); i++) {
 			if (arr[i]) {
@@ -382,4 +404,187 @@ void output::charPrintFull(const character& acter, const std::vector<unit>& unit
 		for (std::vector<std::string> relation : fullRelations)
 			std::cout << "Relation: " << relation[0] << " - " << relation[1] << "\n";
 	}
+}
+
+/*
+* Input Namespace Functions
+* 
+*/
+
+std::vector<std::string> input::splitDelim(std::string input) {
+	// Variables for delims and their found position
+	std::vector<std::string> delimList = { ": ", " - ", " > " };
+	std::vector<int> delimPos;
+
+	// Variable for the return
+	std::vector<std::string> splitLine;
+
+	// Split a maximum of ten times
+	for (int i = 0; i < 10; i++) {
+		// Find each delim in the string
+		for (std::string delim : delimList) {
+			// Find the delim
+			int relPos = input.find(delim);
+
+			// If the delim doesn't appear, set it to the array's size
+			if (relPos == -1)
+				delimPos.push_back(input.size());
+			else
+				delimPos.push_back(input.find(delim));
+		}
+
+		// Determine the first delim to appear
+		auto minEleIter = std::min_element(delimPos.begin(), delimPos.end());
+		int minEle = std::distance(delimPos.begin(), minEleIter);
+
+		// If no delim's appeared, break
+		if (delimPos[minEle] == input.size())
+			break;
+
+		// Split the line and continue with the remainder
+		splitLine.push_back(input.substr(0, input.find(delimList[minEle])));
+		input = input.substr(input.find(delimList[minEle]) + delimList[minEle].size());
+
+		// Clear the delim positions
+		delimPos.clear();
+	}
+
+	// Add the rest of the line to the return
+	splitLine.push_back(input);
+
+	return splitLine;
+}
+
+void input::loadChar(std::string file, std::vector<character>& characterList, std::vector<std::string>& history) {
+	// Text file loading lambda
+	auto loadCharTXT = [&]() {
+		// Add the character to the character list
+		int charIn = characterList.size();
+		characterList.push_back(character());
+
+		// Access the character's file
+		std::ifstream inputFile;
+		inputFile.open("Characters/" + file);
+
+		// For each line
+		std::string line;
+		while (getline(inputFile, line)) {
+			// Add the feature
+			characterList[charIn].addFeature(line, history);
+		}
+
+		// Add the character's name
+		characterList[charIn].name = file.substr(0, file.find("."));
+	};
+
+	// Markdown file loading lambda
+	auto loadCharMD = [&]() {
+		// Access the character markdown file
+		std::ifstream inputFile;
+		inputFile.open("Characters/" + file);
+
+		// Initialize current character index
+		int charIn = -1;
+
+		// For each line
+		std::string line;
+		while (getline(inputFile, line)) {
+			// Search for the header delim
+			int findPos = line.find("# ");
+
+			// If the delim appears, add a character and index it
+			if (findPos != -1) {
+				charIn = characterList.size();
+				characterList.push_back(character());
+				characterList[charIn].name = line.substr(findPos + 2);
+				continue;
+			}
+
+			// If no character is indexed, skip
+			if (charIn == -1)
+				continue;
+
+			// Attempt to add a festure
+			characterList[charIn].addFeature(line, history);
+		}
+	};
+
+	// Skip the template
+	if (file.substr(0, file.find(".")) == "Template Character")
+		return;
+
+	// Check and add if the file is .txt
+	if (file.substr(file.find(".")) == ".txt")
+		loadCharTXT();
+
+	// Check and add if the file is .md
+	if (file.substr(file.find(".")) == ".md")
+		loadCharMD();
+}
+
+void input::loadUnit(std::string file, std::vector<unit>& unitList, std::vector<std::string>& history) {
+	// Text file loading lambda
+	auto loadUnitTXT = [&]() {
+		// Add the unit to the unit list
+		int unitIn = unitList.size();
+		unitList.push_back(unit());
+
+		// Access the unit's file
+		std::ifstream inputFile;
+		inputFile.open("Units/" + file);
+
+		// For each line
+		std::string line;
+		while (getline(inputFile, line)) {
+			// Add the feature
+			unitList[unitIn].addFeature(line, history);
+		}
+
+		// Add the unit's name
+		unitList[unitIn].name = file.substr(0, file.find("."));
+	};
+
+	// Markdown file loading lambda
+	auto loadUnitMD = [&]() {
+		// Access the unit markdown file
+		std::ifstream inputFile;
+		inputFile.open("Units/" + file);
+
+		// Initialize current unit index
+		int unitIn = -1;
+
+		// For each line
+		std::string line;
+		while (getline(inputFile, line)) {
+			// Search for the header delim
+			int findPos = line.find("# ");
+
+			// If the delim appears, add a unit and index it
+			if (findPos != -1) {
+				unitIn = unitList.size();
+				unitList.push_back(unit());
+				unitList[unitIn].name = line.substr(findPos + 2);
+				continue;
+			}
+
+			// If no unit is indexed, skip
+			if (unitIn == -1)
+				continue;
+
+			// Attempt to add a festure
+			unitList[unitIn].addFeature(line, history);
+		}
+	};
+
+	// Skip the template
+	if (file.substr(0, file.find(".")) == "Template Unit")
+		return;
+
+	// Check and add if the file is .txt
+	if (file.substr(file.find(".")) == ".txt")
+		loadUnitTXT();
+
+	// Check and add if the file is .md
+	if (file.substr(file.find(".")) == ".md")
+		loadUnitMD();
 }
