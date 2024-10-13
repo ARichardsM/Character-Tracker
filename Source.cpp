@@ -15,8 +15,7 @@ vector<character> charList; // Contains all characters as the `character` class
 vector<unit> unitList;      // Contains all units as the `unit` class
 vector<string> history;     // Contains all entity history as a string
 
-int main()
-{
+void startUp() {
     // Pull `Character Files` from the `Characters` Directory
     fs::path charPath = fs::current_path() / "Characters";
 
@@ -38,7 +37,6 @@ int main()
         cout << "'Units' directory cannot be found.\n";
 
     // Declare variables
-    bool cont = true;
     set<string> setA, setB;
 
     // Verify the units
@@ -71,9 +69,22 @@ int main()
                 missingEntity::refacChar(charName, charList);
         }
     }
+}
 
-    
+int main()
+{
+    // Declare variables
+    bool cont = true;
 
+    // Run initial preparations
+    startUp();
+
+    int select = support::prompt(
+        "Select", 
+        { "Test Current Function", "Edit Functions", "Print Functions", "Done (Exit Program)" }
+    );
+
+    // Print
     while (cont) {
 
         switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Test", "Random Pull", "Write to File", "Print" })) {

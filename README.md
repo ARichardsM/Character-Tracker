@@ -28,7 +28,7 @@ The project consists of the four scripts shown in the table below.
 		- [X] Refactor TrackerClassEntity.cpp 
 		- [X] Refactor TrackerClassCharacter.cpp
 		- [X] Refactor TrackerClassUnit.cpp
-		- [ ] Refactor TrackerNamespaces.cpp
+		- [X] Refactor TrackerNamespaces.cpp
 		- [X] Refactor TrackerNamespacesME.cpp
 		- [X] Refactor TrackerNamespacesO.cpp
 	- [X] Rename & Reorganzie Files
@@ -45,5 +45,6 @@ The project consists of the four scripts shown in the table below.
 - [ ] Output Via Connection
 - [ ] Alter Relations
 - [ ] Implement an improved testing system
+- [ ] Improved initial read and verify
 
 ## TBD
