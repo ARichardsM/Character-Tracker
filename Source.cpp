@@ -71,22 +71,165 @@ void startUp() {
     }
 }
 
+void editFunc() {
+    // Declare variables
+    bool cont = true;
+    int select;
+
+    while (cont) {
+        select = support::prompt(
+            "Select",
+            { "Verify Unit Size", "Add Missing Relations", "Main Menu" }
+        );
+
+        switch (select) {
+        case 1:
+            // Verify the sizes of all units
+            interactions::verifySizes(charList, unitList);
+            cout << "\n";
+            break;
+        case 2:
+            // Add any one-sided unit or character relations
+            interactions::addMissingRelations(charList, unitList);
+            break;
+        case 3:
+            // Break the loop
+            cont = false;
+            break;
+        }
+
+    }
+
+    // Exit 
+    return;
+}
+
+void printFunc() {
+    // Declare variables
+    bool cont = true;
+    int select;
+
+    while (cont) {
+        select = support::prompt(
+            "Select",
+            { "Print (Screen)", "Write (File)", "Main Menu" }
+        );
+
+        switch (select) {
+        case 1:
+        {
+            // Prompt user for the desired print
+            int printSelectA = support::prompt("Apply A Filter?", { "Yes", "No" });
+            int printSelectB = support::prompt("What Type Of Print?", { "Print All", "Print By Rank", "Random Full Print", "Print Multiple" });
+
+            // Create temporary copies of the list
+            vector<character> tempCharList = charList;
+            vector<unit> tempUnitList = unitList;
+
+            // Potentially apply a filter
+            if (printSelectA == 1) {
+                // Declare unit name variable
+                vector<string> unitNames;
+
+                // Append all unit names to unitNames
+                for (unit unit : unitList) {
+                    unitNames.push_back(unit.name);
+                }
+
+                // Generate the rules
+                vector<string> rulesList = rules::genRules(unitNames);
+
+                // Filter according to the rules
+                rules::filterRules(rulesList, tempCharList, tempUnitList);
+            }
+
+            // Perform the specified print
+            switch (printSelectB) {
+            case 1:
+                // Print all characters and units
+                output::printAll(tempCharList, tempUnitList);
+
+                break;
+            case 2:
+                // Print according to the ranks
+                output::printRank(tempCharList, tempUnitList);
+
+                break;
+            case 3:
+                // Print according to the ranks
+                output::printFull(tempCharList, tempUnitList);
+
+                break;
+            case 4:
+                // Print according to the ranks
+                output::multiPrint(tempCharList, tempUnitList);
+
+                break;
+            }
+        }
+        case 2:
+        {
+            // Prompt user for the desired write
+            int writeSelect = support::prompt("Which Write?", { "[All] Markdown", "[All] File" });
+
+            // Perform the specified write
+            switch (writeSelect) {
+            case 0:
+                // Write all characters and units to markdown files
+                output::logListsMD(charList, unitList, history);
+                break;
+            case 1:
+                // Write all characters and units to their files
+                interactions::writeToFile(charList, unitList);
+                break;
+            }
+
+            break;
+        }
+        case 3:
+            // Break the loop
+            cont = false;
+            break;
+        }
+    }
+
+    // Exit 
+    return;
+}
+
+
 int main()
 {
     // Declare variables
     bool cont = true;
+    int select;
 
     // Run initial preparations
     startUp();
 
-    int select = support::prompt(
-        "Select", 
-        { "Test Current Function", "Edit Functions", "Print Functions", "Done (Exit Program)" }
-    );
-
     // Print
     while (cont) {
+        select = support::prompt(
+            "Select",
+            { "Test Current Function", "Edit Functions", "Print Functions", "Done (Exit Program)" }
+        );
 
+        switch (select) {
+        case 1:
+            break;
+        case 2:
+            editFunc();
+            break;
+        case 3:
+            printFunc();
+            break;
+        case 4:
+            // End the loop
+            cont = false;
+            break;
+        }
+
+        /*
         switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Test", "Random Pull", "Write to File", "Print" })) {
         case 1:
             // End the loop
@@ -185,6 +328,6 @@ int main()
                       
             break;
         }
-
+        */
     }
 }
