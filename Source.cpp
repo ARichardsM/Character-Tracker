@@ -71,6 +71,7 @@ void startUp() {
     }
 }
 
+// Main function for all edit functions
 void editFunc() {
     // Declare variables
     bool cont = true;
@@ -104,6 +105,7 @@ void editFunc() {
     return;
 }
 
+// Main function for all print functions
 void printFunc() {
     // Declare variables
     bool cont = true;
@@ -166,6 +168,8 @@ void printFunc() {
 
                 break;
             }
+
+            break;
         }
         case 2:
         {
@@ -218,9 +222,11 @@ int main()
         case 1:
             break;
         case 2:
+            // Run Edit Functions
             editFunc();
             break;
         case 3:
+            // Run Print Functions
             printFunc();
             break;
         case 4:
@@ -228,106 +234,5 @@ int main()
             cont = false;
             break;
         }
-
-        /*
-        switch (support::prompt("Select", { "Done", "Verify Unit Size", "Add Missing Relations", "Test", "Random Pull", "Write to File", "Print" })) {
-        case 1:
-            // End the loop
-            cont = false;
-            break;
-        case 2:
-            // Verify the sizes of all units
-            interactions::verifySizes(charList, unitList);
-            cout << "\n";
-            break;
-        case 3:
-            // Add any one-sided unit or character relations
-            interactions::addMissingRelations(charList, unitList);
-            break;
-        case 4:
-        {
-            output::multiPrint(charList, unitList);
-            break;
-        }
-        case 5:
-            // Initialize rand
-            srand(time(0));
-
-            // Full print a random character
-            output::charPrintFull(charList[rand() % charList.size()], unitList);
-            cout << "\n";
-            break;
-        case 6:
-        {
-            // Prompt user for the desired write
-            int writeSelect = support::prompt("Which Write?", { "[All] Markdown", "[All] File" });
-
-            // Perform the specified write
-            switch (writeSelect) {
-            case 0:
-                // Write all characters and units to markdown files
-                output::logListsMD(charList, unitList, history);
-                break;
-            case 1:
-                // Write all characters and units to their files
-                interactions::writeToFile(charList, unitList);
-                break;
-            }
-
-            break;
-        }
-        case 7:
-            // Prompt user for the desired print
-            int printSelectA = support::prompt("Apply A Filter?", { "Yes", "No" });
-            int printSelectB = support::prompt("What Type Of Print?", { "Print All", "Print By Rank", "Random Full Print", "Print Multiple" });
-
-            // Create temporary copies of the list
-            vector<character> tempCharList = charList;
-            vector<unit> tempUnitList = unitList;
-
-            // Potentially apply a filter
-            if (printSelectA == 1) {
-                // Declare unit name variable
-                vector<string> unitNames;
-
-                // Append all unit names to unitNames
-                for (unit unit : unitList) {
-                    unitNames.push_back(unit.name);
-                }
-
-                // Generate the rules
-                vector<string> rulesList = rules::genRules(unitNames);
-
-                // Filter according to the rules
-                rules::filterRules(rulesList, tempCharList, tempUnitList);
-            }
-
-            // Perform the specified print
-            switch (printSelectB) {
-            case 1:
-                // Print all characters and units
-                output::printAll(tempCharList, tempUnitList);
-
-                break;
-            case 2:
-                // Print according to the ranks
-                output::printRank(tempCharList, tempUnitList);
-
-                break;
-            case 3:
-                // Print according to the ranks
-                output::printFull(tempCharList, tempUnitList);
-
-                break;
-            case 4:
-                // Print according to the ranks
-                output::multiPrint(tempCharList, tempUnitList);
-
-                break;
-            }
-                      
-            break;
-        }
-        */
     }
 }

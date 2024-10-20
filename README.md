@@ -22,8 +22,8 @@ The project consists of the four scripts shown in the table below.
 
 ## Current
 - [ ] Refactor
-	- [ ] Refactor All CPP Files
-		- [ ] Refactor Source.cpp
+	- [X] Refactor All CPP Files
+		- [X] Refactor Source.cpp
 		- [X] Refactor General.cpp
 		- [X] Refactor TrackerClassEntity.cpp 
 		- [X] Refactor TrackerClassCharacter.cpp
