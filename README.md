@@ -1,27 +1,31 @@
 # Character Tracker
 ## Description
-Replacement for a previous code, Bond Tracker, a C++ Console Script.
-The character tracker is used to manage the simple connections between multiple characters and groups of characters, referred to as Units.
-The project consists of the four scripts shown in the table below.
-<br> <br>
-| Name                      | Purpose                                                                           |
-|---------------------------|-----------------------------------------------------------------------------------|
-| Source.cpp                | Main script, pulls necessary files and loops while the script is in use.          |
-|---------------------------|-----------------------------------------------------------------------------------|
-| General.h                 | Headers for General.cpp.                                                          |
-| General.cpp               | Contains general modular functions that can be implemented in multiple projects.  |
-|---------------------------|-----------------------------------------------------------------------------------|
-| Tracker.h                 | Headers for Tracker CPP Files.                                                    |
-| TrackerClassEntity.cpp    | Contains scripts for the entity class.                                            |
-| TrackerClassCharacter.cpp | Contains scripts for the character class.                                         |
-| TrackerClassUnit.cpp      | Contains scripts for the unit class.                                              |
-| TrackerNamespaces.cpp     | Contains scripts for the tracker interactions.                                    |
-| TrackerNamespacesME.cpp   | Contains scripts for the tracker "Missing Entity" interactions.                   |
-|---------------------------|-----------------------------------------------------------------------------------|
-| UnitTest.cpp              | Unit tests for the Classes.cpp scripts using Microsoft Unit Testing for C/C++.    |
+The Character Tracker is a C++ console application designed to manage relationships between individual characters and groups, referred to as Units.
+It serves as an updated version of the previous "Bond Tracker" code. 
+The project is structured around several scripts that handle different aspects of functionality, as outlined in the table below:
+
+
+| Name                             | Purpose                                                                                                           |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| Source.cpp                       | Main script, coordinates the program and loads the files for use.                                                 |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| General.h                        | Headers for General.cpp.                                                                                          |
+| General.cpp                      | Contains reusable modular functions that can be implemented in multiple projects.                                 |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| Tracker.h                        | Headers for Character Tracker specific scripts.                                                                   |
+| Tracker-Class-Entity.cpp         | Contains scripts for the entity class.                                                                            |
+| Tracker-Class-Character.cpp      | Contains scripts for the character class.                                                                         |
+| Tracker-Class-Unit.cpp           | Contains scripts for the unit class.                                                                              |
+| Tracker-Namespaces-Interact.cpp  | Contains scripts for the interaction scripts, which handle general interactions between the units and characters. |
+| Tracker-Namespaces-IO.cpp        | Contains scripts for input and output, which read in and print out data.                                          |
+| Tracker-Namespaces-Missing.cpp   | Contains scripts for handling missing characters and units.                                                       |
+| Tracker-Namespaces-Support.cpp   | Contains scripts for rule-based exclusion and extensions of General scripts.                                      |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| UnitTest.cpp                     | Unit tests for the class scripts using Microsoft Unit Testing for C/C++.                                          |
+
 
 ## Current
-- [ ] Refactor
+- [X] Refactor
 	- [X] Refactor All CPP Files
 		- [X] Refactor Source.cpp
 		- [X] Refactor General.cpp
@@ -32,9 +36,9 @@ The project consists of the four scripts shown in the table below.
 		- [X] Refactor TrackerNamespacesME.cpp
 		- [X] Refactor TrackerNamespacesO.cpp
 	- [X] Rename & Reorganzie Files
-	- [ ] Rewrite README.md
+	- [X] Rewrite README.md
 		- [X] New Backlog
-		- [ ] Improve Description
+		- [X] Improve Description
 
 ## Backlog
 - [ ] General Input Parameter Document
