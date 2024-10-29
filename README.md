@@ -25,20 +25,8 @@ The project is structured around several scripts that handle different aspects o
 
 
 ## Current
-- [X] Refactor
-	- [X] Refactor All CPP Files
-		- [X] Refactor Source.cpp
-		- [X] Refactor General.cpp
-		- [X] Refactor TrackerClassEntity.cpp 
-		- [X] Refactor TrackerClassCharacter.cpp
-		- [X] Refactor TrackerClassUnit.cpp
-		- [X] Refactor TrackerNamespaces.cpp
-		- [X] Refactor TrackerNamespacesME.cpp
-		- [X] Refactor TrackerNamespacesO.cpp
-	- [X] Rename & Reorganzie Files
-	- [X] Rewrite README.md
-		- [X] New Backlog
-		- [X] Improve Description
+- [ ] Entity Relation Tag System
+- [ ] Simple Relation Constructor
 
 ## Backlog
 - [ ] General Input Parameter Document
