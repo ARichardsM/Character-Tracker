@@ -98,10 +98,10 @@ std::set<std::string> interactions::verifyRelations(std::vector<character> list)
 	// For each character
 	for (character character : list) {
 		// For each relation
-		for (entity::relation member : character.relationVec) {
+		for (entity::tagFeature member : character.relationVec) {
 			// If the member's name can't be found in charNames, add it to the return
-			if (find(charNames.begin(), charNames.end(), member.partner) == charNames.end())
-				returnList.insert(member.partner);
+			if (find(charNames.begin(), charNames.end(), member.name) == charNames.end())
+				returnList.insert(member.name);
 		}
 	}
 
@@ -122,10 +122,10 @@ std::set<std::string> interactions::verifyRelations(std::vector<unit> list) {
 	// For each unit
 	for (unit unit : list) {
 		// For each relation
-		for (entity::relation member : unit.relationVec) {
+		for (entity::tagFeature member : unit.relationVec) {
 			// If the member's name can't be found in charNames, report it
-			if (find(unitNames.begin(), unitNames.end(), member.partner) == unitNames.end())
-				returnList.insert(member.partner);
+			if (find(unitNames.begin(), unitNames.end(), member.name) == unitNames.end())
+				returnList.insert(member.name);
 		}
 	}
 
@@ -155,9 +155,9 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 
 	// For each character's relation
 	for (int i = 0; i < characterList.size(); i++) {
-		for (entity::relation relation : characterList[i].relationVec) {
+		for (entity::tagFeature relation : characterList[i].relationVec) {
 			// Find the relation's name in `names`
-			auto relPos = find(names.begin(), names.end(), relation.partner);
+			auto relPos = find(names.begin(), names.end(), relation.name);
 			int intPos = std::distance(names.begin(), relPos);
 
 			// If the relation exists
@@ -171,9 +171,9 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 	
 	// For each unit's relation
 	for (int i = 0; i < unitList.size(); i++) {
-		for (entity::relation relation : unitList[i].relationVec) {
+		for (entity::tagFeature relation : unitList[i].relationVec) {
 			// Find the relation's name in `names`
-			auto relPos = find(names.begin(), names.end(), relation.partner);
+			auto relPos = find(names.begin(), names.end(), relation.name);
 			int intPos = std::distance(names.begin(), relPos);
 
 			// Adjust i to accomdate the characters
@@ -192,8 +192,8 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 	for (int i = 0; i < characterList.size(); i++) {
 		// Record the character's relation names
 		std::vector<std::string> relateNames;
-		for (entity::relation relation : characterList[i].relationVec) {
-			relateNames.push_back(relation.partner);
+		for (entity::tagFeature relation : characterList[i].relationVec) {
+			relateNames.push_back(relation.name);
 		}
 
 		// For every entity
@@ -204,8 +204,8 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 
 			// if the relation isn't already present, add it
 			if (find(relateNames.begin(), relateNames.end(), names[j]) == relateNames.end()) {
-				entity::relation newRel;
-				newRel.partner = names[j];
+				entity::tagFeature newRel;
+				newRel.name = names[j];
 				newRel.desc = "New Relation";
 				characterList[i].relationVec.push_back(newRel);
 			}
@@ -219,8 +219,8 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 
 		// Record the unit's relation names
 		std::vector<std::string> relateNames;
-		for (entity::relation relation : unitList[i].relationVec) {
-			relateNames.push_back(relation.partner);
+		for (entity::tagFeature relation : unitList[i].relationVec) {
+			relateNames.push_back(relation.name);
 		}
 
 		// For every entity
@@ -231,8 +231,8 @@ void interactions::addMissingRelations(std::vector<character> &characterList, st
 
 			// if the relation isn't already present, add it
 			if (find(relateNames.begin(), relateNames.end(), names[j]) == relateNames.end()) {
-				entity::relation newRel;
-				newRel.partner = names[j];
+				entity::tagFeature newRel;
+				newRel.name = names[j];
 				newRel.desc = "New Relation";
 				unitList[i].relationVec.push_back(newRel);
 			}
@@ -263,8 +263,8 @@ void interactions::writeToFile(std::vector<character> characterList, std::vector
 		outFile << "Member: " << chara.member << "\n";
 		for (std::string aspect : chara.aspects)
 			outFile << "Aspect: " << aspect << "\n";
-		for (entity::relation relation : chara.relationVec)
-			outFile << "Relation: " << relation.partner << ": " << relation.desc << "\n";
+		for (entity::tagFeature relation : chara.relationVec)
+			outFile << "Relation: " << relation.name << ": " << relation.desc << "\n";
 
 		// Rewrite the spare contents
 		outFile << contents;
@@ -293,8 +293,8 @@ void interactions::writeToFile(std::vector<character> characterList, std::vector
 		outFile << "Member: " << unit.member << "\n";
 		for (std::string aspect : unit.aspects)
 			outFile << "Aspect: " << aspect << "\n";
-		for (entity::relation relation : unit.relationVec)
-			outFile << "Relation: " << relation.partner << ": " << relation.desc << "\n";
+		for (entity::tagFeature relation : unit.relationVec)
+			outFile << "Relation: " << relation.name << ": " << relation.desc << "\n";
 
 		// Rewrite the spare contents
 		outFile << contents;

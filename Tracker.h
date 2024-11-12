@@ -14,14 +14,22 @@ const std::vector<std::string> characterRankings = {"Unassigned", "Known", "Novi
 // Abstract Entity Information
 class entity {
 public:
-	struct relation {
-		std::string partner;
+	struct feature {
+		std::string name;
 		std::string desc;
+
+		// Return the feature as a string
+		std::string returnFeat();
+	};
+
+	struct tagFeature : public feature {
 		std::vector<std::string> tags;
 
-		// Return the relation as a string
-		std::string returnRelation();
+		// Return the tagged feature as a string
+		std::string returnFeat();
 	};
+
+	
 
 	std::string name = "None";
 	std::string member = "None";
@@ -30,7 +38,7 @@ public:
 	int historyInd = -1;
 
 	std::vector<std::string> aspects = {};
-	std::vector<relation> relationVec;
+	std::vector<tagFeature> relationVec;
 
 	// Add a feature based on an input string
 	void addFeature(const std::string& featString);

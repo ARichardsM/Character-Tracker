@@ -12,8 +12,8 @@ std::string character::output() const {
 	returnStr += "Member: " + member + "\n";
 	for (std::string aspect : aspects)
 		returnStr += "Aspect: " + aspect + "\n";
-	for (relation relation : relationVec) {
-		returnStr += "Relation: " + relation.returnRelation() + "\n";
+	for (tagFeature relation : relationVec) {
+		returnStr += "Relation: " + relation.returnFeat() + "\n";
 	}
 
 	return returnStr;

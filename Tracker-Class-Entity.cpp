@@ -25,8 +25,8 @@ void entity::addFeature(const std::string& featString) {
 		switch (feat.size()) {
 		case 2:
 		{
-			relation newRelation;
-			newRelation.partner = feat[1];
+			tagFeature newRelation;
+			newRelation.name = feat[1];
 			newRelation.desc = "Unknown Relation";
 			relationVec.push_back(newRelation);
 
@@ -34,8 +34,8 @@ void entity::addFeature(const std::string& featString) {
 		}
 		case 3:
 		{
-			relation newRelation;
-			newRelation.partner = feat[1];
+			tagFeature newRelation;
+			newRelation.name = feat[1];
 			newRelation.desc = feat[2];
 			relationVec.push_back(newRelation);
 			break;
@@ -67,9 +67,20 @@ void entity::addFeature(const std::string& featString, std::vector<std::string>&
 	}
 }
 
-std::string entity::relation::returnRelation() {
+std::string entity::feature::returnFeat() {
 	// Start the string with the partner's name
-	std::string returnVal = partner;
+	std::string returnVal = name;
+
+	// End the string with the description
+	returnVal += " - " + desc;
+
+	// Return the string
+	return returnVal;
+}
+
+std::string entity::tagFeature::returnFeat() {
+	// Start the string with the partner's name
+	std::string returnVal = name;
 
 	// If the relation has tags
 	if (!tags.empty()) {
@@ -91,6 +102,4 @@ std::string entity::relation::returnRelation() {
 	// Return the string
 	return returnVal;
 }
-
-
 

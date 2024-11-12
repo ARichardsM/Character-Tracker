@@ -51,10 +51,10 @@ void missingEntity::renameChar(const std::string& missingChar, std::vector<chara
 
 	// For every character's relation
 	for (character& chara : characterList) {
-		for (entity::relation& relation : chara.relationVec) {
+		for (entity::tagFeature& relation : chara.relationVec) {
 			// If the missing char's name was found, change it for the true name
-			if (relation.partner == missingChar)
-				relation.partner = possibleNames[nameLoc];
+			if (relation.name == missingChar)
+				relation.name = possibleNames[nameLoc];
 		}
 	}
 }
@@ -85,10 +85,10 @@ void missingEntity::renameUnit(const std::string& missingUnit, std::vector<chara
 			uni.member = possibleNames[nameLoc];
 
 		// For each of the unit's relations
-		for (entity::relation& relation : uni.relationVec) {
+		for (entity::tagFeature& relation : uni.relationVec) {
 			// If the missing unit's name was found, change it for the true name
-			if (relation.partner == missingUnit)
-				relation.partner = possibleNames[nameLoc];
+			if (relation.name == missingUnit)
+				relation.name = possibleNames[nameLoc];
 		}
 	}
 }
@@ -143,7 +143,7 @@ void missingEntity::deleteChar(const std::string& missingChar, std::vector<chara
 	// Remove the unit from the characterList
 	for (int i = characterList.size() - 1; i >= 0; i--) {
 		for (int j = characterList[i].relationVec.size() - 1; j >= 0; j--) {
-			if (characterList[i].relationVec[j].partner == missingChar)
+			if (characterList[i].relationVec[j].name == missingChar)
 				characterList[i].relationVec.erase(characterList[i].relationVec.begin() + j);
 		}
 	}
@@ -172,7 +172,7 @@ void missingEntity::deleteUnit(const std::string& missingUnit, std::vector<chara
 			unitList[i].member = "None";
 
 		for (int j = unitList[i].relationVec.size() - 1; j >= 0; j--) {
-			if (unitList[i].relationVec[j].partner == missingUnit)
+			if (unitList[i].relationVec[j].name == missingUnit)
 				unitList[i].relationVec.erase(unitList[i].relationVec.begin() + j);
 		}
 	}

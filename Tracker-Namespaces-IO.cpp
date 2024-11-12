@@ -343,9 +343,9 @@ void output::charPrintFull(const character& acter, const std::vector<unit>& unit
 		// Record the character's aspects and relations
 		std::vector<std::string> fullAspects = acter.aspects;
 		std::vector<std::vector<std::string>> fullRelations;
-		for (entity::relation rel : acter.relationVec) {
+		for (entity::tagFeature rel : acter.relationVec) {
 			std::vector<std::string> relString;
-			relString.push_back(rel.partner);
+			relString.push_back(rel.name);
 			for (std::string tag : rel.tags)
 				relString.push_back(tag);
 			relString.push_back(rel.desc);
@@ -371,9 +371,9 @@ void output::charPrintFull(const character& acter, const std::vector<unit>& unit
 					fullAspects.insert(fullAspects.end(), unit.aspects.begin(), unit.aspects.end());
 					fullMember.push_back(nextMember);
 					std::vector<std::vector<std::string>> newRelations;
-					for (entity::relation rel : unit.relationVec) {
+					for (entity::tagFeature rel : unit.relationVec) {
 						std::vector<std::string> relString;
-						relString.push_back(rel.partner);
+						relString.push_back(rel.name);
 						for (std::string tag : rel.tags)
 							relString.push_back(tag);
 						relString.push_back(rel.desc);
