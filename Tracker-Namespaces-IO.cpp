@@ -413,7 +413,7 @@ void output::charPrintFull(const character& acter, const std::vector<unit>& unit
 
 std::vector<std::string> input::splitDelim(std::string input) {
 	// Variables for delims and their found position
-	std::vector<std::string> delimList = { ": ", " - ", " > " };
+	std::vector<std::string> delimList = { ": ", " - ", " < "," > ", "> " , " <" };
 	std::vector<int> delimPos;
 
 	// Variable for the return

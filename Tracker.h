@@ -29,8 +29,6 @@ public:
 		std::string returnFeat();
 	};
 
-	
-
 	std::string name = "None";
 	std::string member = "None";
 

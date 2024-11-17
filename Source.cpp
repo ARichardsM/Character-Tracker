@@ -220,6 +220,8 @@ int main()
 
         switch (select) {
         case 1:
+            for (entity::tagFeature w : charList[0].relationVec)
+                cout << w.returnFeat() << "\n";
             break;
         case 2:
             // Run Edit Functions

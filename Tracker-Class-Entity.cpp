@@ -20,27 +20,37 @@ void entity::addFeature(const std::string& featString) {
 	else if (feat[0] == "Aspect") {
 		aspects.push_back(feat[1]);
 	}
-	// Relation: Add [1] to the relation array with a descriptor ([2] if available)
+	// Relation: Add character name [1] to the relation array with a descriptor [END] ([2...End-1] are tags if available)
 	else if (feat[0] == "Relation") {
+		// Create a temporary feature for the relation
+		tagFeature newRelation;
+
+		std::cout << featString << " " << feat.size() << "\n";
+
 		switch (feat.size()) {
+		case 1:
+			break;
 		case 2:
-		{
-			tagFeature newRelation;
 			newRelation.name = feat[1];
 			newRelation.desc = "Unknown Relation";
-			relationVec.push_back(newRelation);
-
 			break;
-		}
 		case 3:
-		{
-			tagFeature newRelation;
 			newRelation.name = feat[1];
-			newRelation.desc = feat[2];
-			relationVec.push_back(newRelation);
+			newRelation.desc = feat[2];	
 			break;
+		default:
+			newRelation.name = feat[1];
+
+			for (int i = 2; i < feat.size() - 1; i++) {
+				newRelation.tags.push_back(feat[i]);
+			}
+
+			newRelation.desc = feat.back();
+
 		}
-		}
+
+		// Push the feature into the relation array
+		relationVec.push_back(newRelation);
 	}
 }
 
@@ -85,15 +95,12 @@ std::string entity::tagFeature::returnFeat() {
 	// If the relation has tags
 	if (!tags.empty()) {
 		// Add the first tag
-		returnVal += " <" + tags[0];
+		returnVal += " - " + tags[0];
 
 		// Add any subsequent tags
 		for (std::string tag : std::vector<std::string>(tags.begin() + 1, tags.end())) {
 			returnVal += "," + tag;
 		}
-
-		// Close out the tags
-		returnVal += ">";
 	}
 
 	// End the string with the description
