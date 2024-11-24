@@ -112,6 +112,9 @@ namespace missingEntity{
 namespace input {
 	// Split a string based on a list of delims
 	std::vector<std::string> splitDelim(std::string input);
+	// Split a string based on a list of delims
+	std::vector<std::string> splitDelim(std::string input, std::vector<std::string> delimList);
+
 	// Load a character from a file
 	void loadChar(std::string file, std::vector<character>& characterList, std::vector<std::string>& history);
 	// Load a unit from a file

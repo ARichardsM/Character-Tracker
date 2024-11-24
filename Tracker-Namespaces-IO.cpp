@@ -412,15 +412,24 @@ void output::charPrintFull(const character& acter, const std::vector<unit>& unit
 */
 
 std::vector<std::string> input::splitDelim(std::string input) {
-	// Variables for delims and their found position
+	// Prepare the standard delim list
 	std::vector<std::string> delimList = { ": ", " - ", " < "," > ", "> " , " <" };
+
+	// Pass and return
+	return splitDelim(input, delimList);
+}
+
+std::vector<std::string> input::splitDelim(std::string input, std::vector<std::string> delimList) {
+	// Variables for delims found position and tracking progress
 	std::vector<int> delimPos;
+	bool isRunning = true;
 
 	// Variable for the return
 	std::vector<std::string> splitLine;
 
-	// Split a maximum of ten times
-	for (int i = 0; i < 10; i++) {
+	// Split until a delim cannot be found
+	while (isRunning) {
+		std::cout << isRunning;
 		// Find each delim in the string
 		for (std::string delim : delimList) {
 			// Find the delim
@@ -438,8 +447,10 @@ std::vector<std::string> input::splitDelim(std::string input) {
 		int minEle = std::distance(delimPos.begin(), minEleIter);
 
 		// If no delim's appeared, break
-		if (delimPos[minEle] == input.size())
+		if (delimPos[minEle] == input.size()){
+			isRunning = false;
 			break;
+		}
 
 		// Split the line and continue with the remainder
 		splitLine.push_back(input.substr(0, input.find(delimList[minEle])));

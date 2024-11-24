@@ -25,8 +25,6 @@ void entity::addFeature(const std::string& featString) {
 		// Create a temporary feature for the relation
 		tagFeature newRelation;
 
-		std::cout << featString << " " << feat.size() << "\n";
-
 		switch (feat.size()) {
 		case 1:
 			break;
@@ -46,7 +44,7 @@ void entity::addFeature(const std::string& featString) {
 			}
 
 			newRelation.desc = feat.back();
-
+			break;
 		}
 
 		// Push the feature into the relation array
