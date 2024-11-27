@@ -25,8 +25,8 @@ The project is structured around several scripts that handle different aspects o
 
 
 ## Current
-- [ ] Entity Relation Tag System
-- [ ] Simple Relation Constructor
+- [X] Entity Relation Tag System
+- [X] Simple Relation Constructor
 
 ## Backlog
 - [ ] General Input Parameter Document

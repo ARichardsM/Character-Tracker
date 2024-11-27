@@ -429,7 +429,6 @@ std::vector<std::string> input::splitDelim(std::string input, std::vector<std::s
 
 	// Split until a delim cannot be found
 	while (isRunning) {
-		std::cout << isRunning;
 		// Find each delim in the string
 		for (std::string delim : delimList) {
 			// Find the delim

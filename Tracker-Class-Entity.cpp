@@ -25,6 +25,9 @@ void entity::addFeature(const std::string& featString) {
 		// Create a temporary feature for the relation
 		tagFeature newRelation;
 
+		// Create a variable for possible tags
+		std::vector<std::string> relTags;
+
 		switch (feat.size()) {
 		case 1:
 			break;
@@ -38,9 +41,10 @@ void entity::addFeature(const std::string& featString) {
 			break;
 		default:
 			newRelation.name = feat[1];
+			relTags = input::splitDelim(feat[2], {", ", ",", " , ", " ,"});
 
-			for (int i = 2; i < feat.size() - 1; i++) {
-				newRelation.tags.push_back(feat[i]);
+			for (std::string tag: relTags) {
+				newRelation.tags.push_back(tag);
 			}
 
 			newRelation.desc = feat.back();
@@ -93,16 +97,19 @@ std::string entity::tagFeature::returnFeat() {
 	// If the relation has tags
 	if (!tags.empty()) {
 		// Add the first tag
-		returnVal += " - " + tags[0];
+		returnVal += " <" + tags[0];
 
 		// Add any subsequent tags
 		for (std::string tag : std::vector<std::string>(tags.begin() + 1, tags.end())) {
 			returnVal += "," + tag;
 		}
-	}
 
-	// End the string with the description
-	returnVal += " - " + desc;
+		// End the tag and string with the description
+		returnVal += "> " + desc;
+	}
+	else
+		// End the string with the description
+		returnVal += " - " + desc;
 
 	// Return the string
 	return returnVal;
