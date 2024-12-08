@@ -25,14 +25,10 @@ The project is structured around several scripts that handle different aspects o
 
 
 ## Current
-- [X] Entity Relation Tag System
-- [X] Simple Relation Constructor
-
-## Backlog
 - [ ] General Input Parameter Document
 	- [ ] Entity Feature Switch Case
-- [ ] Entity Relation Tag System
-- [ ] Simple Relation Constructor
+
+## Backlog
 - [ ] Character and Unit List Classes
 - [ ] Output Via Connection
 - [ ] Alter Relations

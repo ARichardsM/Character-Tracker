@@ -220,12 +220,6 @@ int main()
 
         switch (select) {
         case 1:
-            for (entity::tagFeature w : charList[0].relationVec)
-                cout << w.returnFeat() << "\n";
-
-            for (string w : charList[0].relationVec[0].tags)
-                cout << w << "\n";
-            input::splitDelim("A String", {" - "});
             break;
         case 2:
             // Run Edit Functions
