@@ -70,6 +70,29 @@ public:
 	std::string output() const;
 };
 
+struct UnitList {
+	struct Tag{
+		std::string name;
+		int weight;
+		std::string desc;
+	};
+
+	std::vector<unit> units;     // Contains all units as the `unit` class
+	std::vector<Tag> bonds;		// Contains all possible relation tags
+};
+
+struct {
+	struct Tag {
+		std::string name;
+		int weight;
+		std::string desc;
+	};
+
+	std::vector<character> characters;     // Contains all units as the `unit` class
+	std::vector<Tag> bonds;		// Contains all possible relation tags
+} CharacterList;
+
+
 namespace interactions {
 	// Verify all members in the character and unit list
 	std::set<std::string> verifyMemberships(std::vector<character> characterList, std::vector<unit> unitList);
@@ -87,6 +110,13 @@ namespace interactions {
 
 	// Write list contents to their respective files
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);
+}
+
+namespace modifyRelations {
+	// Modify the relations between the provided groups
+	void modGroups(std::vector<unit>& unitList);
+	// Modify the relations between the provided characters
+	void modCharacters(std::vector<character>& characterList);
 }
 
 namespace missingEntity{

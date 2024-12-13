@@ -220,6 +220,8 @@ int main()
 
         switch (select) {
         case 1:
+            modifyRelations::modCharacters(charList);
+            modifyRelations::modGroups(unitList);
             break;
         case 2:
             // Run Edit Functions
