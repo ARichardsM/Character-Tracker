@@ -12,7 +12,7 @@ std::string character::output() const {
 	returnStr += "Member: " + member + "\n";
 	for (std::string aspect : aspects)
 		returnStr += "Aspect: " + aspect + "\n";
-	for (tagFeature relation : relationVec) {
+	for (tagFeature relation : relations) {
 		returnStr += "Relation: " + relation.returnFeat() + "\n";
 	}
 

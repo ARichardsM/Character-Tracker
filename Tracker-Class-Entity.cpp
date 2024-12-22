@@ -52,7 +52,7 @@ void entity::addFeature(const std::string& featString) {
 		}
 
 		// Push the feature into the relation array
-		relationVec.push_back(newRelation);
+		relations.push_back(newRelation);
 	}
 }
 
@@ -63,14 +63,14 @@ void entity::addFeature(const std::string& featString, std::vector<std::string>&
 	// If the input cannot split
 	if (feat.size() == 1) {
 		// If no history has been added previously
-		if (historyInd == -1) {
+		if (historyIndex == -1) {
 			// Add a new history entry and note the index
-			historyInd = history.size();
+			historyIndex = history.size();
 			history.push_back(featString + "\n");
 		}
 		// Else add to history
 		else {
-			history[historyInd] += featString + "\n";
+			history[historyIndex] += featString + "\n";
 		}
 	}
 	// Else add the feature normally

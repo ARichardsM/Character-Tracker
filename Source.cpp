@@ -91,7 +91,7 @@ void editFunc() {
             break;
         case 2:
             // Add any one-sided unit or character relations
-            interactions::addMissingRelations(charList, unitList);
+            modifyRelations::addMissingRelations(charList, unitList);
             break;
         case 3:
             // Break the loop

@@ -33,10 +33,10 @@ public:
 	std::string member = "None";
 
 	int rank = 0;
-	int historyInd = -1;
+	int historyIndex = -1;
 
 	std::vector<std::string> aspects = {};
-	std::vector<tagFeature> relationVec;
+	std::vector<tagFeature> relations;
 
 	// Add a feature based on an input string
 	void addFeature(const std::string& featString);
@@ -105,14 +105,14 @@ namespace interactions {
 	// Verify the size of all units
 	void verifySizes(std::vector<character> characterList, std::vector<unit> unitList);
 
-	// Add any missing relations in the lists
-	void addMissingRelations(std::vector<character>& characterList, std::vector<unit>& unitList);
-
 	// Write list contents to their respective files
 	void writeToFile(std::vector<character> characterList, std::vector<unit> unitList);
 }
 
 namespace modifyRelations {
+	// Add any missing relations in the lists
+	void addMissingRelations(std::vector<character>& characterList, std::vector<unit>& unitList);
+
 	// Modify the relations between the provided groups
 	void modGroups(std::vector<unit>& unitList);
 	// Modify the relations between the provided characters

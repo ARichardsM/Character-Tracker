@@ -25,14 +25,13 @@ The project is structured around several scripts that handle different aspects o
 
 
 ## Current
-- [ ] Improved initial read and verify
-
+- [ ] General Input Parameter Document
+	- [ ] Improved initial read and verify
+	- [ ] Character and Unit List Classes
+	- [ ] Entity Feature Switch Case
 
 ## Backlog
-- [ ] General Input Parameter Document
-	- [ ] Entity Feature Switch Case
 - [ ] Output Via Connection
-- [ ] Character and Unit List Classes
 - [ ] Implement an improved testing system
 - [ ] Alter Relations
 

@@ -196,8 +196,8 @@ void output::logListsMD(const std::vector<character>& characterList, const std::
 		outFileChar << "# " << chara.name << "\n";
 		outFileChar << chara.output();
 
-		if (chara.historyInd != -1)
-			outFileChar << history[chara.historyInd];
+		if (chara.historyIndex != -1)
+			outFileChar << history[chara.historyIndex];
 	}
 
 	// Close the Out File
@@ -212,8 +212,8 @@ void output::logListsMD(const std::vector<character>& characterList, const std::
 		outFileUnit << "# " << unit.name << "\n";
 		outFileUnit << unit.output();
 
-		if (unit.historyInd != -1)
-			outFileUnit << history[unit.historyInd];
+		if (unit.historyIndex != -1)
+			outFileUnit << history[unit.historyIndex];
 	}
 
 	// Close the Out File
@@ -343,7 +343,7 @@ void output::charPrintFull(const character& acter, const std::vector<unit>& unit
 		// Record the character's aspects and relations
 		std::vector<std::string> fullAspects = acter.aspects;
 		std::vector<std::vector<std::string>> fullRelations;
-		for (entity::tagFeature rel : acter.relationVec) {
+		for (entity::tagFeature rel : acter.relations) {
 			std::vector<std::string> relString;
 			relString.push_back(rel.name);
 			for (std::string tag : rel.tags)
@@ -371,7 +371,7 @@ void output::charPrintFull(const character& acter, const std::vector<unit>& unit
 					fullAspects.insert(fullAspects.end(), unit.aspects.begin(), unit.aspects.end());
 					fullMember.push_back(nextMember);
 					std::vector<std::vector<std::string>> newRelations;
-					for (entity::tagFeature rel : unit.relationVec) {
+					for (entity::tagFeature rel : unit.relations) {
 						std::vector<std::string> relString;
 						relString.push_back(rel.name);
 						for (std::string tag : rel.tags)
