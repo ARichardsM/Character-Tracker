@@ -1,38 +1,38 @@
 # Character Tracker
 ## Description
-The Character Tracker is a C++ console application designed to manage relationships between individual characters and groups, referred to as Units.
-It serves as an updated version of the previous "Bond Tracker" code. 
-The project is structured around several scripts that handle different aspects of functionality, as outlined in the table below:
+The Character Tracker is a C++ console application designed to manage relationships between individual characters and groups (currently referred to as Units).
+It serves as an updated iteration of the earlier "Bond Tracker" codebase, with improved structure and expanded functionality.
+The project is organized into multiple scripts, each handling a different aspect of the program, as detailed in the table below.
 
-
-| Name                             | Purpose                                                                                                           |
-|----------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| Source.cpp                       | Main script, coordinates the program and loads the files for use.                                                 |
-|----------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| General.h                        | Headers for General.cpp.                                                                                          |
-| General.cpp                      | Contains reusable modular functions that can be implemented in multiple projects.                                 |
-|----------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| Tracker.h                        | Headers for Character Tracker specific scripts.                                                                   |
-| Tracker-Class-Entity.cpp         | Contains scripts for the entity class.                                                                            |
-| Tracker-Class-Character.cpp      | Contains scripts for the character class.                                                                         |
-| Tracker-Class-Unit.cpp           | Contains scripts for the unit class.                                                                              |
-| Tracker-Namespaces-Interact.cpp  | Contains scripts for the interaction scripts, which handle general interactions between the units and characters. |
-| Tracker-Namespaces-IO.cpp        | Contains scripts for input and output, which read in and print out data.                                          |
-| Tracker-Namespaces-Missing.cpp   | Contains scripts for handling missing characters and units.                                                       |
-| Tracker-Namespaces-Support.cpp   | Contains scripts for rule-based exclusion and extensions of General scripts.                                      |
-|----------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| UnitTest.cpp                     | Unit tests for the class scripts using Microsoft Unit Testing for C/C++.                                          |
+| File Name                        | Description                                                                              |
+|----------------------------------|------------------------------------------------------------------------------------------|
+| Source.cpp                       | The main script that coordinates program flow and loads the required files.              |
+|----------------------------------|------------------------------------------------------------------------------------------|
+| General.h                        | Header file for *General.cpp*.                                                           |
+| General.cpp                      | Contains reusable modular functions that can be implemented in multiple projects.        |
+|----------------------------------|------------------------------------------------------------------------------------------|
+| Tracker.h                        | Header file for the Character Tracker scripts.                                           |
+| Tracker-Class-Entity.cpp         | Implements the entity class.                                                             |
+| Tracker-Class-Character.cpp      | Implements the character class.                                                          |
+| Tracker-Class-Unit.cpp           | Implements the unit class.                                                               |
+| Tracker-Namespaces-Interact.cpp  | Handles interactions between units and characters.                                       |
+| Tracker-Namespaces-IO.cpp        | Manages input and output operations.                                                     |
+| Tracker-Namespaces-Missing.cpp   | Handles missing characters and units.                                                    |
+| Tracker-Namespaces-Relations.cpp | Handles connections between units and characters.                                        |
+| Tracker-Namespaces-Support.cpp   | Extends *General.cpp* functionality with rule-based exclusions and additional features.  |
+|----------------------------------|------------------------------------------------------------------------------------------|
+| UnitTest.cpp                     | Unit tests for the class scripts using Microsoft Unit Testing for C/C++.                 |
 
 
 ## Current
 - [ ] General Input Parameter Document
-	- [ ] Improved initial read and verify
-	- [ ] Character and Unit List Classes
-	- [ ] Entity Feature Switch Case
+	- [ ] Improve initial read and verification processes.
+	- [ ] Develop classes for managing Character and Unit lists.
+	- [ ] Implement a switch-case during entity feature creation.
 
 ## Backlog
-- [ ] Output Via Connection
-- [ ] Implement an improved testing system
-- [ ] Alter Relations
+- [ ] Enable Output via Connection for improved data flow.
+- [ ] Create Relation Alteration features.
 
-## TBD
+# To Be Decided (TBD)
+- [ ] Additional features and priorities will be determined as development progresses.
