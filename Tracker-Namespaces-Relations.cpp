@@ -114,22 +114,51 @@ void modifyRelations::addMissingRelations(std::vector<character>& characterList,
 
 void modifyRelations::modGroups(std::vector<unit>& unitList) {
 	// Declare Variables
-	int selectedUnitA, selectedUnitB;
-	std::vector<std::string> unitNames, unitPossibles, unitRelations;
+	int selectedUnitA, selectedUnitB, findLoc;
+	std::vector<std::string> unitNamesA, unitNamesB;
+	std::vector<std::string> unitPossibles, unitRelations;
+	std::string input;
 
-	// Prepare the Unit Name Vector
+	// Prepare the first Unit Name Vector
 	for (unit currentUnit : unitList)
-		unitNames.push_back(currentUnit.name);
+		unitNamesA.push_back(currentUnit.name);
 
 	// Prompt for the first unit
-	selectedUnitA = support::prompt("Select First Group", unitNames) - 1;
+	selectedUnitA = support::prompt("Select First Group", unitNamesA) - 1;
 
-	// Prepare the Unit Name Vector
+	// Record the first unit's relations
 	for (entity::tagFeature currentRelation : unitList[selectedUnitA].relations)
 		unitRelations.push_back(currentRelation.name);
 
+	// Prepare the second Unit Name Vector
+	for (unit currentUnit : unitList){
+		// Excluded the previously selected unit
+		if (currentUnit.name == unitNamesA[selectedUnitA])
+			continue;
+		// Mark pre-existing relations
+		else if (simpleFind::find(unitRelations, currentUnit.name) != -1)
+			unitNamesB.push_back("* " + currentUnit.name);
+		else
+			unitNamesB.push_back(currentUnit.name);
+	}
+
 	// Prompt for the second unit
-	selectedUnitB = support::prompt(("First Group: " + unitNames[selectedUnitA] + "\nSelect Second Group"), unitNames) - 1;
+	selectedUnitB = support::prompt(("First Group: " + unitNamesA[selectedUnitA] + "\nSelect Second Group"), unitNamesB) - 1;
+
+	if (selectedUnitB >= selectedUnitA)
+		selectedUnitB++;
+
+	// Pull previous relation
+	findLoc = simpleFind::find(unitRelations, unitNamesA[selectedUnitB]);
+	if (findLoc != -1)
+		std::cout << "First Group: " + unitNamesA[selectedUnitA] + " Second Group: " + unitNamesA[selectedUnitB];
+		std::cout << "\nPrevious Relation: " << unitList[selectedUnitA].relations[findLoc].desc + "\n";
+
+	// Prompt for the relation
+	//std::cout << "First Group: " + unitNamesA[selectedUnitA] + " Second Group: " + unitNamesA[selectedUnitB] + "\nInput the relation: ";
+	//std::cin >> input;
+
+	
 
 	return;
 }
