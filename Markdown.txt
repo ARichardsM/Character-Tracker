@@ -1,0 +1,11 @@
+# Unit
+Rank: <RANK>
+Member: <MEMBER>
+Aspect: <ASPECT>
+
+# Character
+Rank: <RANK>
+Member: <MEMBER>
+Aspect: <ASPECT>
+Relation: <RELATION>
+<Notes>

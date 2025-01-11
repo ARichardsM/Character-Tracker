@@ -31,6 +31,7 @@ The project is organized into multiple scripts, each handling a different aspect
 	- [ ] Implement a switch-case during entity feature creation.
 
 ## Backlog
+- [ ] Make Unit Relations a composite of Character Relations
 - [ ] Enable Output via Connection for improved data flow.
 - [ ] Create Relation Alteration features.
 

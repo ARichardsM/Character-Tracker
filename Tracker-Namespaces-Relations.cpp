@@ -150,15 +150,27 @@ void modifyRelations::modGroups(std::vector<unit>& unitList) {
 
 	// Pull previous relation
 	findLoc = simpleFind::find(unitRelations, unitNamesA[selectedUnitB]);
+	std::cout << "First Group: " + unitNamesA[selectedUnitA] + " Second Group: " + unitNamesA[selectedUnitB];
 	if (findLoc != -1)
-		std::cout << "First Group: " + unitNamesA[selectedUnitA] + " Second Group: " + unitNamesA[selectedUnitB];
 		std::cout << "\nPrevious Relation: " << unitList[selectedUnitA].relations[findLoc].desc + "\n";
+	else
+		std::cout << "\nNo Previous Relation\n";
 
 	// Prompt for the relation
-	//std::cout << "First Group: " + unitNamesA[selectedUnitA] + " Second Group: " + unitNamesA[selectedUnitB] + "\nInput the relation: ";
-	//std::cin >> input;
+	std::cout << "New Relation: ";
+	std::cin >> input;
 
-	
+	// Change or add the relation
+	if (findLoc != -1)
+		unitList[selectedUnitA].relations[findLoc].desc = input;
+	else {
+		entity::tagFeature newRel;
+		//newRel.name = names[j];
+		//newRel.desc = "New Relation";
+		//unitList[i].relations.push_back(newRel);
+	}
+
+	//std::cout << unitList[selectedUnitA].relations[findLoc];
 
 	return;
 }

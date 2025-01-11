@@ -33,10 +33,10 @@ public:
 	std::string member = "None";
 
 	int rank = 0;
-	int historyIndex = -1;
+	//int historyIndex = -1;
 
 	std::vector<std::string> aspects = {};
-	std::vector<tagFeature> relations;
+	//std::vector<tagFeature> relations;
 
 	// Add a feature based on an input string
 	void addFeature(const std::string& featString);
@@ -60,6 +60,10 @@ public:
 // Character Information
 class character : public entity {
 public:
+	// Variables
+	std::vector<tagFeature> relations;
+	int historyIndex = -1;
+
 	// Initializer
 	character() = default;
 
