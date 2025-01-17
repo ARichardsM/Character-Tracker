@@ -109,30 +109,6 @@ std::set<std::string> interactions::verifyRelations(std::vector<character> list)
 	return returnList;
 }
 
-std::set<std::string> interactions::verifyRelations(std::vector<unit> list) {
-	// Variables
-	std::vector<std::string> unitNames;
-	std::set<std::string> returnList;
-
-	// Append all unit names to unitNames
-	for (unit unit : list) {
-		unitNames.push_back(unit.name);
-	}
-
-	// For each unit
-	for (unit unit : list) {
-		// For each relation
-		for (entity::tagFeature member : unit.relations) {
-			// If the member's name can't be found in charNames, report it
-			if (find(unitNames.begin(), unitNames.end(), member.name) == unitNames.end())
-				returnList.insert(member.name);
-		}
-	}
-
-	// Return the list
-	return returnList;
-}
-
 void interactions::writeToFile(std::vector<character> characterList, std::vector<unit> unitList) {
 	for (character chara : characterList) {
 		// Variables for input file and spare contents
@@ -186,8 +162,6 @@ void interactions::writeToFile(std::vector<character> characterList, std::vector
 		outFile << "Member: " << unit.member << "\n";
 		for (std::string aspect : unit.aspects)
 			outFile << "Aspect: " << aspect << "\n";
-		for (entity::tagFeature relation : unit.relations)
-			outFile << "Relation: " << relation.name << ": " << relation.desc << "\n";
 
 		// Rewrite the spare contents
 		outFile << contents;

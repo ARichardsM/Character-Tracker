@@ -83,13 +83,6 @@ void missingEntity::renameUnit(const std::string& missingUnit, std::vector<chara
 		// If the missing unit's name is the member, change it for the true name
 		if (uni.member == missingUnit)
 			uni.member = possibleNames[nameLoc];
-
-		// For each of the unit's relations
-		for (entity::tagFeature& relation : uni.relations) {
-			// If the missing unit's name was found, change it for the true name
-			if (relation.name == missingUnit)
-				relation.name = possibleNames[nameLoc];
-		}
 	}
 }
 
@@ -170,11 +163,6 @@ void missingEntity::deleteUnit(const std::string& missingUnit, std::vector<chara
 	for (int i = unitList.size() - 1; i >= 0; i--) {
 		if (unitList[i].member == missingUnit)
 			unitList[i].member = "None";
-
-		for (int j = unitList[i].relations.size() - 1; j >= 0; j--) {
-			if (unitList[i].relations[j].name == missingUnit)
-				unitList[i].relations.erase(unitList[i].relations.begin() + j);
-		}
 	}
 
 	return;

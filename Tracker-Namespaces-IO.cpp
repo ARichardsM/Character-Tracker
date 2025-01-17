@@ -211,9 +211,6 @@ void output::logListsMD(const std::vector<character>& characterList, const std::
 		// Write the content from the unit
 		outFileUnit << "# " << unit.name << "\n";
 		outFileUnit << unit.output();
-
-		if (unit.historyIndex != -1)
-			outFileUnit << history[unit.historyIndex];
 	}
 
 	// Close the Out File
@@ -371,14 +368,6 @@ void output::charPrintFull(const character& acter, const std::vector<unit>& unit
 					fullAspects.insert(fullAspects.end(), unit.aspects.begin(), unit.aspects.end());
 					fullMember.push_back(nextMember);
 					std::vector<std::vector<std::string>> newRelations;
-					for (entity::tagFeature rel : unit.relations) {
-						std::vector<std::string> relString;
-						relString.push_back(rel.name);
-						for (std::string tag : rel.tags)
-							relString.push_back(tag);
-						relString.push_back(rel.desc);
-						newRelations.push_back(relString);
-					}
 					fullRelations.insert(fullRelations.end(), newRelations.begin(), newRelations.end());
 
 					// Update the next member, while preventing an infinte loop
@@ -547,7 +536,7 @@ void input::loadUnit(std::string file, std::vector<unit>& unitList, std::vector<
 		std::string line;
 		while (getline(inputFile, line)) {
 			// Add the feature
-			unitList[unitIn].addFeature(line, history);
+			unitList[unitIn].addFeature(line);
 		}
 
 		// Add the unit's name
@@ -582,7 +571,7 @@ void input::loadUnit(std::string file, std::vector<unit>& unitList, std::vector<
 				continue;
 
 			// Attempt to add a festure
-			unitList[unitIn].addFeature(line, history);
+			unitList[unitIn].addFeature(line);
 		}
 	};
 

@@ -41,25 +41,6 @@ void modifyRelations::addMissingRelations(std::vector<character>& characterList,
 		}
 	}
 
-	// For each unit's relation
-	for (int i = 0; i < unitList.size(); i++) {
-		for (entity::tagFeature relation : unitList[i].relations) {
-			// Find the relation's name in `names`
-			auto relPos = find(names.begin(), names.end(), relation.name);
-			int intPos = std::distance(names.begin(), relPos);
-
-			// Adjust i to accomdate the characters
-			int adjI = i + characterList.size();
-
-			// If the relation exists
-			if (relPos != names.end()) {
-				// Modify the relation matrix
-				relationMatrix[adjI][intPos] = true;
-				relationMatrix[intPos][adjI] = true;
-			}
-		}
-	}
-
 	// For each character
 	for (int i = 0; i < characterList.size(); i++) {
 		// Record the character's relation names
@@ -83,35 +64,9 @@ void modifyRelations::addMissingRelations(std::vector<character>& characterList,
 			}
 		}
 	}
-
-	// For each unit
-	for (int i = 0; i < unitList.size(); i++) {
-		// Adjust i to accomdate the characters
-		int adjI = i + characterList.size();
-
-		// Record the unit's relation names
-		std::vector<std::string> relateNames;
-		for (entity::tagFeature relation : unitList[i].relations) {
-			relateNames.push_back(relation.name);
-		}
-
-		// For every entity
-		for (int j = 0; j < entitySize; j++) {
-			// if a relation doesn't exist, continue
-			if (!relationMatrix[adjI][j])
-				continue;
-
-			// if the relation isn't already present, add it
-			if (find(relateNames.begin(), relateNames.end(), names[j]) == relateNames.end()) {
-				entity::tagFeature newRel;
-				newRel.name = names[j];
-				newRel.desc = "New Relation";
-				unitList[i].relations.push_back(newRel);
-			}
-		}
-	}
 }
 
+/*
 void modifyRelations::modGroups(std::vector<unit>& unitList) {
 	// Declare Variables
 	int selectedUnitA, selectedUnitB, findLoc;
@@ -174,7 +129,7 @@ void modifyRelations::modGroups(std::vector<unit>& unitList) {
 
 	return;
 }
-
+*/
 void modifyRelations::modCharacters(std::vector<character>& characterList) {
 	return;
 }

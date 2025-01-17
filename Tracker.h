@@ -40,8 +40,6 @@ public:
 
 	// Add a feature based on an input string
 	void addFeature(const std::string& featString);
-	// Add a feature or add to history based on an input string
-	void addFeature(const std::string& featString, std::vector<std::string>& history);
 };
 
 // Unit Information
@@ -50,8 +48,8 @@ public:
 	// Initializer
 	unit() = default;
 
-	// Add a feature or add to history based on an input string
-	void addFeature(const std::string& featString, std::vector<std::string>& history);
+	// Add a feature based on an input string
+	void addFeature(const std::string& featString);
 
 	// Output the unit
 	std::string output() const;
@@ -103,8 +101,6 @@ namespace interactions {
 
 	// Verify that all relations in a character list exist in the list
 	std::set<std::string> verifyRelations(std::vector<character> list);
-	// Verify that all relations in a unit list exist in the list
-	std::set<std::string> verifyRelations(std::vector<unit> list);
 
 	// Verify the size of all units
 	void verifySizes(std::vector<character> characterList, std::vector<unit> unitList);
@@ -117,8 +113,6 @@ namespace modifyRelations {
 	// Add any missing relations in the lists
 	void addMissingRelations(std::vector<character>& characterList, std::vector<unit>& unitList);
 
-	// Modify the relations between the provided groups
-	void modGroups(std::vector<unit>& unitList);
 	// Modify the relations between the provided characters
 	void modCharacters(std::vector<character>& characterList);
 }

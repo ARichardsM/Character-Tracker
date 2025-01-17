@@ -41,7 +41,6 @@ void startUp() {
 
     // Verify the units
     setA = interactions::verifyMemberships(charList, unitList);
-    setB = interactions::verifyRelations(unitList);
 
     setA.insert(setB.begin(), setB.end());
 
@@ -221,7 +220,6 @@ int main()
         switch (select) {
         case 1:
             modifyRelations::modCharacters(charList);
-            modifyRelations::modGroups(unitList);
             break;
         case 2:
             // Run Edit Functions

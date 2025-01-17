@@ -12,13 +12,11 @@ std::string unit::output() const {
 	returnStr += "Member: " + member + "\n";
 	for (std::string aspect : aspects)
 		returnStr += "Aspect: " + aspect + "\n";
-	for (tagFeature relation : relations)
-		returnStr += "Relation: " + relation.returnFeat() + "\n";
 
 	return returnStr;
 }
 
-void unit::addFeature(const std::string& featString, std::vector<std::string>& history) {
+void unit::addFeature(const std::string& featString) {
 	// Attempt to split the input string by delims
 	std::vector<std::string> feat = input::splitDelim(featString);
 
@@ -31,5 +29,5 @@ void unit::addFeature(const std::string& featString, std::vector<std::string>& h
 		rank = std::max(0, rankIt);
 	}
 	else
-		entity::addFeature(featString, history);
+		entity::addFeature(featString);
 }
