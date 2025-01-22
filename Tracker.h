@@ -72,26 +72,29 @@ public:
 	std::string output() const;
 };
 
-struct UnitList {
+struct {
+	/*
 	struct Tag{
 		std::string name;
 		int weight;
 		std::string desc;
 	};
-
-	std::vector<unit> units;     // Contains all units as the `unit` class
 	std::vector<Tag> bonds;		// Contains all possible relation tags
-};
+	*/
+	std::vector<unit> groups;     // Contains all units
+} GroupList;
 
 struct {
+	/*
 	struct Tag {
 		std::string name;
 		int weight;
 		std::string desc;
 	};
-
-	std::vector<character> characters;     // Contains all units as the `unit` class
 	std::vector<Tag> bonds;		// Contains all possible relation tags
+	*/
+	std::vector<character> characters;     // Contains all characters
+	std::vector<std::string> other;     // Contains all characters' unlabeled data
 } CharacterList;
 
 

@@ -10,12 +10,7 @@
 using namespace std;
 namespace fs = filesystem;
 
-// Global variables
-vector<character> charList; // Contains all characters as the `character` class
-vector<unit> unitList;      // Contains all units as the `unit` class
-vector<string> history;     // Contains all entity history as a string
-
-void startUp() {
+void startUp(vector<unit>& unitList, vector<character>& charList, vector<string>& history) {
     // Pull `Character Files` from the `Characters` Directory
     fs::path charPath = fs::current_path() / "Characters";
 
@@ -71,7 +66,7 @@ void startUp() {
 }
 
 // Main function for all edit functions
-void editFunc() {
+void editFunc(vector<unit>& unitList, vector<character>& charList) {
     // Declare variables
     bool cont = true;
     int select;
@@ -105,7 +100,7 @@ void editFunc() {
 }
 
 // Main function for all print functions
-void printFunc() {
+void printFunc(vector<unit>& unitList, vector<character>& charList, vector<string>& history) {
     // Declare variables
     bool cont = true;
     int select;
@@ -208,7 +203,7 @@ int main()
     int select;
 
     // Run initial preparations
-    startUp();
+    startUp(GroupList.groups, CharacterList.characters, CharacterList.other);
 
     // Print
     while (cont) {
@@ -219,15 +214,15 @@ int main()
 
         switch (select) {
         case 1:
-            modifyRelations::modCharacters(charList);
+            modifyRelations::modCharacters(CharacterList.characters);
             break;
         case 2:
             // Run Edit Functions
-            editFunc();
+            editFunc(GroupList.groups, CharacterList.characters);
             break;
         case 3:
             // Run Print Functions
-            printFunc();
+            printFunc(GroupList.groups, CharacterList.characters, CharacterList.other);
             break;
         case 4:
             // End the loop
