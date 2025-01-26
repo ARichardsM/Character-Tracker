@@ -44,6 +44,60 @@ int support::prompt(std::string txt, std::vector<std::string> opts) {
 	return stoi(userInput);
 }
 
+std::vector<std::string> support::splitByDelim(std::string input) {
+	// Prepare the standard delim list
+	std::vector<std::string> delimList = { ": ", " - ", " < "," > ", "> " , " <" };
+
+	// Pass and return
+	return splitByDelim(input, delimList);
+}
+
+std::vector<std::string> support::splitByDelim(std::string input, std::vector<std::string> delimList) {
+	// Variables for delims found position and tracking progress
+	std::vector<int> delimPos;
+	bool isRunning = true;
+
+	// Variable for the return
+	std::vector<std::string> splitLine;
+
+	// Split until a delim cannot be found
+	while (isRunning) {
+		// Find each delim in the string
+		for (std::string delim : delimList) {
+			// Find the delim
+			int relPos = input.find(delim);
+
+			// If the delim doesn't appear, set it to the array's size
+			if (relPos == -1)
+				delimPos.push_back(input.size());
+			else
+				delimPos.push_back(input.find(delim));
+		}
+
+		// Determine the first delim to appear
+		auto minEleIter = std::min_element(delimPos.begin(), delimPos.end());
+		int minEle = std::distance(delimPos.begin(), minEleIter);
+
+		// If no delim's appeared, break
+		if (delimPos[minEle] == input.size()) {
+			isRunning = false;
+			break;
+		}
+
+		// Split the line and continue with the remainder
+		splitLine.push_back(input.substr(0, input.find(delimList[minEle])));
+		input = input.substr(input.find(delimList[minEle]) + delimList[minEle].size());
+
+		// Clear the delim positions
+		delimPos.clear();
+	}
+
+	// Add the rest of the line to the return
+	splitLine.push_back(input);
+
+	return splitLine;
+}
+
 int simpleFind::find(const std::vector<std::string>& arr, const std::string& val) {
 	// Try to find val
 	auto loc = find(arr.begin(), arr.end(), val);
@@ -55,4 +109,8 @@ int simpleFind::find(const std::vector<std::string>& arr, const std::string& val
 
 	// Otherwise return -1
 	return -1;
+}
+
+int simpleFind::find(const std::string& val, const std::vector<std::string>& arr) {
+	return find(arr, val); 
 }

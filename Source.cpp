@@ -65,6 +65,43 @@ void startUp(vector<unit>& unitList, vector<character>& charList, vector<string>
     }
 }
 
+void readParameter() {
+    // Access the unit markdown file
+    std::ifstream inputFile;
+    inputFile.open("Parameter-Document.txt");
+
+    // For each line
+    std::string line;
+    vector<std::string> parts;
+
+    while (getline(inputFile, line)) {
+        cout << line << "\n";
+        parts = support::splitByDelim(line);
+
+        switch (parts.size()) {
+        case 1:
+            continue;
+        case 2:
+            switch (simpleFind::find(parts[0], { "Character Ranks", "Group Ranks" })) {
+            case -1:
+                cout << "None \n";
+                break;
+            case 0:
+                cout << "Character \n";
+                support::splitByDelim(parts[1], { ", " });
+                break;
+            case 1:
+                cout << "Group \n";
+                support::splitByDelim(parts[1], { ", " });
+                break;
+            }
+            break;
+        }
+        for (string part: support::splitByDelim(line))
+            cout << part << "\n";
+    }
+}
+
 // Main function for all edit functions
 void editFunc(vector<unit>& unitList, vector<character>& charList) {
     // Declare variables
@@ -203,6 +240,7 @@ int main()
     int select;
 
     // Run initial preparations
+    readParameter();
     startUp(GroupList.groups, CharacterList.characters, CharacterList.other);
 
     // Print

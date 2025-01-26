@@ -1,1 +1,16 @@
+Character Ranks: Unassigned, Known, Novice, Apprentice, Adept, Expert, Legend, Myth
+Group Ranks: Unassigned, Crew, Squad, Regiment, Faction
+
+Extraversion: Extraverts tend to be action-oriented – focusing on other people and things, feeling energized by the presence of others, and emitting energy outwards.
+Introversion: Introverts are more thought-oriented. They enjoy deep and meaningful social interactions and feel recharged after spending time alone.
+
+Sensing: Sensing-dominant people tend to prefer to focus on facts and details and perceive the world around them through their five senses.
+Intuition: Intuition-dominant types are more abstract in their thinking, focusing on patterns, impressions, and future possibilities.
+
+Thinking: Thinking types use logic and facts to judge the world.
+Feeling: Feeling types tend to consider emotions.
+
+Judging: Judging dominant individuals tend to be more methodical and results-oriented and prefer structure and decision-making.
+Perceiving: Perceiving dominant individuals are more adaptable and flexible and tend to be good at multitasking.
+
 Test: Test Aspect Description

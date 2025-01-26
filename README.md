@@ -37,4 +37,5 @@ The project is organized into multiple scripts, each handling a different aspect
 - [ ] Create Relation Alteration features.
 
 # To Be Decided (TBD)
+- [ ] Try-Catch File Reading
 - [ ] Additional features and priorities will be determined as development progresses.
