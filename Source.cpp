@@ -10,6 +10,7 @@
 using namespace std;
 namespace fs = filesystem;
 
+// Pull character and group information
 void startUp(vector<unit>& unitList, vector<character>& charList, vector<string>& history) {
     // Pull `Character Files` from the `Characters` Directory
     fs::path charPath = fs::current_path() / "Characters";
@@ -65,7 +66,8 @@ void startUp(vector<unit>& unitList, vector<character>& charList, vector<string>
     }
 }
 
-void readParameter() {
+// Read the parameter document
+void readParameter(std::vector<std::vector<std::string>>& tags, std::vector<std::string>& characterRanks, std::vector<std::string>& groupRanks) {
     // Access the unit markdown file
     std::ifstream inputFile;
     inputFile.open("Parameter-Document.txt");
@@ -75,30 +77,31 @@ void readParameter() {
     vector<std::string> parts;
 
     while (getline(inputFile, line)) {
-        cout << line << "\n";
+        // Divide the line in parts based on common delims
         parts = support::splitByDelim(line);
 
         switch (parts.size()) {
         case 1:
+            // Skip if the line can't be Split
             continue;
         case 2:
+            // Determine if the input is a rank or a tag
             switch (simpleFind::find(parts[0], { "Character Ranks", "Group Ranks" })) {
             case -1:
-                cout << "None \n";
+                // Add to list of tags
+                tags.push_back(parts);
                 break;
             case 0:
-                cout << "Character \n";
-                support::splitByDelim(parts[1], { ", " });
+                // Set character ranks
+                characterRanks = support::splitByDelim(parts[1], { ", " });
                 break;
             case 1:
-                cout << "Group \n";
-                support::splitByDelim(parts[1], { ", " });
+                // Set group ranks
+                groupRanks = support::splitByDelim(parts[1], { ", " });
                 break;
             }
             break;
         }
-        for (string part: support::splitByDelim(line))
-            cout << part << "\n";
     }
 }
 
@@ -240,7 +243,7 @@ int main()
     int select;
 
     // Run initial preparations
-    readParameter();
+    readParameter(CharacterList.tags, CharacterList.ranks, GroupList.ranks);
     startUp(GroupList.groups, CharacterList.characters, CharacterList.other);
 
     // Print
@@ -252,7 +255,17 @@ int main()
 
         switch (select) {
         case 1:
-            modifyRelations::modCharacters(CharacterList.characters);
+            cout << "Character Ranks\n";
+            for (string i : CharacterList.ranks)
+                cout << i << "\n";
+
+            cout << "\nGroup Ranks\n";
+            for (string i : CharacterList.ranks)
+                cout << i << "\n";
+
+            cout << "\nCharacter Tags\n";
+            for (vector<string> i : CharacterList.tags)
+                cout << "Name: " << i[0] << "\n Description: " << i[1] << "\n\n";
             break;
         case 2:
             // Run Edit Functions

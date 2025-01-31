@@ -27,8 +27,12 @@ The project is organized into multiple scripts, each handling a different aspect
 ## Current
 - [ ] General Input Parameter Document
 	- [ ] Improve initial read and verification processes.
+		- [X] Read the Parameter Document
+		- [ ] Limit Based on Parameters
+
 	- [ ] Develop classes for managing Character and Unit lists.
 		- [X] Implemented a Struct for managing the lists.
+
 	- [ ] Implement a switch-case during entity feature creation.
 
 ## Backlog

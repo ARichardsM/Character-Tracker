@@ -81,20 +81,23 @@ struct {
 	};
 	std::vector<Tag> bonds;		// Contains all possible relation tags
 	*/
-	std::vector<unit> groups;     // Contains all units
+	std::vector<unit> groups;     // Contains all groups
+
+	std::vector<std::string> ranks;		// Contains all group ranks
 } GroupList;
 
 struct {
-	/*
 	struct Tag {
 		std::string name;
-		int weight;
 		std::string desc;
 	};
-	std::vector<Tag> bonds;		// Contains all possible relation tags
-	*/
-	std::vector<character> characters;     // Contains all characters
+
+	std::vector<character> characters;	// Contains all characters
+
+	std::vector<std::string> ranks;		// Contains all character ranks
 	std::vector<std::string> other;     // Contains all characters' unlabeled data
+
+	std::vector<std::vector<std::string>> tags;		// Contains all character tags
 } CharacterList;
 
 
