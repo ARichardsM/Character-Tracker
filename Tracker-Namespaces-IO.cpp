@@ -11,7 +11,7 @@ void recPrint(const std::vector<unit>& unitList, const std::vector<character>& c
 		std::cout << "    ";
 
 	// Print the name and rank
-	std::cout << "[" << unitRankings[unitList[thisUnitInd].rank] << "] ";
+	std::cout << "[" << GroupList.ranks[unitList[thisUnitInd].rank] << "] ";
 	std::cout << unitList[thisUnitInd].name;
 
 	// Print the size and max size
@@ -37,7 +37,7 @@ void recPrint(const std::vector<unit>& unitList, const std::vector<character>& c
 		for (int i = 0; i < depth + 1; i++)
 			std::cout << "    ";
 
-		std::cout << "[" << characterRankings[currChar.rank] << "] ";
+		std::cout << "[" << CharacterList.ranks[currChar.rank] << "] ";
 		std::cout << currChar.name << "\n";
 	}
 
@@ -80,7 +80,7 @@ void output::printRank(std::vector<character> characterList, std::vector<unit> u
 	for (unit uni : unitList) {
 		// If the rank has changed, print a new header
 		if (prevRank != uni.rank) {
-			std::cout << "\n" << unitRankings[uni.rank] << "\n";
+			std::cout << "\n" << GroupList.ranks[uni.rank] << "\n";
 			prevRank = uni.rank;
 		}
 
@@ -95,7 +95,7 @@ void output::printRank(std::vector<character> characterList, std::vector<unit> u
 	for (character chara : characterList) {
 		// If the rank has changed, print a new header
 		if (prevRank != chara.rank) {
-			std::cout << "\n" << characterRankings[chara.rank] << "\n";
+			std::cout << "\n" << CharacterList.ranks[chara.rank] << "\n";
 			prevRank = chara.rank;
 		}
 
@@ -335,7 +335,7 @@ void output::charPrintFull(const character& acter, const std::vector<unit>& unit
 	else {
 		// Print Name and Rank
 		std::cout << "Name: " << acter.name << "\n";
-		std::cout << "Rank: " << characterRankings[acter.rank] << "\n";
+		std::cout << "Rank: " << CharacterList.ranks[acter.rank] << "\n";
 
 		// Record the character's aspects and relations
 		std::vector<std::string> fullAspects = acter.aspects;

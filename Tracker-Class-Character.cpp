@@ -8,7 +8,8 @@ std::string character::output() const {
 	std::string returnStr;
 
 	returnStr += "Name: " + name + "\n";
-	returnStr += "Rank: " + characterRankings[rank] + "\n";
+	//returnStr += "Rank: " + CharacterList.ranks[rank] + "\n";
+	returnStr += "Rank: " + std::to_string(rank)  + "\n";
 	returnStr += "Member: " + member + "\n";
 	for (std::string aspect : aspects)
 		returnStr += "Aspect: " + aspect + "\n";
@@ -39,7 +40,7 @@ void character::addFeature(std::string featString, std::vector<std::string>& his
 	// Rank: Set the rank to [1]'s integer equivalent
 	else if (feat[0] == "Rank") {
 		// Search for rank [1] in the character rankings
-		int rankIt = simpleFind::find(characterRankings, feat[1]);
+		int rankIt = simpleFind::find(CharacterList.ranks, feat[1]);
 
 		// Assign the rank if it exists, otherwise stay unassigned
 		rank = std::max(0, rankIt);

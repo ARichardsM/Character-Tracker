@@ -7,21 +7,18 @@
 #include <set>
 #include "General.h"
 
-// Declare Global variables
-const std::vector<std::string> unitRankings = {"Unassigned", "Crew", "Squad", "Regiment", "Faction"};											// List of eligible unit rankings
-const std::vector<std::string> characterRankings = {"Unassigned", "Known", "Novice", "Apprentice", "Adept", "Expert", "Legend", "Myth"};		// List of eligible character rankings
+// Feature Struct
+struct feature {
+	std::string name;
+	std::string desc;
+
+	// Return the feature as a string
+	std::string returnFeat();
+};
 
 // Abstract Entity Information
 class entity {
 public:
-	struct feature {
-		std::string name;
-		std::string desc;
-
-		// Return the feature as a string
-		std::string returnFeat();
-	};
-
 	struct tagFeature : public feature {
 		std::vector<std::string> tags;
 
@@ -70,6 +67,25 @@ public:
 
 	// Output the character
 	std::string output() const;
+};
+
+// Group List Information
+class groupList {
+public:
+	std::vector<unit> groups;     // Contains all groups
+
+	std::vector<std::string> ranks;		// Contains all group ranks
+};
+
+// Character List Information
+class characterList {
+public:
+	std::vector<character> characters;	// Contains all characters
+
+	std::vector<std::string> ranks;		// Contains all character ranks
+	std::vector<std::string> other;     // Contains all characters' unlabeled data
+
+	std::vector<feature> features;		// Contains all possible character features
 };
 
 struct {

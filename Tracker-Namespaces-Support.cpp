@@ -63,7 +63,7 @@ std::vector<std::string> rules::genRules(const std::vector<std::string>& crewNam
 
 			// If the limit by entity was set to crew
 			if (find(rulesList.begin(), rulesList.end(), "Only:Crew") != rulesList.end()) {
-				for (std::string rank : unitRankings) {
+				for (std::string rank : GroupList.ranks) {
 					// If the rank is not already in the rules list, add it to the possible rules
 					if (find(rulesList.begin(), rulesList.end(), "Ranking:" + rank) == rulesList.end())
 						possibleRules.push_back("Ranking:" + rank);
@@ -71,7 +71,7 @@ std::vector<std::string> rules::genRules(const std::vector<std::string>& crewNam
 			}
 			// If the limit by entity was set to character
 			else if (find(rulesList.begin(), rulesList.end(), "Only:Character") != rulesList.end()) {
-				for (std::string rank : characterRankings) {
+				for (std::string rank : CharacterList.ranks) {
 					// If the rank is not already in the rules list, add it to the possible rules
 					if (find(rulesList.begin(), rulesList.end(), "Ranking:" + rank) == rulesList.end())
 						possibleRules.push_back("Ranking:" + rank);
@@ -139,12 +139,12 @@ void rules::filterRules(const std::vector<std::string>& rulesList, std::vector<c
 	// Pull all neccessary entity information
 	for (character ent : characterList) {
 		possibleNames.push_back(ent.name);
-		possibleEntities.push_back({ ent.name, characterRankings[ent.rank], ent.member, "Character" });
+		possibleEntities.push_back({ ent.name, CharacterList.ranks[ent.rank], ent.member, "Character" });
 	}
 
 	for (unit ent : unitList) {
 		possibleNames.push_back(ent.name);
-		possibleEntities.push_back({ ent.name, unitRankings[ent.rank], ent.member, "Unit" });
+		possibleEntities.push_back({ ent.name, GroupList.ranks[ent.rank], ent.member, "Unit" });
 	}
 
 	// For each of the rules

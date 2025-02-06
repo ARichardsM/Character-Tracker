@@ -75,7 +75,7 @@ void interactions::verifySizes(std::vector<character> characterList, std::vector
 			unitSizes[std::distance(unitNames.begin(), unitMem)] += unitSizes[i];
 
 		// Print out the size
-		std::cout << "[" << unitRankings[stoi(unitInfo[i][1])] << "] " << unitNames[i] << ": Size " << unitSizes[i] << ".";
+		std::cout << "[" << GroupList.ranks[stoi(unitInfo[i][1])] << "] " << unitNames[i] << ": Size " << unitSizes[i] << ".";
 
 		// If the size is invalid, report it
 		if (!(pow(2, stoi(unitInfo[i][1])) <= unitSizes[i] && unitSizes[i] <= (3 * pow(2, stoi(unitInfo[i][1]) - 1))))
@@ -128,7 +128,7 @@ void interactions::writeToFile(std::vector<character> characterList, std::vector
 		std::ofstream outFile("Characters/" + chara.name + ".txt");
 
 		// Write the content from the character
-		outFile << "Rank: " << characterRankings[chara.rank] << "\n";
+		outFile << "Rank: " << CharacterList.ranks[chara.rank] << "\n";
 		outFile << "Member: " << chara.member << "\n";
 		for (std::string aspect : chara.aspects)
 			outFile << "Aspect: " << aspect << "\n";
@@ -158,7 +158,7 @@ void interactions::writeToFile(std::vector<character> characterList, std::vector
 		std::ofstream outFile("Units/" + unit.name + ".txt");
 
 		// Write the content from the unit
-		outFile << "Rank: " << unitRankings[unit.rank] << "\n";
+		outFile << "Rank: " << GroupList.ranks[unit.rank] << "\n";
 		outFile << "Member: " << unit.member << "\n";
 		for (std::string aspect : unit.aspects)
 			outFile << "Aspect: " << aspect << "\n";
