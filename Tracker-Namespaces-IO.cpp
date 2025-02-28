@@ -5,44 +5,7 @@
 *
 */
 
-void recPrint(const std::vector<unit>& unitList, const std::vector<character>& characterList, const std::vector<std::vector<std::string>>& unitDets, int thisUnitInd, int depth) {
-	// Print blanks for indentation
-	for (int i = 0; i < depth; i++)
-		std::cout << "    ";
 
-	// Print the name and rank
-	std::cout << "[" << GroupList.ranks[unitList[thisUnitInd].rank] << "] ";
-	std::cout << unitList[thisUnitInd].name;
-
-	// Print the size and max size
-	for (std::vector<std::string> currUnit : unitDets) {
-		if (currUnit[0] == unitList[thisUnitInd].name) {
-			std::cout << " (" << currUnit[1] << "/";
-			std::cout << (3 * pow(2, unitList[thisUnitInd].rank - 1)) << ")\n";
-		}
-	}
-
-	// Print any units that belongs to this unit
-	for (int i = 0; i < unitList.size(); i++) {
-		if (unitList[i].member != unitList[thisUnitInd].name)
-			continue;
-		recPrint(unitList, characterList, unitDets, i, depth + 1);
-	}
-
-	// Print any character that belongs to this unit
-	for (character currChar : characterList) {
-		if (currChar.member != unitList[thisUnitInd].name)
-			continue;
-
-		for (int i = 0; i < depth + 1; i++)
-			std::cout << "    ";
-
-		std::cout << "[" << CharacterList.ranks[currChar.rank] << "] ";
-		std::cout << currChar.name << "\n";
-	}
-
-	return;
-}
 
 void output::printAll(const std::vector<character>& characterList, const std::vector<unit>& unitList) {
 	// Print all characters
@@ -60,7 +23,7 @@ void output::printAll(const std::vector<character>& characterList, const std::ve
 	}
 }
 
-void output::printRank(std::vector<character> characterList, std::vector<unit> unitList) {
+void output::printRank(std::vector<character> characterList, unitList unitData) {
 	// Declare a variable to track the previously printed rank
 	int prevRank = -1;
 
@@ -71,16 +34,16 @@ void output::printRank(std::vector<character> characterList, std::vector<unit> u
 		});
 
 	// Sort units in order of rank integer
-	std::sort(unitList.begin(), unitList.end(),
+	std::sort(unitData.units.begin(), unitData.units.end(),
 		[](unit a, unit b) {
 			return a.rank < b.rank;
 		});
 
 	// For each unit
-	for (unit uni : unitList) {
+	for (unit uni : unitData.units) {
 		// If the rank has changed, print a new header
 		if (prevRank != uni.rank) {
-			std::cout << "\n" << GroupList.ranks[uni.rank] << "\n";
+			std::cout << "\n" << unitData.ranks[uni.rank] << "\n";
 			prevRank = uni.rank;
 		}
 
@@ -123,69 +86,7 @@ void output::printFull(const std::vector<character>& characterList, const std::v
 }
 
 
-void output::printFullUnit(const std::vector<character>& characterList, const std::vector<unit>& unitList) {
-	// Variables
-	std::vector<std::vector<std::string>> unitDets;
-	std::vector<std::vector<std::string>> unitInfo;
-	std::vector<std::string> unitNames;
-	std::vector<int> unitSizes;
 
-	// Store the unit's name and necessary information and initialize the units' size
-	for (unit unit : unitList) {
-		unitInfo.push_back({ unit.name, std::to_string(unit.rank), unit.member });
-		unitSizes.push_back(0);
-	}
-
-	// Sort unit info in order of rank integer
-	std::sort(unitInfo.begin(), unitInfo.end(),
-		[](std::vector<std::string> a, std::vector<std::string> b) {
-			return stoi(a[1]) < stoi(b[1]);
-		});
-
-	// Store the unit's name via sorted order and create a character holder
-	for (std::vector<std::string> unit : unitInfo) {
-		unitNames.push_back(unit[0]);
-		unitDets.push_back({ unit[0], "0" });
-	}
-
-	// For each character
-	for (character character : characterList) {
-		// Try to find it's unit membership
-		auto charMem = find(unitNames.begin(), unitNames.end(), character.member);
-
-		// If it belongs to a unit, add to the unit's size
-		if (charMem != unitNames.end()) {
-			unitSizes[std::distance(unitNames.begin(), charMem)] += 1;
-		}
-	}
-
-	// For each unit
-	for (int i = 0; i < unitInfo.size(); i++) {
-		// Try to find it's unit membership
-		auto unitMem = find(unitNames.begin(), unitNames.end(), unitInfo[i][2]);
-
-		// If it belongs to a unit, add it's size to the unit's size
-		if (unitMem != unitNames.end())
-			unitSizes[std::distance(unitNames.begin(), unitMem)] += unitSizes[i];
-
-		unitDets[i][1] = std::to_string(unitSizes[i]);
-	}
-
-	// For each unit
-	for (int i = 0; i < unitList.size(); i++) {
-		// Try to find it's unit membership
-		auto unitMem = find(unitNames.begin(), unitNames.end(), unitList[i].name);
-
-		// If it doesn't belongs to a unit
-		if (unitList[i].member == "None") {
-			// Recusive print it and it's members
-			recPrint(unitList, characterList, unitDets, i, 0);
-		}
-	}
-
-	// Print a newline for spacing
-	std::cout << "\n";
-}
 
 void output::logListsMD(const std::vector<character>& characterList, const std::vector<unit>& unitList, const std::vector<std::string>& history) {
 	// Variables for output file

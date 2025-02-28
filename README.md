@@ -1,7 +1,12 @@
 # Character Tracker
+
 ## Description
+
 The Character Tracker is a C++ console application designed to manage relationships between individual characters and groups (currently referred to as Units).
 It serves as an updated iteration of the earlier "Bond Tracker" codebase, with improved structure and expanded functionality.
+
+## Files
+
 The project is organized into multiple scripts, each handling a different aspect of the program, as detailed in the table below.
 
 | File Name                        | Description                                                                              |
@@ -23,8 +28,8 @@ The project is organized into multiple scripts, each handling a different aspect
 |----------------------------------|------------------------------------------------------------------------------------------|
 | UnitTest.cpp                     | Unit tests for the class scripts using Microsoft Unit Testing for C/C++.                 |
 
-
 ## Current
+
 - [ ] General Input Parameter Document
 	- [ ] Improve initial read and verification processes.
 		- [X] Read the Parameter Document
@@ -35,11 +40,10 @@ The project is organized into multiple scripts, each handling a different aspect
 
 	- [ ] Implement a switch-case during entity feature creation.
 
-## Backlog
-- [ ] Make Unit Relations a composite of Character Relations
-- [ ] Enable Output via Connection for improved data flow.
-- [ ] Create Relation Alteration features.
+## Possible Improvements
 
-# To Be Decided (TBD)
-- [ ] Try-Catch File Reading
-- [ ] Additional features and priorities will be determined as development progresses.
+**Try-Catch File Reading:** By implementing a try-catch while attempt to read files, the error-handling of the project can be improved.
+
+**Unit Relations:** A method of handling relations involving units would be for unit relation to equal a composite of its member characters' relations.
+
+**Alter Relations:** A built-in method for altering relations between character's would improve the functionality of the project.

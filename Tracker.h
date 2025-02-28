@@ -69,12 +69,23 @@ public:
 	std::string output() const;
 };
 
-// Group List Information
-class groupList {
+// Unit List Information
+class unitList {
 public:
-	std::vector<unit> groups;     // Contains all groups
+	std::vector<unit> units;			// Contains all units
+	std::vector<std::string> ranks;		// Contains all unit ranks
 
-	std::vector<std::string> ranks;		// Contains all group ranks
+	// Initializer
+	unitList() = default;
+
+	// Add a feature based on an input string
+	void addFeature(const int& select, const std::string& featString);
+
+	// Output the unit
+	std::string output(const int& select) const;
+
+	// Print units and mention members
+	void fullPrint(const std::vector<character>& characterList);
 };
 
 // Character List Information
@@ -87,20 +98,21 @@ public:
 
 	std::vector<feature> features;		// Contains all possible character features
 };
-
+/*
 struct {
-	/*
 	struct Tag{
 		std::string name;
 		int weight;
 		std::string desc;
 	};
 	std::vector<Tag> bonds;		// Contains all possible relation tags
-	*/
+	
 	std::vector<unit> groups;     // Contains all groups
 
 	std::vector<std::string> ranks;		// Contains all group ranks
 } GroupList;
+
+*/
 
 struct {
 	struct Tag {
@@ -175,7 +187,7 @@ namespace output {
 	// Print all in the provided vectors
 	void printAll(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 	// Print according to rank
-	void printRank(std::vector<character> characterList, std::vector<unit> unitList);
+	void printRank(std::vector<character> characterList, unitList unitData);
 	// Full print according to a vector of rules
 	void printFull(const std::vector<character>& characterList, const std::vector<unit>& unitList);
 	// Write the character and unit list to two seperate markdown files

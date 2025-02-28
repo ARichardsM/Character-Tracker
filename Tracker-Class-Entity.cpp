@@ -22,7 +22,7 @@ void entity::addFeature(const std::string& featString) {
 	}
 }
 
-std::string entity::feature::returnFeat() {
+std::string feature::returnFeat() {
 	// Start the string with the partner's name
 	std::string returnVal = name;
 

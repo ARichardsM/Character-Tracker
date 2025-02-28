@@ -106,7 +106,7 @@ void readParameter(std::vector<std::vector<std::string>>& tags, std::vector<std:
 }
 
 // Main function for all edit functions
-void editFunc(vector<unit>& unitList, vector<character>& charList) {
+void editFunc(unitList& unitData, vector<character>& charList) {
     // Declare variables
     bool cont = true;
     int select;
@@ -120,12 +120,12 @@ void editFunc(vector<unit>& unitList, vector<character>& charList) {
         switch (select) {
         case 1:
             // Verify the sizes of all units
-            interactions::verifySizes(charList, unitList);
+            interactions::verifySizes(charList, unitData.units);
             cout << "\n";
             break;
         case 2:
             // Add any one-sided unit or character relations
-            modifyRelations::addMissingRelations(charList, unitList);
+            modifyRelations::addMissingRelations(charList, unitData.units);
             break;
         case 3:
             // Break the loop
@@ -140,7 +140,7 @@ void editFunc(vector<unit>& unitList, vector<character>& charList) {
 }
 
 // Main function for all print functions
-void printFunc(vector<unit>& unitList, vector<character>& charList, vector<string>& history) {
+void printFunc(unitList& unitData, vector<character>& charList, vector<string>& history) {
     // Declare variables
     bool cont = true;
     int select;
@@ -160,7 +160,7 @@ void printFunc(vector<unit>& unitList, vector<character>& charList, vector<strin
 
             // Create temporary copies of the list
             vector<character> tempCharList = charList;
-            vector<unit> tempUnitList = unitList;
+            vector<unit> tempUnitList = unitData.units;
 
             // Potentially apply a filter
             if (printSelectA == 1) {
@@ -168,7 +168,7 @@ void printFunc(vector<unit>& unitList, vector<character>& charList, vector<strin
                 vector<string> unitNames;
 
                 // Append all unit names to unitNames
-                for (unit unit : unitList) {
+                for (unit unit : unitData.units) {
                     unitNames.push_back(unit.name);
                 }
 
@@ -188,7 +188,7 @@ void printFunc(vector<unit>& unitList, vector<character>& charList, vector<strin
                 break;
             case 2:
                 // Print according to the ranks
-                output::printRank(tempCharList, tempUnitList);
+                output::printRank(tempCharList, unitData);
 
                 break;
             case 3:
@@ -214,11 +214,11 @@ void printFunc(vector<unit>& unitList, vector<character>& charList, vector<strin
             switch (writeSelect) {
             case 0:
                 // Write all characters and units to markdown files
-                output::logListsMD(charList, unitList, history);
+                output::logListsMD(charList, unitData.units, history);
                 break;
             case 1:
                 // Write all characters and units to their files
-                interactions::writeToFile(charList, unitList);
+                interactions::writeToFile(charList, unitData.units);
                 break;
             }
 
@@ -239,12 +239,13 @@ void printFunc(vector<unit>& unitList, vector<character>& charList, vector<strin
 int main()
 {
     // Declare variables
+    unitList groupData;
     bool cont = true;
     int select;
 
     // Run initial preparations
-    readParameter(CharacterList.tags, CharacterList.ranks, GroupList.ranks);
-    startUp(GroupList.groups, CharacterList.characters, CharacterList.other);
+    readParameter(CharacterList.tags, CharacterList.ranks, groupData.ranks);
+    startUp(groupData.units, CharacterList.characters, CharacterList.other);
 
     // Print
     while (cont) {
@@ -269,11 +270,11 @@ int main()
             break;
         case 2:
             // Run Edit Functions
-            editFunc(GroupList.groups, CharacterList.characters);
+            editFunc(groupData, CharacterList.characters);
             break;
         case 3:
             // Run Print Functions
-            printFunc(GroupList.groups, CharacterList.characters, CharacterList.other);
+            printFunc(groupData, CharacterList.characters, CharacterList.other);
             break;
         case 4:
             // End the loop
